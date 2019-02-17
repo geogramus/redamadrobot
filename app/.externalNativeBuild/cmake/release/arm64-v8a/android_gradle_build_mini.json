@@ -1,0 +1,18 @@
+{
+  "buildFiles": [
+    "C:\\Users\\geogram\\Documents\\RedMadRobotTimeTracker\\app\\..\\..\\..\\AppData\\Local\\Android\\Sdk\\ndk-bundle\\build\\cmake\\platforms.cmake",
+    "C:\\Users\\geogram\\Documents\\RedMadRobotTimeTracker\\app\\CMakeLists.txt",
+    "C:\\Users\\geogram\\Documents\\RedMadRobotTimeTracker\\app\\..\\..\\..\\AppData\\Local\\Android\\Sdk\\ndk-bundle\\build\\cmake\\android.toolchain.cmake"
+  ],
+  "cleanCommands": [
+    "C:\\Users\\geogram\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\cmake.exe --build C:\\Users\\geogram\\Documents\\RedMadRobotTimeTracker\\app\\.externalNativeBuild\\cmake\\release\\arm64-v8a --target clean"
+  ],
+  "libraries": {
+    "native-lib-Release-arm64-v8a": {
+      "artifactName": "native-lib",
+      "buildCommand": "C:\\Users\\geogram\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\cmake.exe --build C:\\Users\\geogram\\Documents\\RedMadRobotTimeTracker\\app\\.externalNativeBuild\\cmake\\release\\arm64-v8a --target native-lib",
+      "abi": "arm64-v8a",
+      "output": "C:\\Users\\geogram\\Documents\\RedMadRobotTimeTracker\\app\\build\\intermediates\\cmake\\release\\obj\\arm64-v8a\\libnative-lib.so"
+    }
+  }
+}
