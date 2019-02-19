@@ -4,16 +4,15 @@ import android.arch.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import android.arch.lifecycle.LiveData
-import ru.geogram.domain.useCases.AuthUseCaseInterface
-import ru.geogram.domain.useCases.AutheUseCase
-import ru.geogram.entity.entity.LoginModel
+import ru.geogram.domain.model.user.LoginPassword
+import ru.geogram.domain.repositories.AuthRepository
 import ru.geogram.redmadrobottimetracker.app.utils.parseServerError
+import javax.inject.Inject
 
 
-class FragmentAuthoriztionViewModel : BaseViewModel() {
+class FragmentAuthoriztionViewModel @Inject constructor(private val authService: AuthRepository): BaseViewModel() {
 
     var liveData: MutableLiveData<String>? = MutableLiveData<String>()
-    var authService: AuthUseCaseInterface = AutheUseCase()
 
 
     fun getData(): LiveData<String> {
@@ -23,17 +22,17 @@ class FragmentAuthoriztionViewModel : BaseViewModel() {
         return liveData!!
     }
 
-    fun auth(model: LoginModel) {
+    fun auth(model: LoginPassword) {
         val disposable = authService.auth(model)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                it.data?.let {
-                    liveData?.postValue(it.user.first_name)
-                }
-                it.error?.let {
-                    liveData?.postValue(parseServerError(it.code, it.description))
-                }
+//                it.data?.let {
+                    liveData?.postValue(it.first_name)
+//                }
+//                it.error?.let {
+//                    liveData?.postValue(parseServerError(it.code, it.description))
+//                }
             }, {
                 liveData?.postValue("Что то пошло не так...")
                 it.printStackTrace()

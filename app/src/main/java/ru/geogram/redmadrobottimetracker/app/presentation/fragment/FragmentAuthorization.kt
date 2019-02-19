@@ -8,11 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.geogram.redmadrobottimetracker.app.R
-import android.arch.lifecycle.ViewModelProviders
 import com.gc.materialdesign.widgets.SnackBar
 import kotlinx.android.synthetic.main.fragment_authorization.view.*
-import ru.geogram.entity.entity.LoginModel
+import ru.geogram.domain.model.user.LoginPassword
+import ru.geogram.redmadrobottimetracker.app.di.DI
 import ru.geogram.redmadrobottimetracker.app.presentation.presenter.FragmentAuthoriztionViewModel
+import ru.geogram.redmadrobottimetracker.app.utils.getViewModel
+import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
 
 
 class FragmentAuthorization : Fragment() {
@@ -24,11 +26,16 @@ class FragmentAuthorization : Fragment() {
 
     }
 
+    private lateinit var viewModel: FragmentAuthoriztionViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val fragmentView = inflater.inflate(R.layout.fragment_authorization, container, false)
-        val model = ViewModelProviders.of(activity!!).get(FragmentAuthoriztionViewModel::class.java)
-        val data = model.getData()
+
+
+        val viewModelFactory = viewModelFactory { DI.user.get().userViewModel() }
+        viewModel = getViewModel(viewModelFactory)
+        val data = viewModel.getData()
         data.observe(this, Observer<String>() {
 
             val snack = SnackBar(activity!!, it, "asd", View.OnClickListener {
@@ -38,7 +45,7 @@ class FragmentAuthorization : Fragment() {
 
         })
         fragmentView.button.setOnClickListener {
-            model.auth(LoginModel(fragmentView.editText2.text.toString(), fragmentView.editText.text.toString()))
+            viewModel.auth(LoginPassword(fragmentView.editText2.text.toString(), fragmentView.editText.text.toString()))
         }
         return fragmentView
 
