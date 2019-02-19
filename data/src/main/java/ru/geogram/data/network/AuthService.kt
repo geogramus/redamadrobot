@@ -15,22 +15,10 @@ import com.google.gson.GsonBuilder
 
 interface AuthService {
 
-    //    @POST("api/$apiVersion/cmn/devices/{imei}/settings")
-//    fun sendSettings(@Path(value = "imei") imei: String,
-//                     @Header("Content-Type") contentType: String = "application/json",
-//                     @Body settings: HashMap<String, String>): Observable<Result<Void>>
-//
-//    @GET("api/$apiVersion/cmn/devices/{imei}/settings")
-//    fun getSettings(@Path(value = "imei") imei: String): Observable<HashMap<String, String>>
-//
-//    @POST("api/$apiVersion/cmn/unbinddevice")
-//    fun logOut(@Body device: LogoutRequest): Observable<Result<Void>>
     @POST("auth/sign-in/")
     fun singIn(@Body device: LoginModel): Observable<LoginResponseModel>
 
-    /**
-     * Companion object to create the MothershipService
-     */
+
     companion object Factory {
 
         private const val apiVersion = "v1"
