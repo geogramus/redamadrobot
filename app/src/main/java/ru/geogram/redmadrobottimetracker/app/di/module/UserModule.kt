@@ -1,12 +1,10 @@
 package ru.geogram.redmadrobottimetracker.app.di.module
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import ru.geogram.data.network.api.AuthApi
 import ru.geogram.data.network.factory.AppApiFactory
-import ru.geogram.data.repository.user.UserDataRepository
-import ru.geogram.data.storage.db.TimeTrackerBoxStore
+import ru.geogram.data.repository.user.AuthDataRepository
 import ru.geogram.data.storage.db.UserDatabaseInterface
 import ru.geogram.domain.providers.rx.SchedulersProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
@@ -44,7 +42,7 @@ abstract class UserModule {
             userApi: AuthApi,
             dataBase: UserDatabaseInterface
         ): AuthRepository{
-            return UserDataRepository(schedulers, systemInfoProvider, userApi, dataBase)
+            return AuthDataRepository(schedulers, systemInfoProvider, userApi, dataBase)
         }
     }
 }

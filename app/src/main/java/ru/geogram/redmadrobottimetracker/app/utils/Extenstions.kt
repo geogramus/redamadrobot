@@ -1,5 +1,6 @@
 package ru.geogram.redmadrobottimetracker.app.utils
 
+
 fun parseServerError(code: String, description: String): String {
     var errorString = ""
     when (code) {

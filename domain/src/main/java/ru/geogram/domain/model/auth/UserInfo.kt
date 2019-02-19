@@ -1,4 +1,4 @@
-package ru.geogram.domain.model.user
+package ru.geogram.domain.model.auth
 
 data class UserInfo(
     var first_name: String? = "",

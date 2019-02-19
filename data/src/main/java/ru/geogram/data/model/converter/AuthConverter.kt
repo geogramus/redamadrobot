@@ -4,11 +4,12 @@ package ru.geogram.data.model.converter
 import ru.geogram.data.model.LoginModel
 import ru.geogram.data.model.LoginResponseModel
 import ru.geogram.data.model.db.user.UserEntity
-import ru.geogram.data.model.network.user.UserResponse
-import ru.geogram.domain.model.user.LoginPassword
-import ru.geogram.domain.model.user.UserInfo
+import ru.geogram.domain.model.auth.AuthInfo
+import ru.geogram.domain.model.auth.ErrorInfo
+import ru.geogram.domain.model.auth.LoginPassword
+import ru.geogram.domain.model.auth.UserInfo
 
-object UserConverter {
+object AuthConverter {
 
     fun convertToLoginModel(source: LoginPassword): LoginModel {
         return LoginModel(
@@ -17,15 +18,23 @@ object UserConverter {
         )
     }
 
-    fun fromNetwork(loginResponse: LoginResponseModel): UserInfo {
-        val source = loginResponse.data?.user
-        return UserInfo(
-            id = source?.id!!,
-            first_name = source.first_name,
-            last_name = source.last_name,
-            role = source.role,
-            email = source.email,
-            is_staff = source.is_staff
+    fun fromNetwork(loginResponse: LoginResponseModel): AuthInfo {
+        val user = loginResponse.data?.user
+        val error = loginResponse.error
+        return AuthInfo(
+            user?.let {
+                UserInfo(
+                    id = it.id,
+                    first_name = it.first_name,
+                    last_name = it.last_name,
+                    role = it.role,
+                    email = it.email,
+                    is_staff = it.is_staff
+                )
+            },
+            error?.let {
+                ErrorInfo(it.code, error.description)
+            }
         )
     }
 

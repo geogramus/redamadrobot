@@ -6,4 +6,9 @@
     <string name="password_hint">Пароль</string>
     <string name="email_hint">Email для аутстаферов</string>
     <string name="enter_for_robots">Вход для роботов</string>
+    <string name="last_name">Фамилия</string>
+    <string name="first_name">Имя</string>
+    <string name="email">Email</string>
+    <string name="is_stuff">Пользователь является сотрудником</string>
+    <string name="not_stuff">Пользователь не является сотрудником</string>
 </resources>
