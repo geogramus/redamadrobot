@@ -14,7 +14,10 @@ import ru.geogram.redmadrobottimetracker.app.presentation.presenter.Authoriztion
 import ru.geogram.redmadrobottimetracker.app.utils.getViewModel
 import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FragmentAuthorization.FragmentAuthorizationInterface {
+    override fun showUserFragment(userInfo: UserInfo) {
+        showFragment(UserFragment(userInfo))
+    }
 
     private lateinit var viewModel: AuthoriztionViewModel
 
@@ -23,15 +26,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         showFragment(FragmentAuthorization())
         val viewModelFactory = viewModelFactory { DI.user.get().userViewModel() }
-        viewModel = getViewModel(viewModelFactory)
-        viewModel.getData().observe(this, Observer<UserInfo>() {
-           showUserFragment(it)
-        })
+
     }
 
-    private fun showUserFragment(userInfo: UserInfo?) {
-        showFragment(UserFragment(userInfo))
-    }
     private fun showFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             if (!fragment.isAdded) {

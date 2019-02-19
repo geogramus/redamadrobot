@@ -31,32 +31,35 @@
         android:id="@+id/text_view_last_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="@string/last_name"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="32dp" />
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/last_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:textColor="@color/grey"
         android:textSize="@dimen/text_size_text_view"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_last_name"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="32dp" />
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/email_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="@string/email"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/last_name"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="32dp" />
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/email"
@@ -84,10 +87,12 @@
     <ImageView
         android:id="@+id/image_view_man"
         android:layout_width="wrap_content"
+        android:minWidth="100dp"
+        android:minHeight="100dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_view_name"
-        tools:srcCompat="@tools:sample/avatars[0]" />
+        android:src="@drawable/person"/>
 
 </android.support.constraint.ConstraintLayout>
