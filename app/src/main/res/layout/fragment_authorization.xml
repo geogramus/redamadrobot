@@ -6,8 +6,20 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
+    <android.support.constraint.Group
+        android:id="@+id/fragment_authorization_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="fragment_authorization_registration_tv,
+            fragment_authorization_password_question,
+            fragment_authorization_auth_btn,
+            fragment_authorization_password_edit_text,
+            fragment_authorization_email_edit_text,
+            fragment_authorization_enter_for_robots,
+            fragment_authorization_logo" />
+
     <TextView
-        android:id="@+id/registration_tv"
+        android:id="@+id/fragment_authorization_registration_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -19,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/password_question"
+        android:id="@+id/fragment_authorization_password_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -33,7 +45,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/fragment_authorization_auth_btn"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -46,51 +58,51 @@
         android:text="@string/enter"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/password_question"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_authorization_password_question"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/editText"
+        android:id="@+id/fragment_authorization_password_edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_edittext"
         android:ems="10"
         android:hint="@string/password_hint"
         android:inputType="textPassword"
-        android:minHeight="@dimen/min_height"
-        android:textColorHint="@color/auth_et_text_color"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:textColorHint="@color/auth_et_text_color"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_authorization_auth_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/email_edit_text"
+        android:id="@+id/fragment_authorization_email_edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="43dp"
+        android:background="@drawable/bg_edittext"
         android:ems="10"
         android:hint="@string/email_hint"
         android:inputType="textEmailAddress"
-        android:minHeight="@dimen/min_height"
-        android:textColorHint="@color/auth_et_text_color"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@+id/editText"
+        android:textColorHint="@color/auth_et_text_color"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_authorization_password_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/password_edit_text"
+        android:id="@+id/fragment_authorization_enter_for_robots"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="43dp"
         android:background="@drawable/backgounr_red_corner"
         android:gravity="center"
         android:minHeight="@dimen/min_height"
@@ -98,20 +110,65 @@
         android:textColor="@color/grey"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/email_edit_text"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_authorization_email_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/logo"
+        android:id="@+id/fragment_authorization_logo"
         android:layout_width="wrap_content"
-        android:minWidth="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/password_edit_text"
+        android:contentDescription="logo"
+        android:minWidth="180dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_authorization_enter_for_robots"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_img_rmr_logo" />
+
+    <TextView
+        android:id="@+id/fragment_authorization_email_for_outstaffer_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/fragment_authorization_email_for_outstaffer"
+        android:textColor="@color/red_redmarobot_color"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_authorization_email_edit_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragment_authorization_email_edit_text"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/fragment_authorization_incorrect_login_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/fragment_authorization_incorrect_login_tv"
+        android:textColor="@color/red_redmarobot_color"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_authorization_email_edit_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_authorization_email_edit_text" />
+
+    <ProgressBar
+        android:id="@+id/fragment_authorization_progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:minHeight="100dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

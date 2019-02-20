@@ -1,10 +1,14 @@
 package ru.geogram.data.network.factory
 
+import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import ru.geogram.data.BuildConfig
 import java.util.concurrent.TimeUnit
+import java.io.IOException
+
 
 object HttpClientFactory {
 
@@ -36,4 +40,17 @@ object HttpClientFactory {
             }
         }
     }
+
+//    inner class AddCookiesInterceptor : Interceptor {
+//        @Throws(IOException::class)
+//        override fun intercept(chain: Interceptor.Chain): Response {
+//            val builder = chain.request().newBuilder()
+//            val preferences = Methods.getCookies(App.getAppContext())
+//            for (cookie in preferences) {
+//                builder.addHeader("Cookie", cookie)
+//                Log.v("OkHttp", "Adding Header: $cookie") // This is done so I know which headers are being added; this interceptor is used after the normal logging of OkHttp
+//            }
+//            return chain.proceed(builder.build())
+//        }
+//    }
 }

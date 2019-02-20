@@ -31,11 +31,11 @@ class MainActivity : AppCompatActivity(), FragmentAuthorization.FragmentAuthoriz
 
     private fun showFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
-            if (!fragment.isAdded) {
-                add(R.id.mainContainer, fragment)
-            } else {
+//            if (!fragment.isAdded) {
+//                add(R.id.mainContainer, fragment)
+//            } else {
                 replace(R.id.mainContainer, fragment)
-            }
+//            }
             addToBackStack(null)
             commit()
         }

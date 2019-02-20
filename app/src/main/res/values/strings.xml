@@ -11,4 +11,7 @@
     <string name="email">Email</string>
     <string name="is_stuff">Пользователь является сотрудником</string>
     <string name="not_stuff">Пользователь не является сотрудником</string>
+    <string name="fragment_authorization_email_for_outstaffer">Email для аутстаферов</string>
+    <string name="fragment_authorization_incorrect_login_tv">Неверный формат логина</string>
+    <string name="fragment_authorization_error">Что то пошло не так</string>
 </resources>

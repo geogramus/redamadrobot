@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/user_fragment_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -35,11 +35,11 @@
         android:layout_marginTop="32dp"
         android:text="@string/last_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name"
+        app:layout_constraintTop_toBottomOf="@+id/user_fragment_name"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/last_name"
+        android:id="@+id/user_fragment_last_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -58,11 +58,11 @@
         android:layout_marginTop="32dp"
         android:text="@string/email"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/last_name"
+        app:layout_constraintTop_toBottomOf="@+id/user_fragment_last_name"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/email"
+        android:id="@+id/user_fragment_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -81,11 +81,11 @@
         android:textColor="@color/grey"
         android:textSize="@dimen/text_size_text_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
+        app:layout_constraintTop_toBottomOf="@+id/user_fragment_email"
         tools:text="@string/is_stuff" />
 
     <ImageView
-        android:id="@+id/image_view_man"
+        android:id="@+id/user_fragment_image_view_man"
         android:layout_width="wrap_content"
         android:minWidth="100dp"
         android:minHeight="100dp"

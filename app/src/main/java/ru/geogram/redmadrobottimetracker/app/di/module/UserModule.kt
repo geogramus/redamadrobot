@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import ru.geogram.data.network.api.AuthApi
 import ru.geogram.data.network.factory.AppApiFactory
-import ru.geogram.data.repository.user.AuthDataRepository
+import ru.geogram.data.repository.auth.AuthDataRepository
 import ru.geogram.data.storage.db.UserDatabaseInterface
 import ru.geogram.domain.providers.rx.SchedulersProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
@@ -16,11 +16,6 @@ abstract class UserModule {
 
     @Module
     companion object {
-//
-//        @JvmStatic
-//        @Provides
-//        @UserScope
-//        internal fun provideAppDatabase(context: Context) = TimeTrackerBoxStore.getBoxStore(context)
 
         @JvmStatic
         @Provides
@@ -30,7 +25,7 @@ abstract class UserModule {
         @JvmStatic
         @Provides
         @UserScope
-        internal fun provideUserApi(appApiFactory: AppApiFactory) = appApiFactory.create(AuthApi::class.java)
+        internal fun provideAuthApi(appApiFactory: AppApiFactory) = appApiFactory.create(AuthApi::class.java)
 
 
         @JvmStatic

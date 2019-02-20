@@ -6,11 +6,13 @@ import dagger.Module
 import dagger.Provides
 import ru.geogram.data.storage.db.UserDatabase
 import ru.geogram.data.storage.db.UserDatabaseInterface
+import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import ru.geogram.domain.providers.rx.SchedulersProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.redmadrobottimetracker.app.providers.rx.SchedulersProviderImpl
 import ru.geogram.redmadrobottimetracker.app.providers.system.SystemInfoDataProvider
 import ru.geogram.redmadrobottimetracker.app.di.scope.ApplicationScope
+import ru.geogram.redmadrobottimetracker.app.providers.resources.ResourceManagerProviderImpl
 
 @Module
 internal abstract class ApplicationModule {
@@ -33,5 +35,10 @@ internal abstract class ApplicationModule {
         @Provides
         @ApplicationScope
         internal fun provideUserDatabase(context: Context): UserDatabaseInterface = UserDatabase(context)
+
+        @JvmStatic
+        @Provides
+        @ApplicationScope
+        internal fun provideResourceManager(context: Context): ResourceManagerProvider = ResourceManagerProviderImpl(context)
     }
 }

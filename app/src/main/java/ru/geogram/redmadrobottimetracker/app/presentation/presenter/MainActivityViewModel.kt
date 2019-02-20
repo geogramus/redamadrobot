@@ -19,13 +19,12 @@ import ru.geogram.redmadrobottimetracker.app.utils.parseServerError
 import javax.inject.Inject
 
 
-class AuthoriztionViewModel @Inject constructor(private val authService: AuthRepository,
-                                                private val resources: ResourceManagerProvider) : BaseViewModel() {
+class MainActivityViewModel @Inject constructor(private val authService: AuthRepository) : BaseViewModel() {
 
     val user: MutableLiveData<UserViewState> = MutableLiveData()
 
 
-    fun auth(model: LoginPassword) {
+    fun check(model: LoginPassword) {
         val disposable = authService
                 .auth(model)
                 .toObservable()
