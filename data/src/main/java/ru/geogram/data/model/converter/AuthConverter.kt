@@ -18,6 +18,12 @@ object AuthConverter {
         )
     }
 
+    fun checkConverter():AuthInfo{
+        return AuthInfo(
+
+        )
+    }
+
     fun fromNetwork(loginResponse: LoginResponseModel): AuthInfo {
         val user = loginResponse.data?.user
         val error = loginResponse.error
@@ -31,10 +37,14 @@ object AuthConverter {
                     email = it.email,
                     is_staff = it.is_staff
                 )
-            },
+            }?:{
+                null
+            }(),
             error?.let {
                 ErrorInfo(it.code, error.description)
-            }
+            }?:{
+                null
+            }()
         )
     }
 

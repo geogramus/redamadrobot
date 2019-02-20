@@ -1,6 +1,5 @@
 package ru.geogram.redmadrobottimetracker.app.presentation.fragment
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -33,7 +32,7 @@ class FragmentAuthorization : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val fragmentView = inflater.inflate(R.layout.fragment_authorization, container, false)
         screenState = LoadingStateDelegate(fragment_authorization_content, fragment_authorization_progress_bar)
-        val viewModelFactory = viewModelFactory { DI.user.get().userViewModel() }
+        val viewModelFactory = viewModelFactory { DI.user.get().authViewModel() }
         viewModel = getViewModel(viewModelFactory)
         fragmentView.fragment_authorization_auth_btn.setOnClickListener {
             viewModel.auth(LoginPassword(fragmentView.fragment_authorization_email_edit_text.text.toString(),
@@ -47,8 +46,8 @@ class FragmentAuthorization : Fragment() {
         when (viewState) {
             is Data -> {
                 val data = viewState as Data
-                data.user.userInfo?.let {
-                    fragmentAuthorization.showUserFragment(it)
+                data.user?.userInfo?.let {
+                    fragmentAuthorization.showUserFragment()
                 } ?: {
                     showSnackBar(context!!, getString(R.string.fragment_authorization_error), okString)
                 }()
@@ -77,6 +76,6 @@ class FragmentAuthorization : Fragment() {
     }
 
     interface FragmentAuthorizationInterface {
-        fun showUserFragment(userInfo: UserInfo)
+        fun showUserFragment()
     }
 }

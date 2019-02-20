@@ -6,24 +6,23 @@ import ru.geogram.redmadrobottimetracker.app.utils.onNext
 import javax.inject.Inject
 
 
-class MainActivityViewModel @Inject constructor(private val authService: AuthRepository) : BaseViewModel() {
+class UserFragmentViewModel @Inject constructor(private val authService: AuthRepository) : BaseViewModel() {
 
-    val authCheck: MutableLiveData<UserViewState> = MutableLiveData()
+    val userCheck: MutableLiveData<UserViewState> = MutableLiveData()
 
     init {
-        authCheck()
+        userInfo()
     }
 
-
-    fun authCheck() {
+    fun userInfo() {
         val disposable = authService
-                .authCheck()
+                .getProfile()
                 .toObservable()
                 .map<UserViewState>(::Data)
                 .startWith(Loading)
                 .onErrorReturn(::Error)
-                .subscribe(authCheck::onNext) {
-                    authCheck.postValue(Error(it))
+                .subscribe(userCheck::onNext) {
+                    userCheck.postValue(Error(it))
                     it.printStackTrace()
                 }
         safeSubscribe { disposable }

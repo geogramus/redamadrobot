@@ -6,6 +6,7 @@ import ru.geogram.data.network.api.AuthApi
 import ru.geogram.data.network.factory.AppApiFactory
 import ru.geogram.data.repository.auth.AuthDataRepository
 import ru.geogram.data.storage.db.UserDatabaseInterface
+import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import ru.geogram.domain.providers.rx.SchedulersProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.domain.repositories.AuthRepository
@@ -20,7 +21,7 @@ abstract class UserModule {
         @JvmStatic
         @Provides
         @UserScope
-        internal fun provideAppApi() = AppApiFactory()
+        internal fun provideAppApi(resourceManager: ResourceManagerProvider) = AppApiFactory(resourceManager)
 
         @JvmStatic
         @Provides
@@ -35,9 +36,10 @@ abstract class UserModule {
             schedulers: SchedulersProvider,
             systemInfoProvider: SystemInfoProvider,
             userApi: AuthApi,
-            dataBase: UserDatabaseInterface
+            dataBase: UserDatabaseInterface,
+            resourceManager: ResourceManagerProvider
         ): AuthRepository{
-            return AuthDataRepository(schedulers, systemInfoProvider, userApi, dataBase)
+            return AuthDataRepository(schedulers, systemInfoProvider, userApi, dataBase, resourceManager)
         }
     }
 }

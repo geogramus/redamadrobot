@@ -12,8 +12,8 @@ import java.io.IOException
 
 object HttpClientFactory {
 
-    private const val CONNECT_TIMEOUT_MILLIS = 120000L
-    private const val READ_TIMEOUT_MILLIS = 120000L
+    private const val CONNECT_TIMEOUT_MILLIS = 12000L
+    private const val READ_TIMEOUT_MILLIS = 12000L
 
     fun okHttpClient(builder: OkHttpClient.Builder.() -> Unit): OkHttpClient {
         return getPreConfiguredClientBuilder()

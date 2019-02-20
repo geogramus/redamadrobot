@@ -7,6 +7,6 @@ import ru.geogram.domain.model.auth.UserInfo
 
 interface AuthRepository {
     fun auth(loginModel: LoginPassword): Single<AuthInfo>
-    fun authCheck(cookie: String): Single<AuthInfo>
-    fun getProfile(cookie: String): Single<AuthInfo>
+    fun authCheck(): Single<AuthInfo>
+    fun getProfile(): Single<AuthInfo>
 }

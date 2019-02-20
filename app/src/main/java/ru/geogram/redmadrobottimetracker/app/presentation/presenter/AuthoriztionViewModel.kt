@@ -33,6 +33,7 @@ class AuthoriztionViewModel @Inject constructor(private val authService: AuthRep
                 .startWith(Loading)
                 .onErrorReturn(::Error)
                 .subscribe(user::onNext) {
+                    user.postValue(Error(it))
                     it.printStackTrace()
                 }
         safeSubscribe { disposable }

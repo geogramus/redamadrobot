@@ -10,6 +10,7 @@ import ru.geogram.data.storage.db.UserDatabaseInterface
 import ru.geogram.domain.model.auth.AuthInfo
 import ru.geogram.domain.model.auth.LoginPassword
 import ru.geogram.domain.model.auth.UserInfo
+import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import ru.geogram.domain.providers.rx.SchedulersProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.domain.repositories.AuthRepository
@@ -19,17 +20,20 @@ class AuthDataRepository @Inject constructor(
         private val schedulers: SchedulersProvider,
         private val systemInfoProvider: SystemInfoProvider,
         private val authApi: AuthApi,
-        private val boxStore: UserDatabaseInterface
+        private val boxStore: UserDatabaseInterface,
+        private val resourceManager:ResourceManagerProvider
 ) : AuthRepository {
 
-    override fun getProfile(cookie: String): Single<AuthInfo> {
+    override fun getProfile(): Single<AuthInfo> {
+        val cookie = resourceManager.getToken()
         return getProfileInfo(cookie)
                 .subscribeOn(schedulers.io())
                 .observeOn(schedulers.computation())
                 .map(this::processResponse)
     }
 
-    override fun authCheck(cookie: String): Single<AuthInfo> {
+    override fun authCheck(): Single<AuthInfo> {
+        val cookie = resourceManager.getToken()
         return authCheckCall(cookie)
                 .subscribeOn(schedulers.io())
                 .observeOn(schedulers.computation())

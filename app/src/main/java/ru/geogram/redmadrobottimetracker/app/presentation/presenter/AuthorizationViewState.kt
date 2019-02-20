@@ -5,6 +5,6 @@ import ru.geogram.domain.model.auth.UserInfo
 
 
 sealed class UserViewState
-data class Data(val user: AuthInfo) : UserViewState()
+data class Data(val user: AuthInfo?) : UserViewState()
 object Loading : UserViewState()
 data class Error(val th: Throwable) : UserViewState()
