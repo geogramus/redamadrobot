@@ -1,6 +1,5 @@
 package ru.geogram.redmadrobottimetracker.app.presentation.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -12,7 +11,7 @@ import ru.geogram.redmadrobottimetracker.app.R
 import kotlinx.android.synthetic.main.fragment_user_info.view.*
 import ru.geogram.domain.model.auth.UserInfo
 import ru.geogram.redmadrobottimetracker.app.di.DI
-import ru.geogram.redmadrobottimetracker.app.presentation.presenter.*
+import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.*
 import ru.geogram.redmadrobottimetracker.app.utils.getViewModel
 import ru.geogram.redmadrobottimetracker.app.utils.observe
 import ru.geogram.redmadrobottimetracker.app.utils.showSnackBar
@@ -41,26 +40,34 @@ class UserFragment : Fragment() {
             is Data -> {
                 val data = viewState as Data
                 data.user?.userInfo?.let {
-                    with(it) {
-                        view?.user_fragment_name?.text = first_name
-                        view?.user_fragment_last_name?.text = last_name
-                        view?.user_fragment_email?.text = email
-                        is_staff?.let {
-                            if (it.toBoolean()) {
-                                view?.is_stuff_text_view?.text = getText(R.string.is_stuff)
-                            } else {
-                                view?.is_stuff_text_view?.text = getText(R.string.not_stuff)
-                            }
-                        }
-
-                    }
+                    setUserInfo(it)
                 } ?: {
                     showSnackBar(context!!, getString(R.string.fragment_authorization_error), okString)
                 }()
             }
             is Error -> {
-                showSnackBar(context!!, getString(R.string.fragment_authorization_error), okString)
+                val data = viewState as Error
+                showSnackBar(context!!, getString(R.string.fragment_authorization_error_server), okString)
+                data.user?.userInfo?.let {
+                    setUserInfo(it)
+                }
             }
+        }
+    }
+
+    private fun setUserInfo(userInfo: UserInfo) {
+        with(userInfo) {
+            view?.user_fragment_name?.text = first_name
+            view?.user_fragment_last_name?.text = last_name
+            view?.user_fragment_email?.text = email
+            is_staff?.let {
+                if (it) {
+                    view?.is_stuff_text_view?.text = getText(ru.geogram.redmadrobottimetracker.app.R.string.is_stuff)
+                } else {
+                    view?.is_stuff_text_view?.text = getText(ru.geogram.redmadrobottimetracker.app.R.string.not_stuff)
+                }
+            }
+
         }
     }
 

@@ -18,7 +18,7 @@ object AuthConverter {
         )
     }
 
-    fun checkConverter():AuthInfo{
+    fun checkConverter(): AuthInfo {
         return AuthInfo(
 
         )
@@ -37,36 +37,40 @@ object AuthConverter {
                     email = it.email,
                     is_staff = it.is_staff
                 )
-            }?:{
+            } ?: {
                 null
             }(),
             error?.let {
                 ErrorInfo(it.code, error.description)
-            }?:{
+            } ?: {
                 null
             }()
         )
     }
 
-    fun toDatabase(source: UserInfo): UserEntity {
+    fun toDatabase(loginResponse: AuthInfo): UserEntity {
+        val user = loginResponse.userInfo
         return UserEntity(
-            first_name = source.first_name,
-            role = source.role,
-            last_name = source.last_name,
-            email = source.email,
-            id = source.id,
-            is_staff = source.is_staff
+            first_name = user?.first_name,
+            role = user?.role,
+            last_name = user?.last_name,
+            email = user?.email,
+            id = user?.id,
+            stuff = user?.is_staff
         )
     }
 
-    fun fromDatabase(source: UserEntity): UserInfo {
-        return UserInfo(
-            first_name = source.first_name,
-            role = source.role,
-            last_name = source.last_name,
-            email = source.email,
-            id = source.id,
-            is_staff = source.is_staff
+    fun fromDatabase(source: UserEntity): AuthInfo {
+        return AuthInfo(
+            UserInfo(
+                first_name = source.first_name,
+                role = source.role,
+                last_name = source.last_name,
+                email = source.email,
+                id = source.id,
+                is_staff = source.stuff
+            ),
+            null
         )
     }
 

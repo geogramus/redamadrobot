@@ -1,8 +1,11 @@
 package ru.geogram.redmadrobottimetracker.app.presentation.fragment
 
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +14,12 @@ import com.redmadrobot.lib.sd.LoadingStateDelegate
 import kotlinx.android.synthetic.main.fragment_authorization.*
 import kotlinx.android.synthetic.main.fragment_authorization.view.*
 import ru.geogram.domain.model.auth.LoginPassword
-import ru.geogram.domain.model.auth.UserInfo
 import ru.geogram.redmadrobottimetracker.app.di.DI
-import ru.geogram.redmadrobottimetracker.app.presentation.presenter.AuthoriztionViewModel
-import ru.geogram.redmadrobottimetracker.app.presentation.presenter.Data
-import ru.geogram.redmadrobottimetracker.app.presentation.presenter.Loading
-import ru.geogram.redmadrobottimetracker.app.presentation.presenter.UserViewState
-import ru.geogram.redmadrobottimetracker.app.utils.getViewModel
-import ru.geogram.redmadrobottimetracker.app.utils.observe
-import ru.geogram.redmadrobottimetracker.app.utils.showSnackBar
-import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
+import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.AuthoriztionViewModel
+import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.Data
+import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.Loading
+import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.UserViewState
+import ru.geogram.redmadrobottimetracker.app.utils.*
 
 
 class FragmentAuthorization : Fragment() {
@@ -34,18 +33,46 @@ class FragmentAuthorization : Fragment() {
         screenState = LoadingStateDelegate(fragment_authorization_content, fragment_authorization_progress_bar)
         val viewModelFactory = viewModelFactory { DI.user.get().authViewModel() }
         viewModel = getViewModel(viewModelFactory)
+
         fragmentView.fragment_authorization_auth_btn.setOnClickListener {
             viewModel.auth(LoginPassword(fragmentView.fragment_authorization_email_edit_text.text.toString(),
                     fragmentView.fragment_authorization_password_edit_text.text.toString()))
+
         }
+
         observe(viewModel.user, this::onUserChanged)
+        viewModel.correctEmail.observe(this, onLoginChanged)
+        fragmentView.fragment_authorization_email_edit_text.addTextChangedListener(textWatcher)
+
         return fragmentView
+    }
+
+    val textWatcher = object : TextWatcher {
+        override fun afterTextChanged(email: Editable?) {
+            viewModel.isValidEmail(email.toString())
+        }
+
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+        }
+    }
+    val onLoginChanged = Observer<Boolean>() { loginCorrect ->
+        loginCorrect?.let {
+            if (!it) {
+                fragment_authorization_content_not_valid.Visible()
+            } else {
+                fragment_authorization_content_not_valid.InVisible()
+            }
+        }
     }
 
     private fun onUserChanged(viewState: UserViewState) {
         when (viewState) {
             is Data -> {
-                val data = viewState as Data
+                val data = viewState
                 data.user?.userInfo?.let {
                     fragmentAuthorization.showUserFragment()
                 } ?: {
@@ -56,7 +83,7 @@ class FragmentAuthorization : Fragment() {
                 screenState.showLoading()
             }
             is Error -> {
-                val error = viewState as Error
+                val error = viewState
                 error.message?.let {
                     showSnackBar(context!!, it, okString)
                 }

@@ -5,5 +5,5 @@ import ru.geogram.data.model.network.user.UserResponse
 
 data class Data(
     @SerializedName("user")
-    var user: UserResponse
+    var user: UserResponse? = null
 )

@@ -18,6 +18,15 @@
             fragment_authorization_enter_for_robots,
             fragment_authorization_logo" />
 
+    <android.support.constraint.Group
+        android:id="@+id/fragment_authorization_content_not_valid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="
+        fragment_authorization_email_for_outstaffer_tv,
+        fragment_authorization_incorrect_login_tv" />
+
     <TextView
         android:id="@+id/fragment_authorization_registration_tv"
         android:layout_width="wrap_content"
@@ -136,7 +145,6 @@
         android:text="@string/fragment_authorization_email_for_outstaffer"
         android:textColor="@color/red_redmarobot_color"
         android:textSize="12sp"
-        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/fragment_authorization_email_edit_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fragment_authorization_email_edit_text"
@@ -147,11 +155,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="-8dp"
         android:text="@string/fragment_authorization_incorrect_login_tv"
         android:textColor="@color/red_redmarobot_color"
         android:textSize="16sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_authorization_email_edit_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_authorization_email_edit_text" />
 

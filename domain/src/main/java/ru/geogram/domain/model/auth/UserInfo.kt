@@ -5,7 +5,7 @@ data class UserInfo(
     var role: String? = "",
     var last_name: String? = "",
     var email: String? = "",
-    var id: Int,
-    var is_staff: String? = ""
+    var id: Int? = 0,
+    var is_staff: Boolean? = false
 )
 

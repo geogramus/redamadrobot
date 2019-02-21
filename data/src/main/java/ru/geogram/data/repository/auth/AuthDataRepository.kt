@@ -21,15 +21,24 @@ class AuthDataRepository @Inject constructor(
         private val systemInfoProvider: SystemInfoProvider,
         private val authApi: AuthApi,
         private val boxStore: UserDatabaseInterface,
-        private val resourceManager:ResourceManagerProvider
+        private val resourceManager: ResourceManagerProvider
 ) : AuthRepository {
+    override fun getProfileFromDatabase(): AuthInfo {
+        return AuthConverter.fromDatabase(boxStore.getUser())
+    }
 
     override fun getProfile(): Single<AuthInfo> {
         val cookie = resourceManager.getToken()
-        return getProfileInfo(cookie)
-                .subscribeOn(schedulers.io())
-                .observeOn(schedulers.computation())
-                .map(this::processResponse)
+        val diskObservable = loadFromDb().subscribeOn(schedulers.computation())
+        val networkObservable =
+                getProfileInfo(cookie)
+                        .subscribeOn(schedulers.io())
+                        .observeOn(schedulers.computation())
+                        .map(this::processResponse)
+
+        val observable = if (systemInfoProvider.hasNetwork()) networkObservable else diskObservable
+        return observable.map<AuthInfo> { it }
+                .observeOn(schedulers.mainThread())
     }
 
     override fun authCheck(): Single<AuthInfo> {
@@ -39,16 +48,22 @@ class AuthDataRepository @Inject constructor(
                 .observeOn(schedulers.computation())
                 .map(this::processResponse)
     }
+    private val resetToken = ""
 
     override fun auth(loginModel: LoginPassword): Single<AuthInfo> {
-
+        val cookie = resourceManager.setToken(resetToken)
+        val diskObservable =
+                loadFromDb()
+                        .subscribeOn(schedulers.computation())
         val networkObservable =
                 createCall(AuthConverter.convertToLoginModel(loginModel))
                         .subscribeOn(schedulers.io())
                         .observeOn(schedulers.computation())
                         .map(this::processResponse)
-
-        return networkObservable.map<AuthInfo> { it }
+                        .map(this::saveCallResult)
+                        .flatMap { loadFromDb() }
+        val observable = if (systemInfoProvider.hasNetwork()) networkObservable else diskObservable
+        return observable.map<AuthInfo> { it }
                 .observeOn(schedulers.mainThread())
     }
 
@@ -60,8 +75,8 @@ class AuthDataRepository @Inject constructor(
 
     private fun processResponse(response: LoginResponseModel) = AuthConverter.fromNetwork(response)
 
-    private fun saveCallResult(source: UserInfo) {
-        boxStore.putUser(AuthConverter.toDatabase(source))
+    private fun saveCallResult(response: AuthInfo) {
+        boxStore.putUser(AuthConverter.toDatabase(response))
     }
 
     private fun loadFromDb() = boxStore.getUsers().map { AuthConverter.fromDatabase(it) }

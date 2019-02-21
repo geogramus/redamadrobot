@@ -1,4 +1,4 @@
-package ru.geogram.redmadrobottimetracker.app.presentation.presenter
+package ru.geogram.redmadrobottimetracker.app.presentation.viewmodels
 
 import android.arch.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable

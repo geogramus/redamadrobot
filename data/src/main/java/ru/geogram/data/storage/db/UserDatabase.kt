@@ -4,25 +4,24 @@ import android.content.Context
 import io.objectbox.Box
 import io.reactivex.Single
 import ru.geogram.data.model.db.user.UserEntity
+import javax.inject.Inject
 
-class UserDatabase(context: Context) : UserDatabaseInterface {
+class UserDatabase @Inject constructor(val context: Context) : UserDatabaseInterface {
+    override fun getUser(): UserEntity {
+        return  userEntitylBox.all.first()
+    }
+
+    val userEntitylBox: Box<UserEntity> by lazy{
+        TimeTrackerBoxStore.getBoxStore(context).boxFor<UserEntity>(UserEntity::class.java)
+    }
+
     override fun putUser(user: UserEntity) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        userEntitylBox.removeAll()
+        userEntitylBox.put(user)
     }
 
     override fun getUsers(): Single<UserEntity> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val single = Single.fromCallable { userEntitylBox.all.first() }
+        return single
     }
-//    val userEntitylBox: Box<UserEntity> by lazy{
-//        TimeTrackerBoxStore.getBoxStore(context).boxFor<UserEntity>(UserEntity::class.java)
-//    }
-//
-//    override fun putUser(user: UserEntity) {
-//        userEntitylBox.put(user)
-//    }
-//
-//    override fun getUsers(): Single<UserEntity> {
-//        val single = Single.fromCallable { userEntitylBox.all.get(0) }
-//        return single
-//    }
 }

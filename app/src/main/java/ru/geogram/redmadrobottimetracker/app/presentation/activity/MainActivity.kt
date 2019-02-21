@@ -6,15 +6,13 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import com.redmadrobot.lib.sd.LoadingStateDelegate
 import kotlinx.android.synthetic.main.fragment_authorization.*
-import ru.geogram.domain.model.auth.UserInfo
 import ru.geogram.redmadrobottimetracker.app.R
 import ru.geogram.redmadrobottimetracker.app.di.DI
 import ru.geogram.redmadrobottimetracker.app.presentation.fragment.FragmentAuthorization
 import ru.geogram.redmadrobottimetracker.app.presentation.fragment.UserFragment
-import ru.geogram.redmadrobottimetracker.app.presentation.presenter.*
+import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.*
 import ru.geogram.redmadrobottimetracker.app.utils.getViewModel
 import ru.geogram.redmadrobottimetracker.app.utils.observe
-import ru.geogram.redmadrobottimetracker.app.utils.showSnackBar
 import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
 
 class MainActivity : AppCompatActivity(), FragmentAuthorization.FragmentAuthorizationInterface {

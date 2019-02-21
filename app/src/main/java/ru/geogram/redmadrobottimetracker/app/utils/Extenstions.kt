@@ -22,3 +22,11 @@ fun Fragment.showSnackBar(activity: Context, text: String, buttonText: String) {
     })
     snack.show()
 }
+
+fun View.Visible() {
+    visibility = View.VISIBLE
+}
+
+fun View.InVisible() {
+    visibility = View.GONE
+}
