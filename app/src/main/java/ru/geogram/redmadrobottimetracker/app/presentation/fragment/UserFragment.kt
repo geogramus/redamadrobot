@@ -38,7 +38,7 @@ class UserFragment : Fragment() {
     private fun onUserChanged(viewState: UserViewState) {
         when (viewState) {
             is Data -> {
-                val data = viewState as Data
+                val data = viewState
                 data.user?.userInfo?.let {
                     setUserInfo(it)
                 } ?: {
