@@ -6,14 +6,16 @@ apply plugin: 'kotlin-kapt'
 
 
 android {
-    compileSdkVersion 28
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion build_versions.compile_sdk
     defaultConfig {
         applicationId "ru.geogram.redmadrobottimetracker"
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode globalConfiguration.versionCode
+        versionName globalConfiguration.versionName
+        vectorDrawables.useSupportLibrary = true
 
     }
 }
