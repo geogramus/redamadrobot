@@ -1,6 +1,7 @@
 package ru.geogram.data.repository.auth
 
 
+import com.google.gson.Gson
 import io.reactivex.Single
 import ru.geogram.data.model.LoginModel
 import ru.geogram.data.model.LoginResponseModel

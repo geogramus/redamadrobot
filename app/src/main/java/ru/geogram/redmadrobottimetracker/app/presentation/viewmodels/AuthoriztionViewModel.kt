@@ -1,12 +1,12 @@
 package ru.geogram.redmadrobottimetracker.app.presentation.viewmodels
 
-import android.arch.lifecycle.MutableLiveData
 import ru.geogram.domain.model.auth.LoginPassword
 import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import ru.geogram.domain.repositories.AuthRepository
 import ru.geogram.redmadrobottimetracker.app.utils.onNext
 import javax.inject.Inject
 import android.text.TextUtils
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 

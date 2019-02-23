@@ -1,6 +1,6 @@
 package ru.geogram.redmadrobottimetracker.app.presentation.viewmodels
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.geogram.domain.repositories.AuthRepository

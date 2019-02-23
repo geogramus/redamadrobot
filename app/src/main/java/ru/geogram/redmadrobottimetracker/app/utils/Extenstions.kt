@@ -2,8 +2,8 @@ package ru.geogram.redmadrobottimetracker.app.utils
 
 import android.app.Activity
 import android.content.Context
-import android.support.v4.app.Fragment
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.gc.materialdesign.widgets.SnackBar
 
 
@@ -18,7 +18,7 @@ fun parseServerError(code: String, description: String): String {
 }
 
 fun Fragment.showSnackBar(activity: Context, text: String, buttonText: String) {
-    val snack = SnackBar((activity as Activity?), text, buttonText, View.OnClickListener {
+    val snack =  SnackBar((activity as Activity?), text, buttonText, View.OnClickListener {
     })
     snack.show()
 }

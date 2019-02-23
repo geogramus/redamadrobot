@@ -1,10 +1,10 @@
 package ru.geogram.redmadrobottimetracker.app.presentation.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.redmadrobot.lib.sd.LoadingStateDelegate
 import kotlinx.android.synthetic.main.fragment_user_info.*
 import ru.geogram.redmadrobottimetracker.app.R

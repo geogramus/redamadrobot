@@ -19,26 +19,39 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api 'com.android.support:appcompat-v7:28.0.0'
-    api 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation project(':domain')
-    implementation project(':data')
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.14'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation "com.redmadrobot:state-delegator:1.5"
+    implementation(
+            fileTree(dir: 'libs', include: ['*.jar']),
 
-    implementation 'com.github.navasmdc:MaterialDesign:1.5@aar'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation "android.arch.lifecycle:extensions:1.1.1"
-    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+            project(':domain'),
+            project(':data'),
 
-    implementation "com.google.dagger:dagger:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+            deps.support.app_compat,
 
+            deps.ui.constraint_layout,
+            deps.ui.material_design,
+
+            deps.ui.stateDelegator,
+
+            deps.arch.lifecycle,
+
+            deps.support.design,
+
+            deps.kotlin.stdlib,
+
+            deps.rx.java,
+            deps.rx.android,
+
+            deps.dagger.runtime
+    )
+
+    testImplementation(
+            deps.test.junit,
+            deps.test.roboelectric
+    )
+
+    kapt(
+            deps.arch.compiler,
+            deps.dagger.compiler
+    )
 
 }

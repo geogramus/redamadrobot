@@ -1,9 +1,9 @@
 package ru.geogram.redmadrobottimetracker.app.presentation.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.redmadrobot.lib.sd.LoadingStateDelegate
 import kotlinx.android.synthetic.main.fragment_authorization.*
 import ru.geogram.redmadrobottimetracker.app.R

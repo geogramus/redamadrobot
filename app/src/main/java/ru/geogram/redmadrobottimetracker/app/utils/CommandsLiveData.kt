@@ -1,6 +1,6 @@
 package ru.geogram.redmadrobottimetracker.app.utils
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import java.util.*
 
 class CommandsLiveData<T> : MutableLiveData<LinkedList<T>>() {
