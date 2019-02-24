@@ -4,13 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.geogram.domain.repositories.AuthRepository
-import ru.geogram.redmadrobottimetracker.app.utils.onNext
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Data
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
 import javax.inject.Inject
 
 
 class UserFragmentViewModel @Inject constructor(private val authService: AuthRepository) : BaseViewModel() {
 
-    val userCheck: MutableLiveData<UserViewState> = MutableLiveData()
+    val check: MutableLiveData<ViewState> = MutableLiveData()
 
     init {
         userInfo()
@@ -22,10 +24,15 @@ class UserFragmentViewModel @Inject constructor(private val authService: AuthRep
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                userCheck.postValue(Data(it))
+                check.postValue(Data(it))
             },
                 {
-                    userCheck.postValue(Error(it, authService.getProfileFromDatabase()))
+                    check.postValue(
+                        ErrorViewState(
+                            it,
+                            authService.getProfileFromDatabase()
+                        )
+                    )
                     it.printStackTrace()
                 })
 

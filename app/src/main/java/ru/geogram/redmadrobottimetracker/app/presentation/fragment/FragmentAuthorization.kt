@@ -16,9 +16,9 @@ import kotlinx.android.synthetic.main.fragment_authorization.view.*
 import ru.geogram.domain.model.auth.LoginPassword
 import ru.geogram.redmadrobottimetracker.app.di.DI
 import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.AuthoriztionViewModel
-import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.Data
-import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.Loading
-import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.UserViewState
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Data
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
 import ru.geogram.redmadrobottimetracker.app.utils.*
 
 
@@ -31,7 +31,7 @@ class FragmentAuthorization : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val fragmentView = inflater.inflate(R.layout.fragment_authorization, container, false)
         screenState = LoadingStateDelegate(fragment_authorization_content, fragment_authorization_progress_bar)
-        val viewModelFactory = viewModelFactory { DI.user.get().authViewModel() }
+        val viewModelFactory = viewModelFactory { DI.AUTH.get().authViewModel() }
         viewModel = getViewModel(viewModelFactory)
 
         fragmentView.fragment_authorization_auth_btn.setOnClickListener {
@@ -40,7 +40,7 @@ class FragmentAuthorization : Fragment() {
 
         }
 
-        observe(viewModel.user, this::onUserChanged)
+        observe(viewModel.auth, this::onUserChanged)
         viewModel.correctEmail.observe(this, onLoginChanged)
         fragmentView.fragment_authorization_email_edit_text.addTextChangedListener(textWatcher)
 
@@ -69,7 +69,7 @@ class FragmentAuthorization : Fragment() {
         }
     }
 
-    private fun onUserChanged(viewState: UserViewState) {
+    private fun onUserChanged(viewState: ViewState) {
         when (viewState) {
             is Data -> {
                 val data = viewState

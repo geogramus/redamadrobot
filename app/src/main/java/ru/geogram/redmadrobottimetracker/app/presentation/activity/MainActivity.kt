@@ -11,12 +11,15 @@ import ru.geogram.redmadrobottimetracker.app.di.DI
 import ru.geogram.redmadrobottimetracker.app.presentation.fragment.FragmentAuthorization
 import ru.geogram.redmadrobottimetracker.app.presentation.fragment.UserFragment
 import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.*
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Data
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
 import ru.geogram.redmadrobottimetracker.app.utils.getViewModel
 import ru.geogram.redmadrobottimetracker.app.utils.observe
 import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
-import ru.terrakok.cicerone.android.support.SupportAppScreen
 import ru.terrakok.cicerone.commands.Command
 import javax.inject.Inject
 
@@ -36,13 +39,13 @@ class MainActivity: AppCompatActivity(), FragmentAuthorization.FragmentAuthoriza
         setContentView(R.layout.activity_main)
         DI.app.inject(this)
         screenState = LoadingStateDelegate(fragment_authorization_content, fragment_authorization_progress_bar)
-        val viewModelFactory = viewModelFactory { DI.user.get().mainViewModel() }
+        val viewModelFactory = viewModelFactory { DI.AUTH.get().mainViewModel() }
 
         viewModel = getViewModel(viewModelFactory)
-        observe(viewModel.authCheck, this::onUserChanged)
+        observe(viewModel.check, this::onUserChanged)
     }
 
-    private fun onUserChanged(viewState: UserViewState) {
+    private fun onUserChanged(viewState: ViewState) {
         when (viewState) {
             is Data -> {
                 showUserFragment()
@@ -50,7 +53,7 @@ class MainActivity: AppCompatActivity(), FragmentAuthorization.FragmentAuthoriza
             is Loading -> {
                 screenState.showLoading()
             }
-            is Error -> {
+            is ErrorViewState -> {
                 showFragment(FragmentAuthorization())
             }
         }

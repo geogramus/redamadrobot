@@ -12,6 +12,9 @@ import kotlinx.android.synthetic.main.fragment_user_info.view.*
 import ru.geogram.domain.model.auth.UserInfo
 import ru.geogram.redmadrobottimetracker.app.di.DI
 import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.*
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Data
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
 import ru.geogram.redmadrobottimetracker.app.utils.getViewModel
 import ru.geogram.redmadrobottimetracker.app.utils.observe
 import ru.geogram.redmadrobottimetracker.app.utils.showSnackBar
@@ -28,14 +31,14 @@ class UserFragment : Fragment() {
 
         screenState = LoadingStateDelegate(fragment_user_content)
         val fragmentView = inflater.inflate(R.layout.fragment_user_info, container, false)
-        val viewModelFactory = viewModelFactory { DI.user.get().userFragmentViewModel() }
+        val viewModelFactory = viewModelFactory { DI.AUTH.get().userFragmentViewModel() }
         viewModel = getViewModel(viewModelFactory)
-        observe(viewModel.userCheck, this::onUserChanged)
+        observe(viewModel.check, this::onUserChanged)
 
         return fragmentView
     }
 
-    private fun onUserChanged(viewState: UserViewState) {
+    private fun onUserChanged(viewState: ViewState) {
         when (viewState) {
             is Data -> {
                 val data = viewState
@@ -45,8 +48,8 @@ class UserFragment : Fragment() {
                     showSnackBar(context!!, getString(R.string.fragment_authorization_error), okString)
                 }()
             }
-            is Error -> {
-                val data = viewState as Error
+            is ErrorViewState -> {
+                val data = viewState as ErrorViewState
                 showSnackBar(context!!, getString(R.string.fragment_authorization_error_server), okString)
                 data.user?.userInfo?.let {
                     setUserInfo(it)

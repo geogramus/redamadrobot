@@ -10,28 +10,28 @@ import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import ru.geogram.domain.providers.rx.SchedulersProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.domain.repositories.AuthRepository
-import ru.geogram.redmadrobottimetracker.app.di.scope.UserScope
+import ru.geogram.redmadrobottimetracker.app.di.scope.AuthScope
 
 @Module
-abstract class UserModule {
+abstract class AuthModule {
 
     @Module
     companion object {
 
         @JvmStatic
         @Provides
-        @UserScope
+        @AuthScope
         internal fun provideAppApi(resourceManager: ResourceManagerProvider) = AppApiFactory(resourceManager)
 
         @JvmStatic
         @Provides
-        @UserScope
+        @AuthScope
         internal fun provideAuthApi(appApiFactory: AppApiFactory) = appApiFactory.create(AuthApi::class.java)
 
 
         @JvmStatic
         @Provides
-        @UserScope
+        @AuthScope
         internal fun provideUserRepository(
             schedulers: SchedulersProvider,
             systemInfoProvider: SystemInfoProvider,

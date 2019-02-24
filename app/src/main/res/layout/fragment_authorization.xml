@@ -112,7 +112,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="43dp"
-        android:background="@drawable/backgounr_red_corner"
+        android:background="@drawable/backgound_red_corner"
         android:gravity="center"
         android:minHeight="@dimen/min_height"
         android:text="@string/enter_for_robots"

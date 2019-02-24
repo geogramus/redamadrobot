@@ -6,8 +6,15 @@ import ru.geogram.redmadrobottimetracker.app.di.component.*
 object DI {
     lateinit var app: ApplicationComponent
 
-    val user: ComponentHolder<UserComponent> = componentHolder(
-        constructor = { app.userComponent().build() },
+    val AUTH: ComponentHolder<AuthComponent> = componentHolder(
+        constructor = { app.authComponent().build() },
+        destructor = {
+            // destroy child's components here
+        }
+    )
+
+    val DAYS: ComponentHolder<DaysComponent> = componentHolder(
+        constructor = { app.daysComponent().build() },
         destructor = {
             // destroy child's components here
         }

@@ -1,19 +1,19 @@
 package ru.geogram.redmadrobottimetracker.app.di.component
 
 import dagger.Subcomponent
-import ru.geogram.redmadrobottimetracker.app.di.module.UserModule
-import ru.geogram.redmadrobottimetracker.app.di.scope.UserScope
+import ru.geogram.redmadrobottimetracker.app.di.module.AuthModule
+import ru.geogram.redmadrobottimetracker.app.di.scope.AuthScope
 import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.AuthoriztionViewModel
 import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.MainActivityViewModel
 import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.UserFragmentViewModel
 
-@UserScope
-@Subcomponent(modules = [UserModule::class])
-interface UserComponent {
+@AuthScope
+@Subcomponent(modules = [AuthModule::class])
+interface AuthComponent {
 
     @Subcomponent.Builder
     interface Builder {
-        fun build(): UserComponent
+        fun build(): AuthComponent
     }
 
     fun authViewModel(): AuthoriztionViewModel

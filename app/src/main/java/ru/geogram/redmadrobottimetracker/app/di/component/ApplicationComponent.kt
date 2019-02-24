@@ -11,7 +11,8 @@ import ru.geogram.redmadrobottimetracker.app.presentation.activity.MainActivity
 @Component(modules = [(ApplicationModule::class)])
 interface ApplicationComponent {
 
-    fun userComponent(): UserComponent.Builder
+    fun authComponent(): AuthComponent.Builder
+    fun daysComponent(): DaysComponent.Builder
     fun inject(mainActivity: MainActivity)
     @Component.Builder
     interface Builder {

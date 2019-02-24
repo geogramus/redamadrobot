@@ -1,15 +1,15 @@
 package ru.geogram.redmadrobottimetracker.app.presentation.viewmodels
 
 import ru.geogram.domain.model.auth.LoginPassword
-import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import ru.geogram.domain.repositories.AuthRepository
-import ru.geogram.redmadrobottimetracker.app.utils.onNext
 import javax.inject.Inject
-import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.geogram.redmadrobottimetracker.app.presentation.Screens
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
 import ru.geogram.redmadrobottimetracker.app.providers.navigation.RouterProvider
 
 
@@ -20,20 +20,25 @@ class AuthoriztionViewModel @Inject constructor(
     val router by lazy {
         provider.provideRouter()
     }
-    val user: MutableLiveData<UserViewState> = MutableLiveData()
+    val auth: MutableLiveData<ViewState> = MutableLiveData()
     val correctEmail: MutableLiveData<Boolean> = MutableLiveData()
 
     fun auth(model: LoginPassword) {
-        user.postValue(Loading)
+        auth.postValue(Loading)
         val disposable = authService
             .auth(model)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                router.newRootScreen(Screens.ShowUserFragment)
+                router.newRootScreen(Screens.ShowMainScreenFragment)
             },
                 {
-                    user.postValue(Error(it, authService.getProfileFromDatabase()))
+                    auth.postValue(
+                        ErrorViewState(
+                            it,
+                            authService.getProfileFromDatabase()
+                        )
+                    )
                     it.printStackTrace()
                 })
 

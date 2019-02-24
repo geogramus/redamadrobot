@@ -15,4 +15,8 @@
     <string name="fragment_authorization_incorrect_login_tv">Неверный формат логина</string>
     <string name="fragment_authorization_error">Что то пошло не так</string>
     <string name="fragment_authorization_error_server">Ошибка загрузки данных с серверера</string>
+    <string name="toolbar_time_tracking">Учёт времени</string>
+    <string name="instruction">Инструкция</string>
+    <string name="disease">Болезнь</string>
+    <string name="vacation">Отпуск</string>
 </resources>
