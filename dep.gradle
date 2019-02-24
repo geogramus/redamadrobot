@@ -40,7 +40,7 @@ arch.compiler = "androidx.lifecycle:lifecycle-compiler:$versions.arch"
 deps.arch = arch
 
 def navigation = [:]
-versions.cicerone = "3.0.0"
+versions.cicerone = "5.0.0"
 navigation.cicerone = "ru.terrakok.cicerone:cicerone:$versions.cicerone"
 deps.navigation = navigation
 

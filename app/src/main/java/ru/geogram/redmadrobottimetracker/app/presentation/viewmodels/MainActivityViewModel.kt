@@ -4,12 +4,19 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.geogram.domain.repositories.AuthRepository
+import ru.geogram.redmadrobottimetracker.app.presentation.Screens
+import ru.geogram.redmadrobottimetracker.app.providers.navigation.RouterProvider
 import ru.geogram.redmadrobottimetracker.app.utils.onNext
 import javax.inject.Inject
 
 
-class MainActivityViewModel @Inject constructor(private val authService: AuthRepository) : BaseViewModel() {
-
+class MainActivityViewModel @Inject constructor(
+    private val authService: AuthRepository,
+    private val provider: RouterProvider
+) : BaseViewModel() {
+    val router by lazy {
+        provider.provideRouter()
+    }
     val authCheck: MutableLiveData<UserViewState> = MutableLiveData()
 
     init {
@@ -24,10 +31,10 @@ class MainActivityViewModel @Inject constructor(private val authService: AuthRep
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                authCheck.postValue(Data(it))
+                router.newRootScreen(Screens.ShowUserFragment)
             },
                 {
-                    authCheck.postValue(Error(it))
+                    router.newRootScreen(Screens.ShowAuthFragment)
                     it.printStackTrace()
                 })
         safeSubscribe { disposable }

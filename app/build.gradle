@@ -38,6 +38,8 @@ dependencies {
 
             deps.support.design,
 
+            deps.navigation.cicerone,
+
             deps.kotlin.stdlib,
 
             deps.rx.java,

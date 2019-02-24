@@ -9,29 +9,33 @@ import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import ru.geogram.redmadrobottimetracker.app.presentation.Screens
+import ru.geogram.redmadrobottimetracker.app.providers.navigation.RouterProvider
 
 
 class AuthoriztionViewModel @Inject constructor(
-        private val authService: AuthRepository,
-        private val resources: ResourceManagerProvider
+    private val authService: AuthRepository,
+    private val provider: RouterProvider
 ) : BaseViewModel() {
-
+    val router by lazy {
+        provider.provideRouter()
+    }
     val user: MutableLiveData<UserViewState> = MutableLiveData()
     val correctEmail: MutableLiveData<Boolean> = MutableLiveData()
 
     fun auth(model: LoginPassword) {
         user.postValue(Loading)
         val disposable = authService
-                .auth(model)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    user.postValue(Data(it))
-                },
-                        {
-                            user.postValue(Error(it, authService.getProfileFromDatabase()))
-                            it.printStackTrace()
-                        })
+            .auth(model)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                router.newRootScreen(Screens.ShowUserFragment)
+            },
+                {
+                    user.postValue(Error(it, authService.getProfileFromDatabase()))
+                    it.printStackTrace()
+                })
 
         safeSubscribe { disposable }
     }

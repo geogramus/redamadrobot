@@ -14,19 +14,30 @@ import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.*
 import ru.geogram.redmadrobottimetracker.app.utils.getViewModel
 import ru.geogram.redmadrobottimetracker.app.utils.observe
 import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
+import ru.terrakok.cicerone.NavigatorHolder
+import ru.terrakok.cicerone.android.support.SupportAppNavigator
+import ru.terrakok.cicerone.android.support.SupportAppScreen
+import ru.terrakok.cicerone.commands.Command
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), FragmentAuthorization.FragmentAuthorizationInterface {
+
+
+
+class MainActivity: AppCompatActivity(), FragmentAuthorization.FragmentAuthorizationInterface {
     override fun showUserFragment() {
         showFragment(UserFragment())
     }
-
+    @Inject
+    lateinit var navigatorHolder: NavigatorHolder
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var screenState: LoadingStateDelegate
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        DI.app.inject(this)
         screenState = LoadingStateDelegate(fragment_authorization_content, fragment_authorization_progress_bar)
         val viewModelFactory = viewModelFactory { DI.user.get().mainViewModel() }
+
         viewModel = getViewModel(viewModelFactory)
         observe(viewModel.authCheck, this::onUserChanged)
     }
@@ -45,11 +56,28 @@ class MainActivity : AppCompatActivity(), FragmentAuthorization.FragmentAuthoriz
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        navigatorHolder.setNavigator(navigator)
+    }
+
+    override fun onPause() {
+        navigatorHolder.removeNavigator()
+        super.onPause()
+    }
+
     private fun showFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.mainContainer, fragment)
             commit()
         }
         window.statusBarColor = ContextCompat.getColor(this, R.color.status_bar_grey)
+    }
+
+    private val navigator = object : SupportAppNavigator(this, R.id.mainContainer) {
+        override fun applyCommands(commands: Array<Command>) {
+            super.applyCommands(commands)
+            supportFragmentManager.executePendingTransactions()
+        }
     }
 }

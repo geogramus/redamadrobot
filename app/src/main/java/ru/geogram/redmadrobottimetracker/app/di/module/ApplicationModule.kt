@@ -12,7 +12,11 @@ import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.redmadrobottimetracker.app.providers.rx.SchedulersProviderImpl
 import ru.geogram.redmadrobottimetracker.app.providers.system.SystemInfoDataProvider
 import ru.geogram.redmadrobottimetracker.app.di.scope.ApplicationScope
+
+import ru.geogram.redmadrobottimetracker.app.providers.navigation.NavigationProviderImpl
+import ru.geogram.redmadrobottimetracker.app.providers.navigation.RouterProvider
 import ru.geogram.redmadrobottimetracker.app.providers.resources.ResourceManagerProviderImpl
+import ru.terrakok.cicerone.NavigatorHolder
 
 @Module
 internal abstract class ApplicationModule {
@@ -39,6 +43,20 @@ internal abstract class ApplicationModule {
         @JvmStatic
         @Provides
         @ApplicationScope
-        internal fun provideResourceManager(context: Context): ResourceManagerProvider = ResourceManagerProviderImpl(context)
+        internal fun provideResourceManager(context: Context): ResourceManagerProvider =
+            ResourceManagerProviderImpl(context)
+
+        val navigator = NavigationProviderImpl()
+
+        @JvmStatic
+        @Provides
+        @ApplicationScope
+        internal fun provideNavigationHolder(): NavigatorHolder = navigator.provideNavigationHolder()
+
+        @JvmStatic
+        @Provides
+        @ApplicationScope
+        internal fun provideRouterProvider(): RouterProvider = navigator
+
     }
 }
