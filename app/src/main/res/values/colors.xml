@@ -7,4 +7,5 @@
     <color name="red_redmarobot_color">#ff4433</color>
     <color name="auth_et_text_color">#b8bec5</color>
     <color name="status_bar_grey">#5926282a</color>
+    <color name="projects_list_background">#fafafa</color>
 </resources>
