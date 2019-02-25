@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.fragment_main_screen.view.*
 import ru.geogram.domain.model.days.SingleDayInfo
 import ru.geogram.redmadrobottimetracker.app.R
 import ru.geogram.redmadrobottimetracker.app.di.DI
+import ru.geogram.redmadrobottimetracker.app.presentation.adapters.ViewPagerMonthAdapter
 import ru.geogram.redmadrobottimetracker.app.presentation.adapters.ViewPagerTaskAdapter
 import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.MainScreenViewModel
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Data
@@ -18,23 +19,49 @@ import ru.geogram.redmadrobottimetracker.app.utils.getViewModel
 import ru.geogram.redmadrobottimetracker.app.utils.observe
 import ru.geogram.redmadrobottimetracker.app.utils.showSnackBar
 import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
+import androidx.viewpager.widget.ViewPager
+
 
 class MainScreen : Fragment() {
+
+
     private lateinit var viewModel: MainScreenViewModel
     private lateinit var viewPagerTaskAdapter: ViewPagerTaskAdapter
+    private lateinit var viewPagerMonthAdapter: ViewPagerMonthAdapter
     private val daysInfo = ArrayList<SingleDayInfo>()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val fragmentView = inflater.inflate(R.layout.fragment_main_screen, container, false)
         val viewModelFactory = viewModelFactory { DI.DAYS.get().daysTasksFragmentViewModel() }
         viewModel = getViewModel(viewModelFactory)
         viewPagerTaskAdapter = ViewPagerTaskAdapter(fragmentManager!!, daysInfo)
+        viewPagerMonthAdapter = ViewPagerMonthAdapter(fragmentManager!!)
+        fragmentView.fragment_main_screen_view_pager_date.adapter = viewPagerMonthAdapter
+        fragmentView.fragment_main_screen_view_pager_date.setCurrentItem(viewPagerMonthAdapter.getDefaultPosition())
         fragmentView.fragment_main_screen_view_pager_task.adapter = viewPagerTaskAdapter
         observe(viewModel.days, this::onUserChanged)
+        fragmentView.fragment_main_screen_view_pager_date.addOnPageChangeListener(changedListener)
         return fragmentView
     }
 
+    private val changedListener = object : ViewPager.OnPageChangeListener {
+        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            val weekPosition = position - viewPagerMonthAdapter.getDefaultPosition()
+            viewModel.loadNewWeek(weekPosition)
+        }
+
+        override fun onPageSelected(position: Int) {
+
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+
+        }
+    }
+
     private fun onUserChanged(viewState: ViewState) {
+
         when (viewState) {
             is Data -> {
                 val data = viewState

@@ -11,7 +11,7 @@ import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewSt
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
 import ru.geogram.redmadrobottimetracker.app.providers.navigation.RouterProvider
-import ru.geogram.redmadrobottimetracker.app.utils.getCurrentWeekDate
+import ru.geogram.redmadrobottimetracker.app.utils.Utils.getCurrentWeekDate
 import javax.inject.Inject
 
 class MainScreenViewModel @Inject constructor(
@@ -19,12 +19,18 @@ class MainScreenViewModel @Inject constructor(
     private val provider: RouterProvider
 ) : BaseViewModel() {
     val days: MutableLiveData<ViewState> = MutableLiveData()
+    private val defaultWeekNumber = 0
 
     init {
-        loadDays(getCurrentWeekDate())
+        loadDays(getCurrentWeekDate(defaultWeekNumber))
     }
 
-    fun loadDays(date:WeekDates) {
+    fun loadNewWeek(week:Int){
+        loadDays(getCurrentWeekDate(week))
+    }
+
+    fun loadDays(date: WeekDates) {
+        onCleared()
         days.postValue(Loading)
         val disposable = daysService
             .getDays(date.from, date.to)
