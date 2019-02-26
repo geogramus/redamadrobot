@@ -1,6 +1,7 @@
 package ru.geogram.redmadrobottimetracker.app.presentation.viewmodels
 
 import androidx.lifecycle.MutableLiveData
+import ru.geogram.domain.model.projects.PayloadInfo
 import ru.geogram.domain.repositories.ProjectsRepository
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Data
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
@@ -16,7 +17,7 @@ class ProjectsFragmentViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val projects: MutableLiveData<ViewState> = MutableLiveData()
-
+    val payloadTime: MutableLiveData<ViewState> = MutableLiveData()
     init {
         loadProjects()
     }
@@ -31,6 +32,23 @@ class ProjectsFragmentViewModel @Inject constructor(
                 },
                         {
                             projects.postValue(
+                                    ErrorViewState(it)
+                            )
+                            it.printStackTrace()
+                        })
+        safeSubscribe { disposable }
+    }
+
+    fun payloadTime(payloadInfo: PayloadInfo) {
+        payloadTime.postValue(Loading)
+        val disposable = projectsService
+                .payload(payloadInfo)
+                .compose(applySchedulers())
+                .subscribe({
+                    payloadTime.postValue(Data(payloadSucces = it))
+                },
+                        {
+                            payloadTime.postValue(
                                     ErrorViewState(it)
                             )
                             it.printStackTrace()

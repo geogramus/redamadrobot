@@ -64,7 +64,7 @@ class AuthorizationFragment : Fragment() {
             if (!it) {
                 fragment_authorization_content_not_valid.Visible()
             } else {
-                fragment_authorization_content_not_valid.InVisible()
+                fragment_authorization_content_not_valid.Gone()
             }
         }
     }

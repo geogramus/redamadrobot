@@ -39,4 +39,10 @@
     <string name="saturday">Суббота</string>
     <string name="sunday">Воскресенье</string>
     <string name="hour"> ч</string>
+    <string name="hours">Часы</string>
+    <string name="fragment_project_list_set_time">Указать время</string>
+    <string name="fragment_projects_list_description">Описание</string>
+    <string name="fragment_projects_list_add_description">Добавить описание</string>
+    <string name="fragment_project_list_add">Добавить</string>
+    <string name="succes_writing">- задача успешно записана</string>
 </resources>

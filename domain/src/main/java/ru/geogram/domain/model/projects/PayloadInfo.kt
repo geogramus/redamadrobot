@@ -1,8 +1,8 @@
 package ru.geogram.domain.model.projects
 
-class PayloadInfo(
-        project_id: Int,
-        minutes_spent: Int,
-        date: String,
-        description: String
+data class PayloadInfo(
+        val project_id: Int,
+        val minutes_spent: Int,
+        val date: String,
+        val description: String
 )

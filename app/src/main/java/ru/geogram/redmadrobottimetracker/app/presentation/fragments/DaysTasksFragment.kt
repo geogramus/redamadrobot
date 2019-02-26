@@ -15,7 +15,6 @@ import ru.geogram.redmadrobottimetracker.app.presentation.Screens
 import ru.geogram.redmadrobottimetracker.app.presentation.adapters.ProjectsAdapter
 import ru.geogram.redmadrobottimetracker.app.providers.navigation.RouterProvider
 import ru.geogram.redmadrobottimetracker.app.utils.Utils
-import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 @SuppressLint("ValidFragment")
@@ -37,13 +36,13 @@ class DaysTasksFragment(val dayInfo: SingleDayInfo) : Fragment() {
             val hoursString = Utils.getHours(dayInfo.projectsInfoForDays) + getString(R.string.hour)
             fragmentView.fragment_day_of_week_hours.text = hoursString
         }
-        fragmentView.fragment_day_of_week_new_task_btn.setOnClickListener(listener)
+        fragmentView.fragment_day_of_week_new_task_btn.setOnClickListener(listenerNewTask)
         return fragmentView
     }
 
-    val listener = object : View.OnClickListener {
+    val listenerNewTask = object : View.OnClickListener {
         override fun onClick(v: View?) {
-            router.provideRouter().navigateTo(Screens.ShowProjectsFragment)
+            router.provideRouter().navigateTo(Screens.ShowProjectsFragment(dayInfo.date))
         }
     }
 }

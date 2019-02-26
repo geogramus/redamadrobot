@@ -61,7 +61,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="22dp"
-        android:background="@drawable/buttong_bg_red_rounded"
+        android:background="@drawable/buttong_bg_red_rounded_enabled"
         android:minHeight="@dimen/min_height"
         android:padding="12dp"
         android:text="@string/enter"

@@ -6,10 +6,15 @@
             <size android:height="1dp" />
         </shape>
     </item>
-    <item  android:bottom="1dp">
+    <item android:bottom="1dp">
         <shape xmlns:android="http://schemas.android.com/apk/res/android">
-            <solid android:color="@android:color/white" />
-            <padding android:bottom="4dp" android:top="4dp" android:left="4dp" android:right="4dp"/>
+            <solid android:color="@color/background_description_edit_text" />
+            <corners android:radius="3dp" />
+            <padding
+                android:bottom="4dp"
+                android:left="4dp"
+                android:right="4dp"
+                android:top="4dp" />
         </shape>
     </item>
 </layer-list>

@@ -19,7 +19,7 @@ object Screens {
         override fun getFragment() = MainScreenFragment()
     }
 
-    object ShowProjectsFragment : SupportAppScreen() {
-        override fun getFragment() = ProjectsFragment()
+    class ShowProjectsFragment(val date:String) : SupportAppScreen() {
+        override fun getFragment() = ProjectsFragment(date)
     }
 }
