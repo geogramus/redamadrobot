@@ -1,8 +1,8 @@
 package ru.geogram.data.model.converter
 
 
-import ru.geogram.data.model.LoginModel
-import ru.geogram.data.model.LoginResponseModel
+import ru.geogram.data.model.network.user.LoginModel
+import ru.geogram.data.model.network.user.LoginResponseModel
 import ru.geogram.data.model.db.user.UserEntity
 import ru.geogram.domain.model.auth.AuthInfo
 import ru.geogram.domain.model.auth.ErrorInfo
@@ -13,8 +13,8 @@ object AuthConverter {
 
     fun convertToLoginModel(source: LoginPassword): LoginModel {
         return LoginModel(
-            source.login,
-            source.password
+                source.login,
+                source.password
         )
     }
 

@@ -1,4 +1,4 @@
-package ru.geogram.data.model.daysresponse
+package ru.geogram.data.model.network.daysresponse
 
 import com.google.gson.annotations.SerializedName
 

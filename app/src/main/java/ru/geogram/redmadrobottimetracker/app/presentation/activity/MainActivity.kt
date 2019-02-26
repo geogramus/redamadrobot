@@ -8,8 +8,8 @@ import com.redmadrobot.lib.sd.LoadingStateDelegate
 import kotlinx.android.synthetic.main.fragment_authorization.*
 import ru.geogram.redmadrobottimetracker.app.R
 import ru.geogram.redmadrobottimetracker.app.di.DI
-import ru.geogram.redmadrobottimetracker.app.presentation.fragment.FragmentAuthorization
-import ru.geogram.redmadrobottimetracker.app.presentation.fragment.UserFragment
+import ru.geogram.redmadrobottimetracker.app.presentation.fragments.AuthorizationFragment
+import ru.geogram.redmadrobottimetracker.app.presentation.fragments.UserFragment
 import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.*
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Data
@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 
 
-class MainActivity: AppCompatActivity(), FragmentAuthorization.FragmentAuthorizationInterface {
+class MainActivity: AppCompatActivity(), AuthorizationFragment.FragmentAuthorizationInterface {
     override fun showUserFragment() {
         showFragment(UserFragment())
     }
@@ -54,7 +54,7 @@ class MainActivity: AppCompatActivity(), FragmentAuthorization.FragmentAuthoriza
                 screenState.showLoading()
             }
             is ErrorViewState -> {
-                showFragment(FragmentAuthorization())
+                showFragment(AuthorizationFragment())
             }
         }
     }

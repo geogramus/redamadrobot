@@ -3,8 +3,7 @@ package ru.geogram.redmadrobottimetracker.app.presentation.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import ru.geogram.redmadrobottimetracker.app.presentation.fragment.DateItemFragment
-import ru.geogram.redmadrobottimetracker.app.presentation.view.CustomViewPager
+import ru.geogram.redmadrobottimetracker.app.presentation.fragments.DateItemFragment
 
 class ViewPagerMonthAdapter(val fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager){
 

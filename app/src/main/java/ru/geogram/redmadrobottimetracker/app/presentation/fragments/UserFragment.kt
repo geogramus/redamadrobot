@@ -1,4 +1,4 @@
-package ru.geogram.redmadrobottimetracker.app.presentation.fragment
+package ru.geogram.redmadrobottimetracker.app.presentation.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

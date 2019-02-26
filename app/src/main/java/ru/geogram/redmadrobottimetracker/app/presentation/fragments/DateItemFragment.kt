@@ -1,4 +1,4 @@
-package ru.geogram.redmadrobottimetracker.app.presentation.fragment
+package ru.geogram.redmadrobottimetracker.app.presentation.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -21,7 +21,17 @@ class DateItemFragment(val position: Int) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val date = Utils.getDateAndMonthString(position)
-        view.date_item_tv.text = date
+        val date = Utils.getDateAndMonth(position)
+        date.startMonth?.let {
+            val startMonth = getString(it)
+            val endMonth = getString(date.finishMonth)
+            val dateString = "${date.startDate} ${startMonth} - ${date.finishDate} ${endMonth}"
+            view.date_item_tv.text = dateString
+        }?:{
+            val endMonth = getString(date.finishMonth)
+            val dateString = "${date.startDate} - ${date.finishDate} ${endMonth}"
+            view.date_item_tv.text = dateString
+        }()
+
     }
 }

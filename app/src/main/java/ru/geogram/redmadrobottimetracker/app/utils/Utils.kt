@@ -1,13 +1,38 @@
 package ru.geogram.redmadrobottimetracker.app.utils
 
 import android.annotation.SuppressLint
+import ru.geogram.domain.model.days.DayAndMonthModel
+import ru.geogram.domain.model.days.ProjectInfoForDays
 import ru.geogram.domain.model.days.WeekDates
+import ru.geogram.redmadrobottimetracker.app.R
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 @SuppressLint("SimpleDateFormat")
 object Utils {
     private val DATE_FORMAT_PATTERN = "yyyy-MM-dd"
+    private val MINUTES_IN_HOUR = 60
+
+    fun getHours(projectsInfoForDays: ArrayList<ProjectInfoForDays>): String {
+        var time = 0
+        projectsInfoForDays.forEach {
+            time += it.minutes_spent
+        }
+        if (time == 0) {
+            return ""
+        } else {
+            return "${(time / MINUTES_IN_HOUR)}"
+        }
+    }
+
+    fun getHoursForSingleDay(time: Int): String {
+        if (time == 0) {
+            return ""
+        } else {
+            return "${(time / MINUTES_IN_HOUR)}ч"
+        }
+    }
 
     fun getCurrentWeekDate(week: Int): WeekDates {
         val finalWeek = week
@@ -27,16 +52,18 @@ object Utils {
         return cal
     }
 
-    fun getDateAndMonthString(week: Int): String {
+    fun getDateAndMonth(week: Int): DayAndMonthModel {
         val finalWeek = week
         val calFrom = getCalendar(finalWeek, Calendar.MONDAY)
         val calTo = getCalendar(finalWeek, Calendar.SUNDAY)
         val monthFrom = calFrom.get(Calendar.MONTH)
-        val monthTo = calFrom.get(Calendar.MONTH)
+        val monthTo = calTo.get(Calendar.MONTH)
         if (monthFrom == monthTo) {
-            return "${calFrom.get(Calendar.DAY_OF_MONTH)} - ${calTo.get(Calendar.DAY_OF_MONTH)} ${getMonthName(monthFrom)}"
+            return DayAndMonthModel(calFrom.get(Calendar.DAY_OF_MONTH), calTo.get(Calendar.DAY_OF_MONTH),
+                    getMonthName(monthTo))
         } else {
-            return "${calFrom.get(Calendar.DAY_OF_MONTH)}${getMonthName(monthFrom)} - ${calTo.get(Calendar.DAY_OF_MONTH)} ${getMonthName(monthTo)}"
+            return DayAndMonthModel(calFrom.get(Calendar.DAY_OF_MONTH), calTo.get(Calendar.DAY_OF_MONTH),
+                    getMonthName(monthTo), getMonthName(monthFrom))
         }
     }
 
@@ -44,46 +71,94 @@ object Utils {
         return week - 1
     }
 
-    private fun getMonthName(month: Int): String {
-        return when (month) {
-            Calendar.JANUARY -> {
-                "Января"
+    fun getDayOfWeek(date: String): Int {
+        val cal = Calendar.getInstance()
+        val sdf = SimpleDateFormat(DATE_FORMAT_PATTERN)
+        cal.setTime(sdf.parse(date))
+        return getDayOfWeekResource(cal.get(Calendar.DAY_OF_WEEK))
+    }
+
+    fun getDayMonth(date: String): String {
+        val calen = Calendar.getInstance()
+        val sdf = SimpleDateFormat(DATE_FORMAT_PATTERN)
+        calen.setTime(sdf.parse(date))
+        val dayOfMonth = if (calen.get(Calendar.DAY_OF_MONTH).toString().length == 1) "0${calen.get(Calendar.DAY_OF_MONTH)}"
+        else "${calen.get(Calendar.DAY_OF_MONTH)}"
+        val month = if ((calen.get(Calendar.MONTH) + 1).toString().length == 1) "0${(calen.get(Calendar.MONTH) + 1)}"
+        else "${(calen.get(Calendar.MONTH) + 1)}"
+        return "${dayOfMonth}.${month}"
+    }
+
+    private fun getDayOfWeekResource(day: Int): Int {
+        return when (day) {
+            Calendar.MONDAY -> {
+                R.string.monday
             }
-            Calendar.FEBRUARY -> {
-                "Февраля"
+            Calendar.TUESDAY -> {
+                R.string.tuesday
             }
-            Calendar.MARCH -> {
-                "Марта"
+            Calendar.WEDNESDAY -> {
+                R.string.wednesday
             }
-            Calendar.APRIL -> {
-                "Апреля"
+            Calendar.THURSDAY -> {
+                R.string.thusday
             }
-            Calendar.MAY -> {
-                "Мая"
+            Calendar.FRIDAY -> {
+                R.string.friday
             }
-            Calendar.JUNE -> {
-                "Июня"
+            Calendar.SATURDAY -> {
+                R.string.saturday
             }
-            Calendar.JULY -> {
-                "Июля"
-            }
-            Calendar.AUGUST -> {
-                "Августа"
-            }
-            Calendar.SEPTEMBER -> {
-                "Сентября"
-            }
-            Calendar.OCTOBER -> {
-                "Октября"
-            }
-            Calendar.NOVEMBER -> {
-                "Ноября"
-            }
-            Calendar.DECEMBER -> {
-                "Декабря"
+            Calendar.SUNDAY -> {
+                R.string.sunday
             }
             else -> {
-                "Января"
+                R.string.monday
+            }
+
+        }
+    }
+
+    private fun getMonthName(month: Int): Int {
+        return when (month) {
+            Calendar.JANUARY -> {
+                R.string.january
+            }
+            Calendar.FEBRUARY -> {
+                R.string.february
+            }
+            Calendar.MARCH -> {
+                R.string.march
+            }
+            Calendar.APRIL -> {
+                R.string.april
+            }
+            Calendar.MAY -> {
+                R.string.may
+            }
+            Calendar.JUNE -> {
+                R.string.juny
+            }
+            Calendar.JULY -> {
+                R.string.july
+            }
+            Calendar.AUGUST -> {
+                R.string.august
+            }
+            Calendar.SEPTEMBER -> {
+                R.string.september
+            }
+            Calendar.OCTOBER -> {
+                R.string.october
+            }
+            Calendar.NOVEMBER -> {
+                R.string.november
+            }
+            Calendar.DECEMBER -> {
+                R.string.december
+            }
+            else -> {
+                R.string.january
             }
 
         }

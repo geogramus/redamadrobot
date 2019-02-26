@@ -1,16 +1,14 @@
 package ru.geogram.data.repository.auth
 
 
-import com.google.gson.Gson
 import io.reactivex.Single
-import ru.geogram.data.model.LoginModel
-import ru.geogram.data.model.LoginResponseModel
+import ru.geogram.data.model.network.user.LoginModel
+import ru.geogram.data.model.network.user.LoginResponseModel
 import ru.geogram.data.model.converter.AuthConverter
 import ru.geogram.data.network.api.AuthApi
 import ru.geogram.data.storage.db.UserDatabaseInterface
 import ru.geogram.domain.model.auth.AuthInfo
 import ru.geogram.domain.model.auth.LoginPassword
-import ru.geogram.domain.model.auth.UserInfo
 import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import ru.geogram.domain.providers.rx.SchedulersProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider

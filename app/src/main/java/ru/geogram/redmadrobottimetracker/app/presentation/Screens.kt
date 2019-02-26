@@ -1,8 +1,9 @@
 package ru.geogram.redmadrobottimetracker.app.presentation
 
-import ru.geogram.redmadrobottimetracker.app.presentation.fragment.FragmentAuthorization
-import ru.geogram.redmadrobottimetracker.app.presentation.fragment.MainScreen
-import ru.geogram.redmadrobottimetracker.app.presentation.fragment.UserFragment
+import ru.geogram.redmadrobottimetracker.app.presentation.fragments.AuthorizationFragment
+import ru.geogram.redmadrobottimetracker.app.presentation.fragments.MainScreenFragment
+import ru.geogram.redmadrobottimetracker.app.presentation.fragments.ProjectsFragment
+import ru.geogram.redmadrobottimetracker.app.presentation.fragments.UserFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 object Screens {
@@ -11,10 +12,14 @@ object Screens {
     }
 
     object ShowAuthFragment : SupportAppScreen() {
-        override fun getFragment() = FragmentAuthorization()
+        override fun getFragment() = AuthorizationFragment()
     }
 
     object ShowMainScreenFragment : SupportAppScreen() {
-        override fun getFragment() = MainScreen()
+        override fun getFragment() = MainScreenFragment()
+    }
+
+    object ShowProjectsFragment : SupportAppScreen() {
+        override fun getFragment() = ProjectsFragment()
     }
 }

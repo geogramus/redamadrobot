@@ -1,6 +1,6 @@
 package ru.geogram.domain.model.days
 
-data class ProjectInfo (
+data class ProjectInfoForDays (
     val projectId:Int,
     val id:Int,
     val name:String,

@@ -1,4 +1,4 @@
-package ru.geogram.redmadrobottimetracker.app.presentation.fragment
+package ru.geogram.redmadrobottimetracker.app.presentation.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,19 +20,24 @@ import ru.geogram.redmadrobottimetracker.app.utils.observe
 import ru.geogram.redmadrobottimetracker.app.utils.showSnackBar
 import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
 import androidx.viewpager.widget.ViewPager
+import com.redmadrobot.lib.sd.LoadingStateDelegate
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
 
 
-class MainScreen : Fragment() {
+class MainScreenFragment : Fragment() {
 
 
     private lateinit var viewModel: MainScreenViewModel
     private lateinit var viewPagerTaskAdapter: ViewPagerTaskAdapter
     private lateinit var viewPagerMonthAdapter: ViewPagerMonthAdapter
     private val daysInfo = ArrayList<SingleDayInfo>()
+    private lateinit var screenState: LoadingStateDelegate
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val fragmentView = inflater.inflate(R.layout.fragment_main_screen, container, false)
+        screenState = LoadingStateDelegate(fragmentView.fragment_main_screen_view_pager_task,
+            fragmentView.fragment_main_screen_progress_bar)
         val viewModelFactory = viewModelFactory { DI.DAYS.get().daysTasksFragmentViewModel() }
         viewModel = getViewModel(viewModelFactory)
         viewPagerTaskAdapter = ViewPagerTaskAdapter(fragmentManager!!, daysInfo)
@@ -47,6 +52,7 @@ class MainScreen : Fragment() {
 
     private val changedListener = object : ViewPager.OnPageChangeListener {
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
             val weekPosition = position - viewPagerMonthAdapter.getDefaultPosition()
             viewModel.loadNewWeek(weekPosition)
         }
@@ -64,12 +70,17 @@ class MainScreen : Fragment() {
 
         when (viewState) {
             is Data -> {
+                screenState.showContent()
                 val data = viewState
                 data.days?.let {
-                    viewPagerTaskAdapter.addDays(it.days)
+                    viewPagerTaskAdapter = ViewPagerTaskAdapter(fragmentManager!!, it.days)
+                    view?.fragment_main_screen_view_pager_task?.adapter = viewPagerTaskAdapter
                 } ?: {
                     showSnackBar(context!!, getString(R.string.fragment_authorization_error), "ок")
                 }()
+            }
+            is Loading ->{
+                screenState.showLoading()
             }
             is ErrorViewState -> {
                 val data = viewState as ErrorViewState

@@ -20,6 +20,13 @@ object DI {
         }
     )
 
+    val PROJECTS: ComponentHolder<ProjectsComponent> = componentHolder(
+            constructor = { app.projectsComponent().build() },
+            destructor = {
+                // destroy child's components here
+            }
+    )
+
     fun init(context: Context) {
         this.app = DaggerApplicationComponent
             .builder()

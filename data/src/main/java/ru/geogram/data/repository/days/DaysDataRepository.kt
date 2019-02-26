@@ -2,8 +2,7 @@ package ru.geogram.data.repository.days
 
 import io.reactivex.Single
 import ru.geogram.data.model.converter.DaysConverter
-import ru.geogram.data.model.daysresponse.DataForDayResponse
-import ru.geogram.data.model.daysresponse.DaysResponse
+import ru.geogram.data.model.network.daysresponse.DaysResponse
 import ru.geogram.data.network.api.DaysApi
 import ru.geogram.domain.model.days.DaysInfo
 import ru.geogram.domain.providers.resources.ResourceManagerProvider

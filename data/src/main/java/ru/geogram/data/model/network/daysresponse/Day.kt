@@ -1,6 +1,7 @@
-package ru.geogram.data.model.daysresponse
+package ru.geogram.data.model.network.daysresponse
 
 import com.google.gson.annotations.SerializedName
+import ru.geogram.data.model.network.LoggedTimeRecord
 
 data class Day(
     @SerializedName("date")

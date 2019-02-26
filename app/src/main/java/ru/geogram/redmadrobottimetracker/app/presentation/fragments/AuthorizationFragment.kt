@@ -1,4 +1,4 @@
-package ru.geogram.redmadrobottimetracker.app.presentation.fragment
+package ru.geogram.redmadrobottimetracker.app.presentation.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -22,7 +22,7 @@ import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
 import ru.geogram.redmadrobottimetracker.app.utils.*
 
 
-class FragmentAuthorization : Fragment() {
+class AuthorizationFragment : Fragment() {
     private val okString = "Ок"
     private lateinit var screenState: LoadingStateDelegate
     private lateinit var viewModel: AuthoriztionViewModel
@@ -72,6 +72,7 @@ class FragmentAuthorization : Fragment() {
     private fun onUserChanged(viewState: ViewState) {
         when (viewState) {
             is Data -> {
+                screenState.showContent()
                 val data = viewState
                 data.user?.userInfo?.let {
                     fragmentAuthorization.showUserFragment()

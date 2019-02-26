@@ -1,8 +1,8 @@
 package ru.geogram.data.network.api
 
 import retrofit2.http.*
-import ru.geogram.data.model.LoginModel
-import ru.geogram.data.model.LoginResponseModel
+import ru.geogram.data.model.network.user.LoginModel
+import ru.geogram.data.model.network.user.LoginResponseModel
 import io.reactivex.Single
 
 
