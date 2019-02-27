@@ -54,6 +54,18 @@ class MainScreenFragment : Fragment() {
         return fragmentView
     }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.fragment_main_screen_arrow_back.setOnClickListener {
+            view.fragment_main_screen_view_pager_date.setCurrentItem(view.fragment_main_screen_view_pager_date.currentItem - 1,
+                true)
+        }
+        view.fragment_main_screen_arrow_forward.setOnClickListener {
+            view.fragment_main_screen_view_pager_date.setCurrentItem(view.fragment_main_screen_view_pager_date.currentItem + 1,
+                true)
+        }
+    }
     private val changedListener = object : ViewPager.OnPageChangeListener {
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
