@@ -26,10 +26,8 @@ import javax.inject.Inject
 
 
 
-class MainActivity: AppCompatActivity(), AuthorizationFragment.FragmentAuthorizationInterface {
-    override fun showUserFragment() {
-        showFragment(UserFragment())
-    }
+class MainActivity: AppCompatActivity() {
+
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
     private lateinit var viewModel: MainActivityViewModel
@@ -38,26 +36,11 @@ class MainActivity: AppCompatActivity(), AuthorizationFragment.FragmentAuthoriza
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         DI.app.inject(this)
-        screenState = LoadingStateDelegate(fragment_authorization_content, fragment_authorization_progress_bar)
         val viewModelFactory = viewModelFactory { DI.AUTH.get().mainViewModel() }
 
         viewModel = getViewModel(viewModelFactory)
-        observe(viewModel.check, this::onUserChanged)
     }
 
-    private fun onUserChanged(viewState: ViewState) {
-        when (viewState) {
-            is Data -> {
-                showUserFragment()
-            }
-            is Loading -> {
-                screenState.showLoading()
-            }
-            is ErrorViewState -> {
-                showFragment(AuthorizationFragment())
-            }
-        }
-    }
 
     override fun onResume() {
         super.onResume()
@@ -69,13 +52,6 @@ class MainActivity: AppCompatActivity(), AuthorizationFragment.FragmentAuthoriza
         super.onPause()
     }
 
-    private fun showFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.mainContainer, fragment)
-            commit()
-        }
-        window.statusBarColor = ContextCompat.getColor(this, R.color.status_bar_grey)
-    }
 
     private val navigator = object : SupportAppNavigator(this, R.id.mainContainer) {
         override fun applyCommands(commands: Array<Command>) {

@@ -1,25 +1,31 @@
 package ru.geogram.redmadrobottimetracker.app.presentation.fragments
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import ru.geogram.redmadrobottimetracker.app.R
 import com.redmadrobot.lib.sd.LoadingStateDelegate
 import kotlinx.android.synthetic.main.fragment_authorization.*
 import kotlinx.android.synthetic.main.fragment_authorization.view.*
+import ru.geogram.data.network.ServerUrls
 import ru.geogram.domain.model.auth.LoginPassword
+import ru.geogram.domain.model.projects.PayloadInfo
 import ru.geogram.redmadrobottimetracker.app.di.DI
 import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.AuthoriztionViewModel
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Data
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
 import ru.geogram.redmadrobottimetracker.app.utils.*
+import saschpe.android.customtabs.CustomTabsHelper
+import saschpe.android.customtabs.WebViewFallback
 
 
 class AuthorizationFragment : Fragment() {
@@ -43,7 +49,7 @@ class AuthorizationFragment : Fragment() {
         observe(viewModel.auth, this::onUserChanged)
         viewModel.correctEmail.observe(this, onLoginChanged)
         fragmentView.fragment_authorization_email_edit_text.addTextChangedListener(textWatcher)
-
+        fragmentView.fragment_authorization_password_question.setOnClickListener(memoryPassword)
         return fragmentView
     }
 
@@ -57,6 +63,26 @@ class AuthorizationFragment : Fragment() {
 
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
+        }
+    }
+
+    val memoryPassword = object : View.OnClickListener {
+        override fun onClick(v: View?) {
+            val customTabsIntent = CustomTabsIntent.Builder()
+                .addDefaultShareMenuItem()
+                .setToolbarColor(
+                    context?.resources?.getColor(R.color.grey)!!
+                )
+                .setShowTitle(true)
+                .build()
+
+            CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent)
+
+            CustomTabsHelper.openCustomTab(
+                context, customTabsIntent,
+                Uri.parse(REDMADROBOT_SITE),
+                WebViewFallback()
+            )
         }
     }
     val onLoginChanged = Observer<Boolean>() { loginCorrect ->
@@ -75,7 +101,6 @@ class AuthorizationFragment : Fragment() {
                 screenState.showContent()
                 val data = viewState
                 data.user?.userInfo?.let {
-                    fragmentAuthorization.showUserFragment()
                 } ?: {
                     showSnackBar(context!!, getString(R.string.fragment_authorization_error), okString)
                 }()
@@ -92,18 +117,9 @@ class AuthorizationFragment : Fragment() {
         }
     }
 
-    lateinit var fragmentAuthorization: FragmentAuthorizationInterface
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        if (activity is FragmentAuthorizationInterface) {
-            fragmentAuthorization = context as FragmentAuthorizationInterface
-        } else {
-            throw UnsupportedOperationException("Activity must implement FragmentAuthorizationInterface")
-        }
-    }
 
-    interface FragmentAuthorizationInterface {
-        fun showUserFragment()
+    companion object {
+        const val REDMADROBOT_SITE = "https://redmadrobot.com"
     }
 }

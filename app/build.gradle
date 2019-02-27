@@ -45,6 +45,10 @@ dependencies {
             deps.rx.java,
             deps.rx.android,
 
+            deps.customtabs.tabs,
+
+            deps.lottie.anim,
+
             deps.dagger.runtime
     )
 
