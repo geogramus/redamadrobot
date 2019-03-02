@@ -38,7 +38,7 @@
                 android:id="@+id/fragment_projects_list_progress_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:lottie_fileName="progress_bar_first_second.json"
+                app:lottie_fileName="circle_progress_bar.json"
                 app:lottie_loop="true"
                 app:lottie_autoPlay="true"
                 android:layout_marginStart="8dp"
@@ -144,7 +144,7 @@
                 tools:ignore="RtlCompat"/>
 
         <Button
-                android:id="@+id/fragment_project_list_add"
+                android:id="@+id/fragment_project_list_new_project"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

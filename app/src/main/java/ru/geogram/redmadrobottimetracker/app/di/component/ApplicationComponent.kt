@@ -17,8 +17,6 @@ interface ApplicationComponent {
     fun daysComponent(): DaysComponent.Builder
     fun projectsComponent(): ProjectsComponent.Builder
     fun inject(mainActivity: MainActivity)
-    fun inject(daysTasksFragment: DaysTasksFragment)
-    fun inject(projectsFragment: ProjectsFragment)
 
     @Component.Builder
     interface Builder {

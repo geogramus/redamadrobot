@@ -6,7 +6,7 @@ import javax.inject.Inject
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import ru.geogram.redmadrobottimetracker.app.presentation.Screens
+import ru.geogram.redmadrobottimetracker.app.presentation.ShowMainScreenFragment
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
@@ -30,7 +30,7 @@ class AuthoriztionViewModel @Inject constructor(
                 .auth(model)
                 .compose(applySchedulers())
                 .subscribe({
-                    router.newRootScreen(Screens.ShowMainScreenFragment)
+                    router.newRootScreen(ShowMainScreenFragment)
                 },
                         {
                             auth.postValue(

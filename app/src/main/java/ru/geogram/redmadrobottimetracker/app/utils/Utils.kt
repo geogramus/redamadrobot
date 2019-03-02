@@ -19,50 +19,50 @@ object Utils {
         projectsInfoForDays.forEach {
             time += it.minutes_spent
         }
-        if (time == 0) {
-            return ""
+        return if (time == 0) {
+           ""
         } else {
-            return "${(time / MINUTES_IN_HOUR)}"
+           "${(time / MINUTES_IN_HOUR)}"
         }
     }
 
     fun getHoursForSingleDay(time: Int): String {
-        if (time == 0) {
-            return ""
+        return if (time == 0) {
+            ""
         } else {
-            return "${(time / MINUTES_IN_HOUR)}ч"
+            "${(time / MINUTES_IN_HOUR)}ч"
         }
     }
 
     fun getCurrentWeekDate(week: Int): WeekDates {
         val finalWeek = week
-        val cal = getCalendar(finalWeek, Calendar.MONDAY)
+        val calendar = getCalendar(finalWeek, Calendar.MONDAY)
         val sdf = SimpleDateFormat(DATE_FORMAT_PATTERN)
-        val from = sdf.format(cal.time)
-        val calTo = getCalendar(finalWeek, Calendar.SUNDAY)
-        val to = sdf.format(calTo.time)
+        val from = sdf.format(calendar.time)
+        val calendatTo = getCalendar(finalWeek, Calendar.SUNDAY)
+        val to = sdf.format(calendatTo.time)
         return WeekDates(from, to)
     }
 
     private fun getCalendar(finalWeek: Int, weekDay: Int): Calendar {
-        val cal = Calendar.getInstance()
-        cal.add(Calendar.WEEK_OF_YEAR, finalWeek)
-        cal.set(Calendar.DAY_OF_WEEK, weekDay)
-        cal.add(Calendar.DAY_OF_WEEK, 1)
-        return cal
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.WEEK_OF_YEAR, finalWeek)
+        calendar.set(Calendar.DAY_OF_WEEK, weekDay)
+        calendar.add(Calendar.DAY_OF_WEEK, 1)
+        return calendar
     }
 
     fun getDateAndMonth(week: Int): DayAndMonthModel {
         val finalWeek = week
-        val calFrom = getCalendar(finalWeek, Calendar.MONDAY)
-        val calTo = getCalendar(finalWeek, Calendar.SUNDAY)
-        val monthFrom = calFrom.get(Calendar.MONTH)
-        val monthTo = calTo.get(Calendar.MONTH)
-        if (monthFrom == monthTo) {
-            return DayAndMonthModel(calFrom.get(Calendar.DAY_OF_MONTH), calTo.get(Calendar.DAY_OF_MONTH),
+        val calendarFrom = getCalendar(finalWeek, Calendar.MONDAY)
+        val calendarTo = getCalendar(finalWeek, Calendar.SUNDAY)
+        val monthFrom = calendarFrom.get(Calendar.MONTH)
+        val monthTo = calendarTo.get(Calendar.MONTH)
+        return if (monthFrom == monthTo) {
+            DayAndMonthModel(calendarFrom.get(Calendar.DAY_OF_MONTH), calendarTo.get(Calendar.DAY_OF_MONTH),
                     getMonthName(monthTo))
         } else {
-            return DayAndMonthModel(calFrom.get(Calendar.DAY_OF_MONTH), calTo.get(Calendar.DAY_OF_MONTH),
+            DayAndMonthModel(calendarFrom.get(Calendar.DAY_OF_MONTH), calendarTo.get(Calendar.DAY_OF_MONTH),
                     getMonthName(monthTo), getMonthName(monthFrom))
         }
     }
@@ -72,20 +72,20 @@ object Utils {
     }
 
     fun getDayOfWeek(date: String): Int {
-        val cal = Calendar.getInstance()
+        val calendar = Calendar.getInstance()
         val sdf = SimpleDateFormat(DATE_FORMAT_PATTERN)
-        cal.setTime(sdf.parse(date))
-        return getDayOfWeekResource(cal.get(Calendar.DAY_OF_WEEK))
+        calendar.setTime(sdf.parse(date))
+        return getDayOfWeekResource(calendar.get(Calendar.DAY_OF_WEEK))
     }
 
     fun getDayMonth(date: String): String {
-        val calen = Calendar.getInstance()
+        val calendar = Calendar.getInstance()
         val sdf = SimpleDateFormat(DATE_FORMAT_PATTERN)
-        calen.setTime(sdf.parse(date))
-        val dayOfMonth = if (calen.get(Calendar.DAY_OF_MONTH).toString().length == 1) "0${calen.get(Calendar.DAY_OF_MONTH)}"
-        else "${calen.get(Calendar.DAY_OF_MONTH)}"
-        val month = if ((calen.get(Calendar.MONTH) + 1).toString().length == 1) "0${(calen.get(Calendar.MONTH) + 1)}"
-        else "${(calen.get(Calendar.MONTH) + 1)}"
+        calendar.setTime(sdf.parse(date))
+        val dayOfMonth = if (calendar.get(Calendar.DAY_OF_MONTH).toString().length == 1) "0${calendar.get(Calendar.DAY_OF_MONTH)}"
+        else "${calendar.get(Calendar.DAY_OF_MONTH)}"
+        val month = if ((calendar.get(Calendar.MONTH) + 1).toString().length == 1) "0${(calendar.get(Calendar.MONTH) + 1)}"
+        else "${(calendar.get(Calendar.MONTH) + 1)}"
         return "${dayOfMonth}.${month}"
     }
 
@@ -160,9 +160,6 @@ object Utils {
             else -> {
                 R.string.january
             }
-
         }
     }
-
-
 }

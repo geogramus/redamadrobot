@@ -45,4 +45,6 @@
     <string name="fragment_projects_list_add_description">Добавить описание</string>
     <string name="fragment_project_list_add">Добавить</string>
     <string name="succes_writing">- задача успешно записана</string>
+    <string name="ok_string">ок</string>
+    <string name="time_hours_mins">%1$dч. %2$dмин.</string>
 </resources>

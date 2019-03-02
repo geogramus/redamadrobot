@@ -8,41 +8,26 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.geogram.domain.model.projects.ProjectInf
 import ru.geogram.redmadrobottimetracker.app.R
+import ru.geogram.redmadrobottimetracker.app.presentation.calbacks.ProjectListCalback
+import ru.geogram.redmadrobottimetracker.app.presentation.holders.ProjectsListViewHolder
 
-class ProjectsListAdapter(val listener: ProjectListCalback) : RecyclerView.Adapter<ProjectsListAdapter.ProjectsListViewHolder>() {
+class ProjectsListAdapter(val listener: ProjectListCalback) : RecyclerView.Adapter<ProjectsListViewHolder>() {
+
     val projectsList = ArrayList<ProjectInf>()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProjectsListAdapter.ProjectsListViewHolder {
-        return ProjectsListViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.project_item, parent, false)
-        )
-    }
 
-    override fun getItemCount(): Int {
-        return projectsList.size
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProjectsListViewHolder =
+    ProjectsListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.project_item, parent, false))
 
-    override fun onBindViewHolder(holder: ProjectsListAdapter.ProjectsListViewHolder, position: Int) {
-        holder.bind(position)
+    override fun getItemCount(): Int = projectsList.size
+
+    override fun onBindViewHolder(holder: ProjectsListViewHolder, position: Int) {
+        val project = projectsList.get(position)
+        holder.bind(project, listener)
     }
 
     fun addItems(items: ArrayList<ProjectInf>) {
         projectsList.clear()
         projectsList.addAll(items)
         notifyDataSetChanged()
-    }
-
-    inner class ProjectsListViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        private val project_item_container: LinearLayout = v.findViewById(R.id.project_item_container)
-        private val project_item_tv: TextView = v.findViewById(R.id.project_item_tv)
-        fun bind(position: Int) {
-            project_item_tv.text = projectsList.get(position).name
-            project_item_container.setOnClickListener {
-                listener.onProjectClick(projectsList.get(position))
-            }
-        }
-    }
-
-    interface ProjectListCalback {
-        fun onProjectClick(project: ProjectInf)
     }
 }

@@ -22,7 +22,10 @@ import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
 
 class UserFragment : Fragment() {
 
-    private val okString = "Ок"
+    companion object {
+        fun getInstance(): UserFragment = UserFragment()
+    }
+
     private lateinit var screenState: LoadingStateDelegate
     private lateinit var viewModel: UserFragmentViewModel
 
@@ -41,17 +44,23 @@ class UserFragment : Fragment() {
     private fun onUserChanged(viewState: ViewState) {
         when (viewState) {
             is Data -> {
-                val data = viewState
-                data.user?.userInfo?.let {
+                viewState.user?.userInfo?.let {
                     setUserInfo(it)
                 } ?: {
-                    showSnackBar(context!!, getString(R.string.fragment_authorization_error), okString)
+                    showSnackBar(
+                        context!!,
+                        getString(R.string.fragment_authorization_error),
+                        getString(R.string.ok_string)
+                    )
                 }()
             }
             is ErrorViewState -> {
-                val data = viewState as ErrorViewState
-                showSnackBar(context!!, getString(R.string.fragment_authorization_error_server), okString)
-                data.user?.userInfo?.let {
+                showSnackBar(
+                    context!!,
+                    getString(R.string.fragment_authorization_error_server),
+                    getString(R.string.ok_string)
+                )
+                viewState.user?.userInfo?.let {
                     setUserInfo(it)
                 }
             }
@@ -70,7 +79,6 @@ class UserFragment : Fragment() {
                     view?.is_stuff_text_view?.text = getText(ru.geogram.redmadrobottimetracker.app.R.string.not_stuff)
                 }
             }
-
         }
     }
 

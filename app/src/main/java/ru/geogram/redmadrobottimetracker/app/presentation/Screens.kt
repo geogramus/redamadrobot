@@ -6,20 +6,18 @@ import ru.geogram.redmadrobottimetracker.app.presentation.fragments.ProjectsFrag
 import ru.geogram.redmadrobottimetracker.app.presentation.fragments.UserFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
-object Screens {
-    object ShowUserFragment : SupportAppScreen() {
-        override fun getFragment() = UserFragment()
-    }
+object ShowUserFragment : SupportAppScreen() {
+    override fun getFragment() = UserFragment.getInstance()
+}
 
-    object ShowAuthFragment : SupportAppScreen() {
-        override fun getFragment() = AuthorizationFragment()
-    }
+object ShowAuthFragment : SupportAppScreen() {
+    override fun getFragment() = AuthorizationFragment.getInstance()
+}
 
-    object ShowMainScreenFragment : SupportAppScreen() {
-        override fun getFragment() = MainScreenFragment()
-    }
+object ShowMainScreenFragment : SupportAppScreen() {
+    override fun getFragment() = MainScreenFragment.getInstance()
+}
 
-    class ShowProjectsFragment(val date:String) : SupportAppScreen() {
-        override fun getFragment() = ProjectsFragment(date)
-    }
+class ShowProjectsFragment(val date: String) : SupportAppScreen() {
+    override fun getFragment() = ProjectsFragment.getInstance(date)
 }

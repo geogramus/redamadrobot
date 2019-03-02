@@ -7,8 +7,8 @@ import javax.inject.Inject
 class ResourceManagerProviderImpl @Inject constructor(private val context: Context) : ResourceManagerProvider {
 
     companion object {
-        private const val SHARED_PREFERENCES_NAME_TOKEN = "name_tooken"
-        private const val SHARED_PREFERENCES_TOKEN = "tooken"
+        private const val SHARED_PREFERENCES_NAME_TOKEN = "name_token"
+        private const val SHARED_PREFERENCES_TOKEN = "token"
     }
 
     override fun getString(id: Int): String {

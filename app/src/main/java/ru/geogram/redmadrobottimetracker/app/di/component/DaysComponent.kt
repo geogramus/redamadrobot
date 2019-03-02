@@ -3,6 +3,7 @@ package ru.geogram.redmadrobottimetracker.app.di.component
 import dagger.Subcomponent
 import ru.geogram.redmadrobottimetracker.app.di.module.DaysModule
 import ru.geogram.redmadrobottimetracker.app.di.scope.DaysScope
+import ru.geogram.redmadrobottimetracker.app.presentation.fragments.DaysTasksFragment
 import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.MainScreenViewModel
 import ru.geogram.redmadrobottimetracker.app.providers.navigation.NavigationProviderImpl
 
@@ -14,5 +15,6 @@ interface DaysComponent {
         fun build(): DaysComponent
     }
 
+    fun inject(daysTasksFragment: DaysTasksFragment)
     fun daysTasksFragmentViewModel(): MainScreenViewModel
 }

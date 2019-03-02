@@ -32,6 +32,14 @@ class MainActivity: AppCompatActivity() {
     lateinit var navigatorHolder: NavigatorHolder
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var screenState: LoadingStateDelegate
+
+    private val navigator = object : SupportAppNavigator(this, R.id.mainContainer) {
+        override fun applyCommands(commands: Array<Command>) {
+            super.applyCommands(commands)
+            supportFragmentManager.executePendingTransactions()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,11 +60,4 @@ class MainActivity: AppCompatActivity() {
         super.onPause()
     }
 
-
-    private val navigator = object : SupportAppNavigator(this, R.id.mainContainer) {
-        override fun applyCommands(commands: Array<Command>) {
-            super.applyCommands(commands)
-            supportFragmentManager.executePendingTransactions()
-        }
-    }
 }

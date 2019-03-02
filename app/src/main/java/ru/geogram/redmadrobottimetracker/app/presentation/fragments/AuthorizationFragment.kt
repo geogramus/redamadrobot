@@ -29,6 +29,12 @@ import saschpe.android.customtabs.WebViewFallback
 
 
 class AuthorizationFragment : Fragment() {
+
+    companion object {
+        fun getInstance(): AuthorizationFragment = AuthorizationFragment()
+        const val REDMADROBOT_SITE = "https://redmadrobot.com"
+    }
+
     private val okString = "Ок"
     private lateinit var screenState: LoadingStateDelegate
     private lateinit var viewModel: AuthoriztionViewModel
@@ -41,8 +47,12 @@ class AuthorizationFragment : Fragment() {
         viewModel = getViewModel(viewModelFactory)
 
         fragmentView.fragment_authorization_auth_btn.setOnClickListener {
-            viewModel.auth(LoginPassword(fragmentView.fragment_authorization_email_edit_text.text.toString(),
-                    fragmentView.fragment_authorization_password_edit_text.text.toString()))
+            viewModel.auth(
+                LoginPassword(
+                    fragmentView.fragment_authorization_email_edit_text.text.toString(),
+                    fragmentView.fragment_authorization_password_edit_text.text.toString()
+                )
+            )
 
         }
 
@@ -117,9 +127,4 @@ class AuthorizationFragment : Fragment() {
         }
     }
 
-
-
-    companion object {
-        const val REDMADROBOT_SITE = "https://redmadrobot.com"
-    }
 }

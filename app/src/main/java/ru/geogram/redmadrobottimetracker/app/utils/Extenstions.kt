@@ -15,17 +15,6 @@ import ru.geogram.redmadrobottimetracker.app.R
 import java.util.*
 import java.text.SimpleDateFormat
 
-
-fun parseServerError(code: String, description: String): String {
-    var errorString = ""
-    when (code) {
-        "400" -> errorString = "Ошибка валидации\n${description}"
-        "401" -> errorString = "Неправильный email или пароль\n${description}"
-        else -> errorString = "Что то пошло не так"
-    }
-    return errorString
-}
-
 fun Fragment.showSnackBar(activity: Context, text: String, buttonText: String) {
     val snack = SnackBar((activity as Activity?), text, buttonText, View.OnClickListener {
     })
@@ -48,18 +37,13 @@ fun View.Gone() {
 fun <T> applySchedulers(): SingleTransformer<T, T> {
     return SingleTransformer { single ->
         single.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 }
 
-fun Button.disable() {
-    background = context.getDrawable(R.drawable.buttong_bg_red_rounded_disabled)
-    isClickable = false
-    isEnabled = false
-}
-
-fun Button.enable() {
-    background = context.getDrawable(R.drawable.buttong_bg_red_rounded_enabled)
-    isClickable = true
-    isEnabled = true
+fun Button.isEnable(isEnable: Boolean) {
+    background = if (isEnable) context.getDrawable(R.drawable.buttong_bg_red_rounded_enabled)
+    else context.getDrawable(R.drawable.buttong_bg_red_rounded_disabled)
+    isClickable = isEnable
+    isEnabled = isEnable
 }
