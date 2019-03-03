@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/auth_et_text_color</color>
+    <color name="colorPrimaryDark">@color/grey</color>
+    <color name="colorAccent">@color/red_redmarobot_color</color>
+    <color name="grey">#3a3c3f</color>
+    <color name="red_redmarobot_color">#ff4433</color>
+    <color name="button_color_disabled">#40ff4433</color>
+    <color name="auth_et_text_color">#b8bec5</color>
+    <color name="status_bar_grey">#5926282a</color>
+    <color name="projects_list_background">#fafafa</color>
+    <color name="background_description_edit_text">#4cd4d9df</color>
+</resources>

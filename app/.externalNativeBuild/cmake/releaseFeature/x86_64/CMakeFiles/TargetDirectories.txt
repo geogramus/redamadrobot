@@ -1,3 +1,0 @@
-C:/Users/geogram/Documents/RedMadRobotTimeTracker/app/.externalNativeBuild/cmake/releaseFeature/x86_64/CMakeFiles/native-lib.dir
-C:/Users/geogram/Documents/RedMadRobotTimeTracker/app/.externalNativeBuild/cmake/releaseFeature/x86_64/CMakeFiles/edit_cache.dir
-C:/Users/geogram/Documents/RedMadRobotTimeTracker/app/.externalNativeBuild/cmake/releaseFeature/x86_64/CMakeFiles/rebuild_cache.dir

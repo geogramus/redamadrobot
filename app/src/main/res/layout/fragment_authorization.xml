@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/fragment_authorization_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="fragment_authorization_registration_tv,
+            fragment_authorization_password_question,
+            fragment_authorization_auth_btn,
+            fragment_authorization_password_edit_text,
+            fragment_authorization_email_edit_text,
+            fragment_authorization_enter_for_robots,
+            fragment_authorization_logo" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/fragment_authorization_content_not_valid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="
+        fragment_authorization_email_for_outstaffer_tv,
+        fragment_authorization_incorrect_login_tv" />
+
+    <TextView
+        android:id="@+id/fragment_authorization_registration_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/registraion"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/text_size_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fragment_authorization_password_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="41dp"
+        android:padding="10dp"
+        android:text="@string/password_question"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/text_size_text_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/fragment_authorization_auth_btn"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="22dp"
+        android:background="@drawable/buttong_bg_red_rounded_enabled"
+        android:minHeight="@dimen/min_height"
+        android:padding="12dp"
+        android:text="@string/enter"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_authorization_password_question"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/fragment_authorization_password_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_edittext"
+        android:ems="10"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/auth_et_text_color"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_authorization_auth_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/fragment_authorization_email_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="43dp"
+        android:background="@drawable/bg_edittext"
+        android:ems="10"
+        android:hint="@string/email_hint"
+        android:inputType="textEmailAddress"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/auth_et_text_color"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_authorization_password_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/fragment_authorization_enter_for_robots"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="43dp"
+        android:background="@drawable/backgound_red_corner"
+        android:gravity="center"
+        android:minHeight="@dimen/min_height"
+        android:text="@string/enter_for_robots"
+        android:textColor="@color/grey"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_authorization_email_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/fragment_authorization_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="48dp"
+        android:contentDescription="logo"
+        android:minWidth="180dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_authorization_enter_for_robots"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_img_rmr_logo" />
+
+    <TextView
+        android:id="@+id/fragment_authorization_email_for_outstaffer_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/fragment_authorization_email_for_outstaffer"
+        android:textColor="@color/red_redmarobot_color"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_authorization_email_edit_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragment_authorization_email_edit_text"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/fragment_authorization_incorrect_login_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="-8dp"
+        android:text="@string/fragment_authorization_incorrect_login_tv"
+        android:textColor="@color/red_redmarobot_color"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_authorization_email_edit_text" />
+
+    <ProgressBar
+        android:id="@+id/fragment_authorization_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:minHeight="100dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

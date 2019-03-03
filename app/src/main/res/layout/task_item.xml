@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/backgound_light_grey_corner">
+
+    <TextView
+        android:id="@+id/task_item_name_of_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        tools:text="Такси Командир" />
+
+    <TextView
+        android:id="@+id/task_item_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/task_item_name_of_task"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="13dp"
+        android:textColor="@color/auth_et_text_color"
+        android:textSize="14sp"
+        tools:text="Такси Командир" />
+
+    <TextView
+        android:id="@+id/task_item_hours_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        tools:text="8ч" />
+</RelativeLayout>

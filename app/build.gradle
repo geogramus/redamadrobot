@@ -1,39 +1,68 @@
-apply plugin: 'com.android.feature'
-
+apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+
 
 android {
-    compileSdkVersion 28
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion build_versions.compile_sdk
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        externalNativeBuild {
-            cmake {
-                cppFlags ""
-            }
-        }
-    }
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
-        }
+        applicationId "ru.geogram.redmadrobottimetracker"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode globalConfiguration.versionCode
+        versionName globalConfiguration.versionName
+        vectorDrawables.useSupportLibrary = true
+
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation project(':data')
-    implementation project(':domain')
-    implementation project(':base')
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation "android.arch.lifecycle:extensions:1.1.1"
-    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+    implementation(
+            fileTree(dir: 'libs', include: ['*.jar']),
+
+            project(':domain'),
+            project(':data'),
+
+            deps.support.app_compat,
+
+            deps.ui.constraint_layout,
+            deps.ui.material_design,
+
+            deps.ui.stateDelegator,
+
+            deps.arch.lifecycle,
+
+            deps.support.design,
+
+            deps.navigation.cicerone,
+
+            deps.kotlin.stdlib,
+
+            deps.rx.java,
+            deps.rx.android,
+
+            deps.customtabs.tabs,
+
+            deps.lottie.anim,
+
+            deps.dagger.runtime
+    )
+    implementation 'com.google.code.gson:gson:2.8.5'//знаю что так неправильно но через dep.gradle file
+    // не получается подключить
+    testImplementation(
+            deps.test.junit,
+            deps.test.roboelectric
+    )
+
+    kapt(
+            deps.arch.compiler,
+            deps.dagger.compiler
+    )
+    implementation 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
 }
