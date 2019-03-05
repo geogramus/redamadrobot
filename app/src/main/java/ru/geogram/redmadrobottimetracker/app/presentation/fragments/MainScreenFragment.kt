@@ -20,6 +20,7 @@ import ru.geogram.redmadrobottimetracker.app.utils.observe
 import ru.geogram.redmadrobottimetracker.app.utils.showSnackBar
 import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
 import androidx.viewpager.widget.ViewPager
+import com.jakewharton.rxbinding3.view.clicks
 import com.redmadrobot.lib.sd.LoadingStateDelegate
 import kotlinx.android.synthetic.main.fragment_main_screen.*
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
@@ -66,8 +67,8 @@ class MainScreenFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         screenState = LoadingStateDelegate(
-            fragment_main_screen_view_pager_task,
-            fragment_main_screen_progress_bar
+                fragment_main_screen_view_pager_task,
+                fragment_main_screen_progress_bar
         )
         viewPagerTaskAdapter = ViewPagerTaskAdapter(requireFragmentManager(), daysInfo)
         viewPagerWeekAdapter = ViewPagerWeekAdapter(getChildFragmentManager())
@@ -75,18 +76,18 @@ class MainScreenFragment : BaseFragment() {
         fragment_main_screen_view_pager_date.setCurrentItem(viewPagerWeekAdapter.getDefaultPosition())
         fragment_main_screen_view_pager_task.adapter = viewPagerTaskAdapter
         fragment_main_screen_view_pager_date.addOnPageChangeListener(changedListener)
-        fragment_main_screen_arrow_back.setOnClickListener {
+        fragment_main_screen_arrow_back.clicks().subscribe {
             fragment_main_screen_view_pager_date.setCurrentItem(
-                fragment_main_screen_view_pager_date.currentItem - nextPreviousDatePosition,
-                true
+                    fragment_main_screen_view_pager_date.currentItem - nextPreviousDatePosition,
+                    true
             )
-        }
-        fragment_main_screen_arrow_forward.setOnClickListener {
+        }.disposeOnDetach()
+        fragment_main_screen_arrow_forward.clicks().subscribe {
             fragment_main_screen_view_pager_date.setCurrentItem(
-                fragment_main_screen_view_pager_date.currentItem + nextPreviousDatePosition,
-                true
+                    fragment_main_screen_view_pager_date.currentItem + nextPreviousDatePosition,
+                    true
             )
-        }
+        }.disposeOnDetach()
     }
 
     private fun onUserChanged(viewState: ViewState) {
@@ -99,9 +100,9 @@ class MainScreenFragment : BaseFragment() {
                     view?.fragment_main_screen_view_pager_task?.adapter = viewPagerTaskAdapter
                 } ?: {
                     showSnackBar(
-                        requireActivity(),
-                        getString(R.string.fragment_authorization_error),
-                        getString(R.string.ok_string)
+                            requireActivity(),
+                            getString(R.string.fragment_authorization_error),
+                            getString(R.string.ok_string)
                     )
                 }()
             }
@@ -109,11 +110,13 @@ class MainScreenFragment : BaseFragment() {
                 screenState.showLoading()
             }
             is ErrorViewState -> {
-                showSnackBar(
-                    requireActivity(),
-                    getString(R.string.fragment_authorization_error_server),
-                    getString(R.string.ok_string)
-                )
+                viewState.th.message?.let {
+                    showSnackBar(
+                            requireActivity(),
+                            it,
+                            getString(R.string.ok_string)
+                    )
+                }
             }
         }
     }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
+import com.jakewharton.rxbinding3.view.clicks
 import kotlinx.android.synthetic.main.fragment_day_of_week.*
 import ru.geogram.domain.model.days.SingleDayInfo
 import ru.geogram.redmadrobottimetracker.app.R
@@ -31,15 +32,6 @@ class DaysTasksFragment : BaseFragment() {
     lateinit var router: RouterProvider
     private var dayInfo: SingleDayInfo? = null
 
-    val listenerNewTask = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-            dayInfo?.date?.let {
-                val bundle = Bundle()
-                bundle.putString(NEW_DAY_DATE, it)
-                router.provideRouter().navigateTo(ShowProjectsFragment(bundle))
-            }
-        }
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -64,6 +56,12 @@ class DaysTasksFragment : BaseFragment() {
                 fragment_day_of_week_hours.text = hoursString
             }
         }
-        fragment_day_of_week_new_task_btn.setOnClickListener(listenerNewTask)
+        fragment_day_of_week_new_task_btn.clicks().subscribe{
+            dayInfo?.date?.let {
+                val bundle = Bundle()
+                bundle.putString(NEW_DAY_DATE, it)
+                router.provideRouter().navigateTo(ShowProjectsFragment(bundle))
+            }
+        }.disposeOnDetach()
     }
 }

@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.afterTextChangeEvents
+import com.jakewharton.rxbinding3.widget.textChanges
 import com.redmadrobot.lib.sd.LoadingStateDelegate
 import kotlinx.android.synthetic.main.fragment_projects_list.*
 import kotlinx.android.synthetic.main.fragment_projects_list.view.*
@@ -48,43 +50,6 @@ class ProjectsFragment : BaseFragment(), ProjectListCalback {
     private var descriptionString = ""
     private var date: String = ""
 
-    val listenerCancel = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-            router.provideRouter().exit()
-        }
-    }
-
-    val listenerSetDate = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-            val listener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                setMinutes = hourOfDay * MINUTES_HOUR + minute
-                timeIsSet = true
-                fragment_project_list_set_time?.setTextColor(getColor(requireContext(), R.color.grey))
-                fragment_project_list_set_time?.text = getString(R.string.time_hours_mins, hourOfDay, minute)
-                fragment_project_list_new_project?.isEnable(timeIsSet && fragment_project_list_add_description?.text?.isNotEmpty()!!)
-            }
-            TimePickerDialog(activity, listener, 0, 0, true).show()
-        }
-    }
-
-    val listenerButton = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-            viewModel.payloadTime(PayloadInfo(project.id, setMinutes, date, descriptionString))
-        }
-    }
-
-    val descriptionWatcher = object : TextWatcher {
-        override fun afterTextChanged(editedString: Editable?) {
-        }
-
-        override fun beforeTextChanged(editedString: CharSequence?, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(editedString: CharSequence?, start: Int, before: Int, count: Int) {
-            fragment_project_list_new_project.isEnable(timeIsSet && editedString.toString().isNotEmpty())
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val fragmentView = inflater.inflate(R.layout.fragment_projects_list, container, false)
@@ -105,19 +70,48 @@ class ProjectsFragment : BaseFragment(), ProjectListCalback {
         fragment_projects_list_recycler.adapter = projectsAdapter
         fragment_projects_list_recycler.layoutManager = LinearLayoutManager(activity)
         screenState = LoadingStateDelegate(
-            fragment_projects_list_recycler,
-            fragment_projects_list_progress_bar
+                fragment_projects_list_recycler,
+                fragment_projects_list_progress_bar
         )
-        fragment_project_list_icn_close.setOnClickListener(listenerCancel)
-        fragment_project_list_set_time.setOnClickListener(listenerSetDate)
-        fragment_project_list_add_description.addTextChangedListener(descriptionWatcher)
-        fragment_project_list_new_project.setOnClickListener(listenerButton)
+
+        fragment_project_list_icn_close.clicks()
+                .subscribe {
+                    router.provideRouter().exit()
+                }
+                .disposeOnDetach()
+
+        fragment_project_list_set_time.clicks().subscribe {
+            val listener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                setMinutes = hourOfDay * MINUTES_HOUR + minute
+                timeIsSet = true
+                fragment_project_list_set_time?.setTextColor(getColor(requireContext(), R.color.grey))
+                fragment_project_list_set_time?.text = getString(R.string.time_hours_mins, hourOfDay, minute)
+                fragment_project_list_new_project?.isEnable(timeIsSet && fragment_project_list_add_description?.text?.isNotEmpty()!!)
+
+            }
+            TimePickerDialog(activity, listener, 0, 0, true).show()
+        }
+                .disposeOnDetach()
+        fragment_project_list_add_description.textChanges()
+                .skipInitialValue()
+                .subscribe {
+                    fragment_project_list_new_project.isEnable(timeIsSet && it.toString().isNotEmpty())
+                    descriptionString = it.toString()
+                }
+                .disposeOnDetach()
+        fragment_project_list_new_project.clicks()
+                .debounce(DEBOUNCE_TIME, TimeUnit.MILLISECONDS)
+                .subscribe {
+                    viewModel.payloadTime(PayloadInfo(project.id, setMinutes, date, descriptionString))
+                }
+                .disposeOnDetach()
+
         fragment_projects_list_search_et.afterTextChangeEvents()
-            .skipInitialValue()
-            .debounce(DEBOUNCE_TIME, TimeUnit.MILLISECONDS)
-            .filter { it.editable?.isEmpty() == true || it.editable?.length ?: 0 >= MIN_SEARCH_LETTERS_COUNT }
-            .subscribe { viewModel.onSearchProjectTextChanged(it.editable.toString()) }
-            .disposeOnDetach()
+                .skipInitialValue()
+                .debounce(DEBOUNCE_TIME, TimeUnit.MILLISECONDS)
+                .filter { it.editable?.isEmpty() == true || it.editable?.length ?: 0 >= MIN_SEARCH_LETTERS_COUNT }
+                .subscribe { viewModel.onSearchProjectTextChanged(it.editable.toString()) }
+                .disposeOnDetach()
     }
 
     override fun onProjectClick(project: ProjectInf) {
@@ -141,9 +135,9 @@ class ProjectsFragment : BaseFragment(), ProjectListCalback {
             is ErrorViewStateProjects -> {
                 viewState.th.message?.let {
                     showSnackBar(
-                        requireActivity(),
-                        it,
-                        getString(R.string.ok_string)
+                            requireActivity(),
+                            it,
+                            getString(R.string.ok_string)
                     )
                 }
             }
@@ -155,19 +149,21 @@ class ProjectsFragment : BaseFragment(), ProjectListCalback {
             is Data -> {
                 viewState.payloadSucces?.let {
                     showSnackBar(
-                        requireActivity(),
-                        "${it.project_name} ${getString(R.string.succes_writing)}",
-                        getString(R.string.ok_string)
+                            requireActivity(),
+                            "${it.project_name} ${getString(R.string.succes_writing)}",
+                            getString(R.string.ok_string)
                     )
                 }
                 router.provideRouter().exit()
             }
             is ErrorViewState -> {
-                showSnackBar(
-                    requireActivity(),
-                    getString(R.string.fragment_authorization_error_server),
-                    getString(R.string.ok_string)
-                )
+                viewState.th.message?.let {
+                    showSnackBar(
+                            requireActivity(),
+                            it,
+                            getString(R.string.ok_string)
+                    )
+                }
             }
         }
     }

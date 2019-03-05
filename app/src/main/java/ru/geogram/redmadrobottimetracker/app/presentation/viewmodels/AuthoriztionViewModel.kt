@@ -6,6 +6,7 @@ import javax.inject.Inject
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import ru.geogram.redmadrobottimetracker.app.presentation.ShowMainScreenFragment
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
@@ -15,8 +16,9 @@ import ru.geogram.redmadrobottimetracker.app.utils.schedulersToMain
 
 
 class AuthoriztionViewModel @Inject constructor(
-    private val authService: AuthRepository,
-    private val provider: RouterProvider
+        private val authService: AuthRepository,
+        private val provider: RouterProvider,
+        private val resources: ResourceManagerProvider
 ) : BaseViewModel() {
     val router by lazy {
         provider.provideRouter()
@@ -27,19 +29,20 @@ class AuthoriztionViewModel @Inject constructor(
     fun auth(model: LoginPassword) {
         auth.postValue(Loading)
         val disposable = authService
-            .auth(model)
-            .schedulersToMain()
-            .subscribe({
-                router.newRootScreen(ShowMainScreenFragment)
-            },
-                {
-                    auth.postValue(
-                        ErrorViewState(
-                            it
-                        )
-                    )
-                    it.printStackTrace()
-                })
+                .auth(model)
+                .schedulersToMain()
+                .subscribe({
+                    router.newRootScreen(ShowMainScreenFragment)
+                    resources.setLoginPassword(model)
+                },
+                        {
+                            auth.postValue(
+                                    ErrorViewState(
+                                            it
+                                    )
+                            )
+                            it.printStackTrace()
+                        })
 
         safeSubscribe { disposable }
     }

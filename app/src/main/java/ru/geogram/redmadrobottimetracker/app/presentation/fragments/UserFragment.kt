@@ -55,11 +55,14 @@ class UserFragment : BaseFragment() {
                 }()
             }
             is ErrorViewState -> {
-                showSnackBar(
-                    requireActivity(),
-                    getString(R.string.fragment_authorization_error_server),
-                    getString(R.string.ok_string)
-                )
+                viewState.th.message?.let {
+                    showSnackBar(
+                            requireActivity(),
+                            it,
+                            getString(R.string.ok_string)
+                    )
+                }
+
                 viewState.user?.userInfo?.let {
                     setUserInfo(it)
                 }

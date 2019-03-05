@@ -14,8 +14,8 @@ import ru.geogram.redmadrobottimetracker.app.utils.schedulersToMain
 import javax.inject.Inject
 
 class ProjectsFragmentViewModel @Inject constructor(
-    private val projectsService: ProjectsRepository,
-    private val provider: RouterProvider
+        private val projectsService: ProjectsRepository,
+        private val provider: RouterProvider
 ) : BaseViewModel() {
 
     val projects: MutableLiveData<ProjectsViewState> = MutableLiveData()
@@ -27,33 +27,33 @@ class ProjectsFragmentViewModel @Inject constructor(
         loadProjects()
         safeSubscribe {
             publishRelay
-                .map(::filterProjectsByName)
-                .map<ProjectsViewState> {
-                    DataProjects(ProjectsInfo(it))
-                }
-                .startWith(LoadingProjects)
-                .onErrorReturn(::ErrorViewStateProjects)
-                .schedulersToMain()
-                .subscribe { projects.value = it }
+                    .map(::filterProjectsByName)
+                    .map<ProjectsViewState> {
+                        DataProjects(ProjectsInfo(it))
+                    }
+                    .startWith(LoadingProjects)
+                    .onErrorReturn(::ErrorViewStateProjects)
+                    .schedulersToMain()
+                    .subscribe { projects.value = it }
         }
     }
 
     private fun loadProjects() {
         safeSubscribe {
             projectsService
-                .getProjects(false)
-                .schedulersToMain()
-                .subscribe({
-                    projectsList.clear()
-                    projectsList.addAll(it.projectList)
-                    projects.postValue(DataProjects(it))
-                },
-                    {
-                        projects.postValue(
-                            ErrorViewStateProjects(it)
-                        )
-                        it.printStackTrace()
-                    })
+                    .getProjects(false)
+                    .schedulersToMain()
+                    .subscribe({
+                        projectsList.clear()
+                        projectsList.addAll(it.projectList)
+                        projects.postValue(DataProjects(it))
+                    },
+                            {
+                                projects.postValue(
+                                        ErrorViewStateProjects(it)
+                                )
+                                it.printStackTrace()
+                            })
         }
     }
 
@@ -61,17 +61,17 @@ class ProjectsFragmentViewModel @Inject constructor(
         payloadTime.postValue(Loading)
         safeSubscribe {
             projectsService
-                .payload(payloadInfo)
-                .schedulersToMain()
-                .subscribe({
-                    payloadTime.postValue(Data(payloadSucces = it))
-                },
-                    {
-                        payloadTime.postValue(
-                            ErrorViewState(it)
-                        )
-                        it.printStackTrace()
-                    })
+                    .payload(payloadInfo)
+                    .schedulersToMain()
+                    .subscribe({
+                        payloadTime.postValue(Data(payloadSucces = it))
+                    },
+                            {
+                                payloadTime.postValue(
+                                        ErrorViewState(it)
+                                )
+                                it.printStackTrace()
+                            })
         }
     }
 
@@ -82,7 +82,7 @@ class ProjectsFragmentViewModel @Inject constructor(
     private fun filterProjectsByName(name: String): ArrayList<ProjectInf> {
         val projectsListFinal = ArrayList<ProjectInf>()
         projectsListFinal.addAll(projectsList.filter { it.name.toLowerCase().contains(name.toLowerCase()) }
-            .sortedBy { it.name })
+                .sortedBy { it.name })
         return projectsListFinal
     }
 
