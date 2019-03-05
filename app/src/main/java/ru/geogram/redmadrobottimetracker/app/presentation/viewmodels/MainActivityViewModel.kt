@@ -9,13 +9,13 @@ import ru.geogram.redmadrobottimetracker.app.presentation.ShowMainScreenFragment
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
 import ru.geogram.redmadrobottimetracker.app.providers.navigation.RouterProvider
-import ru.geogram.redmadrobottimetracker.app.utils.applySchedulers
+import ru.geogram.redmadrobottimetracker.app.utils.schedulersToMain
 import javax.inject.Inject
 
 
 class MainActivityViewModel @Inject constructor(
-        private val authService: AuthRepository,
-        private val provider: RouterProvider
+    private val authService: AuthRepository,
+    private val provider: RouterProvider
 ) : BaseViewModel() {
     val router by lazy {
         provider.provideRouter()
@@ -30,15 +30,15 @@ class MainActivityViewModel @Inject constructor(
     fun authCheck() {
         check.postValue(Loading)
         val disposable = authService
-                .authCheck()
-                .compose(applySchedulers())
-                .subscribe({
-                    router.newRootScreen(ShowMainScreenFragment)
-                },
-                        {
-                            router.newRootScreen(ShowAuthFragment)
-                            it.printStackTrace()
-                        })
+            .authCheck()
+            .schedulersToMain()
+            .subscribe({
+                router.newRootScreen(ShowMainScreenFragment)
+            },
+                {
+                    router.newRootScreen(ShowAuthFragment)
+                    it.printStackTrace()
+                })
         safeSubscribe { disposable }
     }
 }

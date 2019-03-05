@@ -18,11 +18,12 @@ import ru.geogram.redmadrobottimetracker.app.utils.Utils
 import javax.inject.Inject
 
 
-class DaysTasksFragment : Fragment() {
+class DaysTasksFragment : BaseFragment() {
 
     companion object {
         fun getInstance(): DaysTasksFragment = DaysTasksFragment()
         const val DAY_TASKS = "day_position"
+        const val NEW_DAY_DATE = "new_day_date"
     }
 
     private lateinit var projectsAdapters: ProjectsAdapter
@@ -33,7 +34,9 @@ class DaysTasksFragment : Fragment() {
     val listenerNewTask = object : View.OnClickListener {
         override fun onClick(v: View?) {
             dayInfo?.date?.let {
-                router.provideRouter().navigateTo(ShowProjectsFragment(it))
+                val bundle = Bundle()
+                bundle.putString(NEW_DAY_DATE, it)
+                router.provideRouter().navigateTo(ShowProjectsFragment(bundle))
             }
         }
     }

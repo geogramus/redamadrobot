@@ -33,14 +33,6 @@ fun View.Gone() {
     visibility = View.GONE
 }
 
-
-fun <T> applySchedulers(): SingleTransformer<T, T> {
-    return SingleTransformer { single ->
-        single.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-    }
-}
-
 fun Button.isEnable(isEnable: Boolean) {
     background = if (isEnable) context.getDrawable(R.drawable.buttong_bg_red_rounded_enabled)
     else context.getDrawable(R.drawable.buttong_bg_red_rounded_disabled)

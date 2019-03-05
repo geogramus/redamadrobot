@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_main_screen.*
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
 
 
-class MainScreenFragment : Fragment() {
+class MainScreenFragment : BaseFragment() {
 
     companion object {
         fun getInstance(): MainScreenFragment = MainScreenFragment()

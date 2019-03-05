@@ -31,7 +31,7 @@ dependencies {
 
             deps.ui.constraint_layout,
             deps.ui.material_design,
-
+            deps.ui.rx_bindings,
             deps.ui.stateDelegator,
 
             deps.arch.lifecycle,
@@ -44,6 +44,7 @@ dependencies {
 
             deps.rx.java,
             deps.rx.android,
+            deps.rx.relay,
 
             deps.customtabs.tabs,
 

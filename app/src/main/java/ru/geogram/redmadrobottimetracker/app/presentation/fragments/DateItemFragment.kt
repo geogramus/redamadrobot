@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.date_item.view.*
 import ru.geogram.redmadrobottimetracker.app.R
 import ru.geogram.redmadrobottimetracker.app.utils.Utils
 
-class DateItemFragment : Fragment() {
+class DateItemFragment : BaseFragment() {
 
     companion object {
         const val DATE_POSITION = "date_position"

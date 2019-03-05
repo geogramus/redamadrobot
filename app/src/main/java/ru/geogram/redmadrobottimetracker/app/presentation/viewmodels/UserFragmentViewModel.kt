@@ -7,7 +7,7 @@ import ru.geogram.domain.repositories.AuthRepository
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Data
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
-import ru.geogram.redmadrobottimetracker.app.utils.applySchedulers
+import ru.geogram.redmadrobottimetracker.app.utils.schedulersToMain
 import javax.inject.Inject
 
 
@@ -20,22 +20,22 @@ class UserFragmentViewModel @Inject constructor(private val authService: AuthRep
     }
 
     fun userInfo() {
-        val disposable = authService
+        safeSubscribe {
+            authService
                 .getProfile()
-                .compose(applySchedulers())
+                .schedulersToMain()
                 .subscribe({
                     check.postValue(Data(it))
                 },
-                        {
-                            check.postValue(
-                                    ErrorViewState(
-                                            it,
-                                            authService.getProfileFromDatabase()
-                                    )
+                    {
+                        check.postValue(
+                            ErrorViewState(
+                                it,
+                                authService.getProfileFromDatabase()
                             )
-                            it.printStackTrace()
-                        })
-
-        safeSubscribe { disposable }
+                        )
+                        it.printStackTrace()
+                    })
+        }
     }
 }

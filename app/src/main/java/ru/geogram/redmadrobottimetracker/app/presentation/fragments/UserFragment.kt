@@ -20,7 +20,7 @@ import ru.geogram.redmadrobottimetracker.app.utils.observe
 import ru.geogram.redmadrobottimetracker.app.utils.showSnackBar
 import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
 
-class UserFragment : Fragment() {
+class UserFragment : BaseFragment() {
 
     companion object {
         fun getInstance(): UserFragment = UserFragment()
@@ -48,7 +48,7 @@ class UserFragment : Fragment() {
                     setUserInfo(it)
                 } ?: {
                     showSnackBar(
-                        context!!,
+                        requireActivity(),
                         getString(R.string.fragment_authorization_error),
                         getString(R.string.ok_string)
                     )
@@ -56,7 +56,7 @@ class UserFragment : Fragment() {
             }
             is ErrorViewState -> {
                 showSnackBar(
-                    context!!,
+                    requireActivity(),
                     getString(R.string.fragment_authorization_error_server),
                     getString(R.string.ok_string)
                 )

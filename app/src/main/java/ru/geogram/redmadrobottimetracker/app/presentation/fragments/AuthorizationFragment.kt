@@ -21,6 +21,7 @@ import ru.geogram.domain.model.projects.PayloadInfo
 import ru.geogram.redmadrobottimetracker.app.di.DI
 import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.AuthoriztionViewModel
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Data
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
 import ru.geogram.redmadrobottimetracker.app.utils.*
@@ -28,7 +29,7 @@ import saschpe.android.customtabs.CustomTabsHelper
 import saschpe.android.customtabs.WebViewFallback
 
 
-class AuthorizationFragment : Fragment() {
+class AuthorizationFragment : BaseFragment() {
 
     companion object {
         fun getInstance(): AuthorizationFragment = AuthorizationFragment()
@@ -118,10 +119,10 @@ class AuthorizationFragment : Fragment() {
             is Loading -> {
                 screenState.showLoading()
             }
-            is Error -> {
+            is ErrorViewState -> {
                 val error = viewState
-                error.message?.let {
-                    showSnackBar(context!!, it, okString)
+                error.th.let {
+                    showSnackBar(context!!, it.message.toString(), okString)
                 }
             }
         }

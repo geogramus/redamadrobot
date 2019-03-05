@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jakewharton.rxbinding3.widget.afterTextChangeEvents
 import com.redmadrobot.lib.sd.LoadingStateDelegate
 import kotlinx.android.synthetic.main.fragment_projects_list.*
 import kotlinx.android.synthetic.main.fragment_projects_list.view.*
@@ -21,19 +22,18 @@ import ru.geogram.redmadrobottimetracker.app.di.DI
 import ru.geogram.redmadrobottimetracker.app.presentation.adapters.ProjectsListAdapter
 import ru.geogram.redmadrobottimetracker.app.presentation.calbacks.ProjectListCalback
 import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.ProjectsFragmentViewModel
-import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Data
-import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
-import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
-import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.*
 import ru.geogram.redmadrobottimetracker.app.providers.navigation.RouterProvider
 import ru.geogram.redmadrobottimetracker.app.utils.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-@SuppressLint("ValidFragment")
-class ProjectsFragment(val date: String) : Fragment(), ProjectListCalback {
+class ProjectsFragment : BaseFragment(), ProjectListCalback {
 
     companion object {
-        fun getInstance(date: String): ProjectsFragment = ProjectsFragment(date)
+        fun getInstance(): ProjectsFragment = ProjectsFragment()
+        private const val DEBOUNCE_TIME = 300L
+        private const val MIN_SEARCH_LETTERS_COUNT = 1
     }
 
     private val MINUTES_HOUR = 60
@@ -46,6 +46,7 @@ class ProjectsFragment(val date: String) : Fragment(), ProjectListCalback {
     private var setMinutes = 0
     private lateinit var project: ProjectInf
     private var descriptionString = ""
+    private var date: String = ""
 
     val listenerCancel = object : View.OnClickListener {
         override fun onClick(v: View?) {
@@ -97,6 +98,9 @@ class ProjectsFragment(val date: String) : Fragment(), ProjectListCalback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        arguments?.getString(DaysTasksFragment.NEW_DAY_DATE)?.let {
+            date = it
+        }
         projectsAdapter = ProjectsListAdapter(this)
         fragment_projects_list_recycler.adapter = projectsAdapter
         fragment_projects_list_recycler.layoutManager = LinearLayoutManager(activity)
@@ -108,6 +112,12 @@ class ProjectsFragment(val date: String) : Fragment(), ProjectListCalback {
         fragment_project_list_set_time.setOnClickListener(listenerSetDate)
         fragment_project_list_add_description.addTextChangedListener(descriptionWatcher)
         fragment_project_list_new_project.setOnClickListener(listenerButton)
+        fragment_projects_list_search_et.afterTextChangeEvents()
+            .skipInitialValue()
+            .debounce(DEBOUNCE_TIME, TimeUnit.MILLISECONDS)
+            .filter { it.editable?.isEmpty() == true || it.editable?.length ?: 0 >= MIN_SEARCH_LETTERS_COUNT }
+            .subscribe { viewModel.onSearchProjectTextChanged(it.editable.toString()) }
+            .disposeOnDetach()
     }
 
     override fun onProjectClick(project: ProjectInf) {
@@ -117,23 +127,25 @@ class ProjectsFragment(val date: String) : Fragment(), ProjectListCalback {
         view?.fragment_project_list_project_name?.text = project.name
     }
 
-    private fun onProjectsChanged(viewState: ViewState) {
+    private fun onProjectsChanged(viewState: ProjectsViewState) {
         when (viewState) {
-            is Data -> {
+            is DataProjects -> {
                 screenState.showContent()
                 viewState.projects?.let {
                     projectsAdapter.addItems(it.projectList)
                 }
             }
-            is Loading -> {
+            is LoadingProjects -> {
                 screenState.showLoading()
             }
-            is ErrorViewState -> {
-                showSnackBar(
-                    requireActivity(),
-                    getString(R.string.fragment_authorization_error_server),
-                    getString(R.string.ok_string)
-                )
+            is ErrorViewStateProjects -> {
+                viewState.th.message?.let {
+                    showSnackBar(
+                        requireActivity(),
+                        it,
+                        getString(R.string.ok_string)
+                    )
+                }
             }
         }
     }

@@ -15,6 +15,7 @@ class ResourceManagerProviderImpl @Inject constructor(private val context: Conte
         return context.getString(id)
     }
 
+    @Synchronized
     override fun setToken(preferencesValue: String) {
         val sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME_TOKEN, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -22,6 +23,7 @@ class ResourceManagerProviderImpl @Inject constructor(private val context: Conte
         editor.apply()
     }
 
+    @Synchronized
     override fun getToken(): String {
         val sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME_TOKEN, Context.MODE_PRIVATE)
         return sharedPreferences.getString(SHARED_PREFERENCES_TOKEN, "")

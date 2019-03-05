@@ -9,6 +9,5 @@ import ru.geogram.domain.model.projects.ProjectsInfo
 sealed class ViewState
 data class Data(val user: AuthInfo? = null, val days: DaysInfo? = null,
                 val projects: ProjectsInfo? = null, val payloadSucces: PayloadSucces? = null) : ViewState()
-
 object Loading : ViewState()
 data class ErrorViewState(val th: Throwable, val user: AuthInfo? = null, val days: DaysInfo? = null) : ViewState()

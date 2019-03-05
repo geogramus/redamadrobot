@@ -1,5 +1,6 @@
 package ru.geogram.redmadrobottimetracker.app.presentation
 
+import android.os.Bundle
 import ru.geogram.redmadrobottimetracker.app.presentation.fragments.AuthorizationFragment
 import ru.geogram.redmadrobottimetracker.app.presentation.fragments.MainScreenFragment
 import ru.geogram.redmadrobottimetracker.app.presentation.fragments.ProjectsFragment
@@ -18,6 +19,9 @@ object ShowMainScreenFragment : SupportAppScreen() {
     override fun getFragment() = MainScreenFragment.getInstance()
 }
 
-class ShowProjectsFragment(val date: String) : SupportAppScreen() {
-    override fun getFragment() = ProjectsFragment.getInstance(date)
+class ShowProjectsFragment(val bundle: Bundle) : SupportAppScreen() {
+    override fun getFragment():ProjectsFragment {
+        val projectsFragment = ProjectsFragment.getInstance()
+        return projectsFragment
+    }
 }
