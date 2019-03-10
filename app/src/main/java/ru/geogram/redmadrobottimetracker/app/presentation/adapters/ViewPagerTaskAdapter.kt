@@ -1,12 +1,12 @@
 package ru.geogram.redmadrobottimetracker.app.presentation.adapters
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.google.gson.Gson
 import ru.geogram.domain.model.days.SingleDayInfo
 import ru.geogram.redmadrobottimetracker.app.presentation.fragments.DaysTasksFragment
-import android.os.Bundle
-import com.google.gson.Gson
 
 
 class ViewPagerTaskAdapter(val fragmentManager: FragmentManager, val daysList: ArrayList<SingleDayInfo>) :

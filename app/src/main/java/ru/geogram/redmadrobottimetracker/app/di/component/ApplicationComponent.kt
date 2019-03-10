@@ -6,8 +6,6 @@ import dagger.Component
 import ru.geogram.redmadrobottimetracker.app.di.module.ApplicationModule
 import ru.geogram.redmadrobottimetracker.app.di.scope.ApplicationScope
 import ru.geogram.redmadrobottimetracker.app.presentation.activity.MainActivity
-import ru.geogram.redmadrobottimetracker.app.presentation.fragments.DaysTasksFragment
-import ru.geogram.redmadrobottimetracker.app.presentation.fragments.ProjectsFragment
 
 @ApplicationScope
 @Component(modules = [(ApplicationModule::class)])

@@ -4,26 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
+import com.jakewharton.rxbinding3.view.clicks
+import com.redmadrobot.lib.sd.LoadingStateDelegate
+import kotlinx.android.synthetic.main.fragment_main_screen.*
 import kotlinx.android.synthetic.main.fragment_main_screen.view.*
 import ru.geogram.domain.model.days.SingleDayInfo
 import ru.geogram.redmadrobottimetracker.app.R
 import ru.geogram.redmadrobottimetracker.app.di.DI
-import ru.geogram.redmadrobottimetracker.app.presentation.adapters.ViewPagerWeekAdapter
 import ru.geogram.redmadrobottimetracker.app.presentation.adapters.ViewPagerTaskAdapter
+import ru.geogram.redmadrobottimetracker.app.presentation.adapters.ViewPagerWeekAdapter
 import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.MainScreenViewModel
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Data
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
 import ru.geogram.redmadrobottimetracker.app.utils.getViewModel
 import ru.geogram.redmadrobottimetracker.app.utils.observe
 import ru.geogram.redmadrobottimetracker.app.utils.showSnackBar
 import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
-import androidx.viewpager.widget.ViewPager
-import com.jakewharton.rxbinding3.view.clicks
-import com.redmadrobot.lib.sd.LoadingStateDelegate
-import kotlinx.android.synthetic.main.fragment_main_screen.*
-import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
 
 
 class MainScreenFragment : BaseFragment() {

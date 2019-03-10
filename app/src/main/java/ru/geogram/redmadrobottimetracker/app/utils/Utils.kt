@@ -7,7 +7,6 @@ import ru.geogram.domain.model.days.WeekDates
 import ru.geogram.redmadrobottimetracker.app.R
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 @SuppressLint("SimpleDateFormat")
 object Utils {
@@ -20,9 +19,9 @@ object Utils {
             time += it.minutes_spent
         }
         return if (time == 0) {
-           ""
+            ""
         } else {
-           "${(time / MINUTES_IN_HOUR)}"
+            "${(time / MINUTES_IN_HOUR)}"
         }
     }
 

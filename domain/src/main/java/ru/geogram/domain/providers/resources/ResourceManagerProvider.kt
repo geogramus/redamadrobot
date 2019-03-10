@@ -1,6 +1,5 @@
 package ru.geogram.domain.providers.resources
 
-import android.content.Context
 import ru.geogram.domain.model.auth.LoginPassword
 
 interface ResourceManagerProvider {

@@ -2,9 +2,9 @@ package ru.geogram.data.repository.auth
 
 
 import io.reactivex.Single
+import ru.geogram.data.model.converter.AuthConverter
 import ru.geogram.data.model.network.user.LoginModel
 import ru.geogram.data.model.network.user.LoginResponseModel
-import ru.geogram.data.model.converter.AuthConverter
 import ru.geogram.data.network.api.AuthApi
 import ru.geogram.data.storage.db.UserDatabaseInterface
 import ru.geogram.domain.exceptions.network.CreditinalException
@@ -17,11 +17,11 @@ import ru.geogram.domain.repositories.AuthRepository
 import javax.inject.Inject
 
 class AuthDataRepository @Inject constructor(
-    private val schedulers: SchedulersProvider,
-    private val systemInfoProvider: SystemInfoProvider,
-    private val authApi: AuthApi,
-    private val boxStore: UserDatabaseInterface,
-    private val resourceManager: ResourceManagerProvider
+        private val schedulers: SchedulersProvider,
+        private val systemInfoProvider: SystemInfoProvider,
+        private val authApi: AuthApi,
+        private val boxStore: UserDatabaseInterface,
+        private val resourceManager: ResourceManagerProvider
 ) : AuthRepository {
     override fun getProfileFromDatabase(): AuthInfo {
         return AuthConverter.fromDatabase(boxStore.getUser())
@@ -31,26 +31,26 @@ class AuthDataRepository @Inject constructor(
         val cookie = resourceManager.getToken()
         val diskObservable = loadFromDb().subscribeOn(schedulers.computation())
         val networkObservable =
-            getProfileInfo(cookie)
-                .subscribeOn(schedulers.io())
-                .observeOn(schedulers.computation())
-                .map(this::processResponse)
+                getProfileInfo(cookie)
+                        .subscribeOn(schedulers.io())
+                        .observeOn(schedulers.computation())
+                        .map(this::processResponse)
 
         val observable = if (systemInfoProvider.hasNetwork()) networkObservable else diskObservable
         return observable.map<AuthInfo> { it }
-            .observeOn(schedulers.mainThread())
+                .observeOn(schedulers.mainThread())
     }
 
     override fun authCheck(): Single<AuthInfo> {
         val cookie = resourceManager.getToken()
         return authCheckCall(cookie)
-            .subscribeOn(schedulers.io())
-            .observeOn(schedulers.computation())
-            .map(this::processResponse)
-            .onErrorResumeNext(::convertException)
+                .subscribeOn(schedulers.io())
+                .observeOn(schedulers.computation())
+                .map(this::processResponse)
+                .onErrorResumeNext(::convertException)
     }
 
-    private fun convertException(th:Throwable): Single<AuthInfo>{
+    private fun convertException(th: Throwable): Single<AuthInfo> {
         if (th is CreditinalException) {
             return auth(resourceManager.getLoginPassword())
         } else {
@@ -60,18 +60,18 @@ class AuthDataRepository @Inject constructor(
 
     override fun auth(loginModel: LoginPassword): Single<AuthInfo> {
         val diskObservable =
-            loadFromDb()
-                .subscribeOn(schedulers.computation())
+                loadFromDb()
+                        .subscribeOn(schedulers.io())
         val networkObservable =
-            createCall(AuthConverter.convertToLoginModel(loginModel))
-                .subscribeOn(schedulers.io())
-                .observeOn(schedulers.computation())
-                .map(this::processResponse)
-                .map(this::saveCallResult)
-                .flatMap { loadFromDb() }
+                createCall(AuthConverter.convertToLoginModel(loginModel))
+                        .subscribeOn(schedulers.io())
+                        .observeOn(schedulers.computation())
+                        .map(this::processResponse)
+                        .map(this::saveCallResult)
+                        .flatMap { loadFromDb() }
         val observable = if (systemInfoProvider.hasNetwork()) networkObservable else diskObservable
         return observable.map<AuthInfo> { it }
-            .observeOn(schedulers.mainThread())
+                .observeOn(schedulers.mainThread())
     }
 
     private fun authCheckCall(cookie: String) = authApi.authCheck(cookie)

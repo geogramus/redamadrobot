@@ -1,25 +1,19 @@
 package ru.geogram.redmadrobottimetracker.app.presentation.fragments
 
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
-import ru.geogram.redmadrobottimetracker.app.R
 import com.redmadrobot.lib.sd.LoadingStateDelegate
 import kotlinx.android.synthetic.main.fragment_authorization.*
-import kotlinx.android.synthetic.main.fragment_authorization.view.*
-import ru.geogram.data.network.ServerUrls
 import ru.geogram.domain.model.auth.LoginPassword
-import ru.geogram.domain.model.projects.PayloadInfo
+import ru.geogram.redmadrobottimetracker.app.R
 import ru.geogram.redmadrobottimetracker.app.di.DI
 import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.AuthoriztionViewModel
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Data
@@ -29,7 +23,6 @@ import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
 import ru.geogram.redmadrobottimetracker.app.utils.*
 import saschpe.android.customtabs.CustomTabsHelper
 import saschpe.android.customtabs.WebViewFallback
-import java.util.concurrent.TimeUnit
 
 
 class AuthorizationFragment : BaseFragment() {
@@ -38,27 +31,6 @@ class AuthorizationFragment : BaseFragment() {
         fun getInstance(): AuthorizationFragment = AuthorizationFragment()
         const val REDMADROBOT_SITE = "https://redmadrobot.com"
         private val DEBOUNCE_TIME = 200L
-    }
-
-
-    val memoryPassword = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-            val customTabsIntent = CustomTabsIntent.Builder()
-                    .addDefaultShareMenuItem()
-                    .setToolbarColor(
-                            context?.resources?.getColor(R.color.grey)!!
-                    )
-                    .setShowTitle(true)
-                    .build()
-
-            CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent)
-
-            CustomTabsHelper.openCustomTab(
-                    context, customTabsIntent,
-                    Uri.parse(REDMADROBOT_SITE),
-                    WebViewFallback()
-            )
-        }
     }
 
     val onLoginChanged = Observer<Boolean>() { loginCorrect ->
@@ -86,16 +58,38 @@ class AuthorizationFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initFragmentView()
+
+    }
+
+    private fun initFragmentView() {
         fragment_authorization_email_edit_text.textChanges()
                 .skipInitialValue()
                 .subscribe {
                     viewModel.isValidEmail(it.toString())
                 }.disposeOnDetach()
 
-        fragment_authorization_password_question.setOnClickListener(memoryPassword)
+        fragment_authorization_password_question.clicks()
+                .subscribe {
+                    val customTabsIntent = CustomTabsIntent.Builder()
+                            .addDefaultShareMenuItem()
+                            .setToolbarColor(
+                                    ContextCompat.getColor(context!!, R.color.grey)
+
+                            )
+                            .setShowTitle(true)
+                            .build()
+
+                    CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent)
+
+                    CustomTabsHelper.openCustomTab(
+                            context, customTabsIntent,
+                            Uri.parse(REDMADROBOT_SITE),
+                            WebViewFallback()
+                    )
+                }.disposeOnDetach()
 
         fragment_authorization_auth_btn.clicks()
-                .debounce(DEBOUNCE_TIME, TimeUnit.MILLISECONDS)
                 .subscribe {
                     viewModel.auth(
                             LoginPassword(
@@ -109,10 +103,13 @@ class AuthorizationFragment : BaseFragment() {
     private fun onUserChanged(viewState: ViewState) {
         when (viewState) {
             is Data -> {
-                viewState.user?.userInfo?.let {
-                } ?: {
-                    showSnackBar(requireActivity(), getString(R.string.fragment_authorization_error), getString(R.string.ok_string))
-                }()
+                if (viewState.user?.userInfo == null) {
+                    showSnackBar(
+                            requireActivity(),
+                            getString(R.string.fragment_authorization_error),
+                            getString(R.string.ok_string)
+                    )
+                }
             }
             is Loading -> {
                 screenState.showLoading()

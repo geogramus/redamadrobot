@@ -1,7 +1,6 @@
 package ru.geogram.redmadrobottimetracker.app.presentation.fragments
 
 import android.content.Context
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

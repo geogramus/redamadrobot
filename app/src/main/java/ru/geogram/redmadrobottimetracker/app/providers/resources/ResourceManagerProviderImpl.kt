@@ -1,6 +1,7 @@
 package ru.geogram.redmadrobottimetracker.app.providers.resources
 
 import android.content.Context
+import android.content.SharedPreferences
 import ru.geogram.domain.model.auth.LoginPassword
 import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import javax.inject.Inject
@@ -9,47 +10,50 @@ class ResourceManagerProviderImpl @Inject constructor(private val context: Conte
 
 
     companion object {
-        private const val SHARED_PREFERENCES_NAME_TOKEN = "name_token"
+        private const val SHARED_PREFERENCES_RED_MAD_ROBOT = "name_token"
         private const val SHARED_PREFERENCES_TOKEN = "token"
-        private const val SHARED_PREFERENCES_NAME_LOGIN_PASSWORD = "login_password"
         private const val SHARED_PREFERENCES_LOGIN = "login"
         private const val SHARED_PREFERENCES_PASSWORD = "password"
     }
+
+    @Volatile
+    private var sharedPreferences: SharedPreferences? = null
 
     override fun getString(id: Int): String {
         return context.getString(id)
     }
 
-    @Synchronized
-    override fun setToken(preferencesValue: String) {
-        val sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME_TOKEN, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString(SHARED_PREFERENCES_TOKEN, preferencesValue)
-        editor.apply()
+    private fun getSharedPrederences(): SharedPreferences? {
+        if (sharedPreferences == null) {
+            sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES_RED_MAD_ROBOT, Context.MODE_PRIVATE)
+        }
+        return sharedPreferences
     }
 
+
     @Synchronized
+    override fun setToken(preferencesValue: String) {
+        val editor = getSharedPrederences()?.edit()
+        editor?.putString(SHARED_PREFERENCES_TOKEN, preferencesValue)
+        editor?.apply()
+    }
+
+
     override fun getToken(): String {
-        val sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME_TOKEN, Context.MODE_PRIVATE)
-        return sharedPreferences.getString(SHARED_PREFERENCES_TOKEN, "")
+        return getSharedPrederences()!!.getString(SHARED_PREFERENCES_TOKEN, "")
     }
 
     @Synchronized
     override fun setLoginPassword(loginModel: LoginPassword) {
-        val sharedPreferences =
-                context.getSharedPreferences(SHARED_PREFERENCES_NAME_LOGIN_PASSWORD, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString(SHARED_PREFERENCES_LOGIN, loginModel.login)
-        editor.putString(SHARED_PREFERENCES_PASSWORD, loginModel.password)
-        editor.apply()
+        val editor = getSharedPrederences()?.edit()
+        editor?.putString(SHARED_PREFERENCES_LOGIN, loginModel.login)
+        editor?.putString(SHARED_PREFERENCES_PASSWORD, loginModel.password)
+        editor?.apply()
     }
 
-    @Synchronized
     override fun getLoginPassword(): LoginPassword {
-        val sharedPreferences =
-                context.getSharedPreferences(SHARED_PREFERENCES_NAME_LOGIN_PASSWORD, Context.MODE_PRIVATE)
-        val login = sharedPreferences.getString(SHARED_PREFERENCES_LOGIN, "")
-        val password = sharedPreferences.getString(SHARED_PREFERENCES_PASSWORD, "")
+        val login = getSharedPrederences()!!.getString(SHARED_PREFERENCES_LOGIN, "")
+        val password = getSharedPrederences()!!.getString(SHARED_PREFERENCES_PASSWORD, "")
         return LoginPassword(login, password)
     }
 }

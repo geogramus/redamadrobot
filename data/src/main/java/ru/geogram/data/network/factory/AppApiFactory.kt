@@ -1,14 +1,14 @@
 package ru.geogram.data.network.factory
 
 
+import ru.geogram.data.model.network.getErrorMessage
 import ru.geogram.data.network.ServerUrls
+import ru.geogram.domain.exceptions.network.CreditinalException
 import ru.geogram.domain.exceptions.network.NetworkException
 import ru.geogram.domain.exceptions.network.ServerException
 import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import java.io.IOException
 import javax.inject.Inject
-import ru.geogram.data.model.network.getErrorMessage
-import ru.geogram.domain.exceptions.network.ConvertException
 
 private const val SET_COOKIE = "set-cookie"
 
@@ -28,10 +28,10 @@ class AppApiFactory @Inject constructor(private val resourceManager: ResourceMan
                 }
                 when (response.code()) {
                     401 -> {
-                        throw ConvertException(getErrorMessage(response.body()))
+                        throw CreditinalException()
                     }
                     in 400..501 -> {
-                        throw ConvertException(getErrorMessage(response.body()))
+                        throw ServerException(response.code(), getErrorMessage(response.body()))
                     }
                     else -> {
 

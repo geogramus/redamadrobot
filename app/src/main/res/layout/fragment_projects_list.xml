@@ -109,7 +109,7 @@
             android:paddingRight="16dp"
             android:paddingBottom="16dp"
             android:text="@string/fragment_project_list_set_time"
-            android:textColor="@color/red_redmarobot_color"
+            android:textColor="@color/red_redmad_robot_color"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/fragment_project_list_hours" />
@@ -152,7 +152,7 @@
             android:inputType="textPersonName"
             android:minHeight="120dp"
             android:textAlignment="textStart"
-            android:textColorHint="@color/red_redmarobot_color"
+            android:textColorHint="@color/red_redmad_robot_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_project_list_description"

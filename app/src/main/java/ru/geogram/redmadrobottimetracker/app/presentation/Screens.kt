@@ -20,9 +20,7 @@ object ShowMainScreenFragment : SupportAppScreen() {
 }
 
 class ShowProjectsFragment(val bundle: Bundle) : SupportAppScreen() {
-    override fun getFragment():ProjectsFragment {
-        val projectsFragment = ProjectsFragment.getInstance()
-        projectsFragment.arguments = bundle
-        return projectsFragment
+    override fun getFragment(): ProjectsFragment {
+        return ProjectsFragment.getInstance(bundle)
     }
 }
