@@ -14,7 +14,6 @@ class DaysDataRepository(
     val schedulers: SchedulersProvider,
     private val systemInfoProvider: SystemInfoProvider,
     private val daysApi: DaysApi,
-//private val boxStore: UserDatabaseInterface,
     private val resourceManager: ResourceManagerProvider
 ) : DaysRepository {
     override fun getDays(from: String, to: String): Single<DaysInfo> {

@@ -6,7 +6,6 @@ import ru.geogram.data.model.converter.AuthConverter
 import ru.geogram.data.model.network.user.LoginModel
 import ru.geogram.data.model.network.user.LoginResponseModel
 import ru.geogram.data.network.api.AuthApi
-import ru.geogram.data.storage.db.UserDatabaseInterface
 import ru.geogram.domain.exceptions.network.CreditinalException
 import ru.geogram.domain.model.auth.AuthInfo
 import ru.geogram.domain.model.auth.LoginPassword
@@ -17,37 +16,29 @@ import ru.geogram.domain.repositories.AuthRepository
 import javax.inject.Inject
 
 class AuthDataRepository @Inject constructor(
-        private val schedulers: SchedulersProvider,
-        private val systemInfoProvider: SystemInfoProvider,
-        private val authApi: AuthApi,
-        private val boxStore: UserDatabaseInterface,
-        private val resourceManager: ResourceManagerProvider
+    private val schedulers: SchedulersProvider,
+    private val systemInfoProvider: SystemInfoProvider,
+    private val authApi: AuthApi,
+    private val resourceManager: ResourceManagerProvider
 ) : AuthRepository {
-    override fun getProfileFromDatabase(): AuthInfo {
-        return AuthConverter.fromDatabase(boxStore.getUser())
-    }
 
     override fun getProfile(): Single<AuthInfo> {
         val cookie = resourceManager.getToken()
-        val diskObservable = loadFromDb().subscribeOn(schedulers.computation())
-        val networkObservable =
-                getProfileInfo(cookie)
-                        .subscribeOn(schedulers.io())
-                        .observeOn(schedulers.computation())
-                        .map(this::processResponse)
+        return getProfileInfo(cookie)
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.computation())
+            .map(this::processResponse)
+            .observeOn(schedulers.mainThread())
 
-        val observable = if (systemInfoProvider.hasNetwork()) networkObservable else diskObservable
-        return observable.map<AuthInfo> { it }
-                .observeOn(schedulers.mainThread())
     }
 
     override fun authCheck(): Single<AuthInfo> {
         val cookie = resourceManager.getToken()
         return authCheckCall(cookie)
-                .subscribeOn(schedulers.io())
-                .observeOn(schedulers.computation())
-                .map(this::processResponse)
-                .onErrorResumeNext(::convertException)
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.computation())
+            .map(this::processResponse)
+            .onErrorResumeNext(::convertException)
     }
 
     private fun convertException(th: Throwable): Single<AuthInfo> {
@@ -59,19 +50,14 @@ class AuthDataRepository @Inject constructor(
     }
 
     override fun auth(loginModel: LoginPassword): Single<AuthInfo> {
-        val diskObservable =
-                loadFromDb()
-                        .subscribeOn(schedulers.io())
-        val networkObservable =
-                createCall(AuthConverter.convertToLoginModel(loginModel))
-                        .subscribeOn(schedulers.io())
-                        .observeOn(schedulers.computation())
-                        .map(this::processResponse)
-                        .map(this::saveCallResult)
-                        .flatMap { loadFromDb() }
-        val observable = if (systemInfoProvider.hasNetwork()) networkObservable else diskObservable
-        return observable.map<AuthInfo> { it }
-                .observeOn(schedulers.mainThread())
+
+        return createCall(AuthConverter.convertToLoginModel(loginModel))
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.computation())
+            .map(this::processResponse)
+            .observeOn(schedulers.mainThread())
+
+
     }
 
     private fun authCheckCall(cookie: String) = authApi.authCheck(cookie)
@@ -82,9 +68,5 @@ class AuthDataRepository @Inject constructor(
 
     private fun processResponse(response: LoginResponseModel) = AuthConverter.fromNetwork(response)
 
-    private fun saveCallResult(response: AuthInfo) {
-        boxStore.putUser(AuthConverter.toDatabase(response))
-    }
 
-    private fun loadFromDb() = boxStore.getUsers().map { AuthConverter.fromDatabase(it) }
 }

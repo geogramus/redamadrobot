@@ -5,7 +5,6 @@ import dagger.Provides
 import ru.geogram.data.network.api.AuthApi
 import ru.geogram.data.network.factory.AppApiFactory
 import ru.geogram.data.repository.auth.AuthDataRepository
-import ru.geogram.data.storage.db.UserDatabaseInterface
 import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import ru.geogram.domain.providers.rx.SchedulersProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
@@ -36,10 +35,9 @@ abstract class AuthModule {
             schedulers: SchedulersProvider,
             systemInfoProvider: SystemInfoProvider,
             userApi: AuthApi,
-            dataBase: UserDatabaseInterface,
             resourceManager: ResourceManagerProvider
         ): AuthRepository{
-            return AuthDataRepository(schedulers, systemInfoProvider, userApi, dataBase, resourceManager)
+            return AuthDataRepository(schedulers, systemInfoProvider, userApi, resourceManager)
         }
     }
 }

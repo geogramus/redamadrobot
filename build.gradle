@@ -7,7 +7,6 @@ buildscript {
     dependencies {
         classpath deps.gradle.android_plugin
         classpath deps.kotlin.plugin
-        classpath deps.objectbox.objectbox_plugin
     }
 }
 

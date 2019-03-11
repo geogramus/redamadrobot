@@ -1,7 +1,9 @@
 package ru.geogram.redmadrobottimetracker.app.di.module
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
+import ru.geogram.data.delegate.provideDataAppDatabase
 import ru.geogram.data.network.api.ProjectsApi
 import ru.geogram.data.network.factory.AppApiFactory
 import ru.geogram.data.repository.projects.ProjectsDataRepository
@@ -27,6 +29,10 @@ abstract class ProjectsModule {
         @DaysScope
         internal fun provideAuthApi(appApiFactory: AppApiFactory) = appApiFactory.create(ProjectsApi::class.java)
 
+        @JvmStatic
+        @Provides
+        @DaysScope
+        internal fun provideAppDatabase(context: Context) = provideDataAppDatabase(context)
 
         @JvmStatic
         @Provides

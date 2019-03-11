@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'io.objectbox'
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -54,13 +53,19 @@ dependencies {
             deps.dagger.runtime
     )
 
+    api(
+            deps.room.runtime,
+            deps.room.rxjava2
+    )
+
     testImplementation(
             deps.test.junit,
             deps.test.roboelectric
     )
 
     kapt(
-            deps.dagger.compiler
+            deps.dagger.compiler,
+            deps.room.compiler
     )
 
 }

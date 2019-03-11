@@ -1,7 +1,6 @@
 package ru.geogram.data.model.converter
 
 
-import ru.geogram.data.model.db.user.UserEntity
 import ru.geogram.data.model.network.user.LoginModel
 import ru.geogram.data.model.network.user.LoginResponseModel
 import ru.geogram.domain.model.auth.AuthInfo
@@ -18,11 +17,6 @@ object AuthConverter {
         )
     }
 
-    fun checkConverter(): AuthInfo {
-        return AuthInfo(
-
-        )
-    }
 
     fun fromNetwork(loginResponse: LoginResponseModel): AuthInfo {
         val user = loginResponse.data?.user
@@ -45,32 +39,6 @@ object AuthConverter {
             } ?: {
                 null
             }()
-        )
-    }
-
-    fun toDatabase(loginResponse: AuthInfo): UserEntity {
-        val user = loginResponse.userInfo
-        return UserEntity(
-            first_name = user?.first_name,
-            role = user?.role,
-            last_name = user?.last_name,
-            email = user?.email,
-            id = user?.id,
-            stuff = user?.is_staff
-        )
-    }
-
-    fun fromDatabase(source: UserEntity): AuthInfo {
-        return AuthInfo(
-            UserInfo(
-                first_name = source.first_name,
-                role = source.role,
-                last_name = source.last_name,
-                email = source.email,
-                id = source.id,
-                is_staff = source.stuff
-            ),
-            null
         )
     }
 

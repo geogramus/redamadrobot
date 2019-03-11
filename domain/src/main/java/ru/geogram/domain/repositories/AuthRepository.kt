@@ -8,5 +8,4 @@ interface AuthRepository {
     fun auth(loginModel: LoginPassword): Single<AuthInfo>
     fun authCheck(): Single<AuthInfo>
     fun getProfile(): Single<AuthInfo>
-    fun getProfileFromDatabase(): AuthInfo
 }

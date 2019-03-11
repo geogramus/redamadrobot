@@ -3,8 +3,6 @@ package ru.geogram.redmadrobottimetracker.app.di.module
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import ru.geogram.data.storage.db.UserDatabase
-import ru.geogram.data.storage.db.UserDatabaseInterface
 import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import ru.geogram.domain.providers.rx.SchedulersProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
@@ -33,10 +31,6 @@ internal abstract class ApplicationModule {
         @ApplicationScope
         internal fun provideSystemInfoProvider(context: Context): SystemInfoProvider = SystemInfoDataProvider(context)
 
-        @JvmStatic
-        @Provides
-        @ApplicationScope
-        internal fun provideUserDatabase(context: Context): UserDatabaseInterface = UserDatabase(context)
 
         @JvmStatic
         @Provides

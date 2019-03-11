@@ -18,7 +18,6 @@ class ProjectsDataRepository(
         val schedulers: SchedulersProvider,
         private val systemInfoProvider: SystemInfoProvider,
         private val projectsApi: ProjectsApi,
-//private val boxStore: UserDatabaseInterface,
         private val resourceManager: ResourceManagerProvider
 ) : ProjectsRepository {
 
