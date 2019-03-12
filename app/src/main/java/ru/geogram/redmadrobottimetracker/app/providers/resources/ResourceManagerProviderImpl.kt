@@ -1,7 +1,8 @@
 package ru.geogram.redmadrobottimetracker.app.providers.resources
 
 import android.content.Context
-import android.content.SharedPreferences
+import com.google.gson.Gson
+import com.orhanobut.hawk.Hawk
 import ru.geogram.domain.model.auth.LoginPassword
 import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import javax.inject.Inject
@@ -11,49 +12,35 @@ class ResourceManagerProviderImpl @Inject constructor(private val context: Conte
 
     companion object {
         private const val SHARED_PREFERENCES_RED_MAD_ROBOT = "name_token"
-        private const val SHARED_PREFERENCES_TOKEN = "token"
-        private const val SHARED_PREFERENCES_LOGIN = "login"
-        private const val SHARED_PREFERENCES_PASSWORD = "password"
+        private const val TOKEN = "token"
+        private const val LOGIN = "login"
     }
 
-    @Volatile
-    private var sharedPreferences: SharedPreferences? = null
 
     override fun getString(id: Int): String {
         return context.getString(id)
     }
 
-    private fun getSharedPrederences(): SharedPreferences? {
-        if (sharedPreferences == null) {
-            sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES_RED_MAD_ROBOT, Context.MODE_PRIVATE)
-        }
-        return sharedPreferences
-    }
-
 
     @Synchronized
-    override fun setToken(preferencesValue: String) {
-        val editor = getSharedPrederences()?.edit()
-        editor?.putString(SHARED_PREFERENCES_TOKEN, preferencesValue)
-        editor?.apply()
+    override fun setToken(token: String) {
+        Hawk.put(TOKEN, token)
     }
 
 
     override fun getToken(): String {
-        return getSharedPrederences()!!.getString(SHARED_PREFERENCES_TOKEN, "")
+        return Hawk.get<String>(TOKEN, "")
     }
 
     @Synchronized
     override fun setLoginPassword(loginModel: LoginPassword) {
-        val editor = getSharedPrederences()?.edit()
-        editor?.putString(SHARED_PREFERENCES_LOGIN, loginModel.login)
-        editor?.putString(SHARED_PREFERENCES_PASSWORD, loginModel.password)
-        editor?.apply()
+        Hawk.put(LOGIN, Gson().toJson(loginModel))
     }
 
     override fun getLoginPassword(): LoginPassword {
-        val login = getSharedPrederences()!!.getString(SHARED_PREFERENCES_LOGIN, "")
-        val password = getSharedPrederences()!!.getString(SHARED_PREFERENCES_PASSWORD, "")
-        return LoginPassword(login, password)
+        return Gson().fromJson(
+            Hawk.get<String>(LOGIN, ""),
+            LoginPassword::class.java
+        )
     }
 }
