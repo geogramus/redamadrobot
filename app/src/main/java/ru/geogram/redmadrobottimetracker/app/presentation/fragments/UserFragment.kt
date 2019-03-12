@@ -4,23 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.redmadrobot.lib.sd.LoadingStateDelegate
 import kotlinx.android.synthetic.main.fragment_user_info.*
-import ru.geogram.redmadrobottimetracker.app.R
 import kotlinx.android.synthetic.main.fragment_user_info.view.*
 import ru.geogram.domain.model.auth.UserInfo
+import ru.geogram.redmadrobottimetracker.app.R
 import ru.geogram.redmadrobottimetracker.app.di.DI
-import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.*
-import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
+import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.UserFragmentViewModel
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Data
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
+import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
 import ru.geogram.redmadrobottimetracker.app.utils.getViewModel
 import ru.geogram.redmadrobottimetracker.app.utils.observe
 import ru.geogram.redmadrobottimetracker.app.utils.showSnackBar
 import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
 
-class UserFragment : Fragment() {
+class UserFragment : BaseFragment() {
 
     companion object {
         fun getInstance(): UserFragment = UserFragment()
@@ -48,18 +47,21 @@ class UserFragment : Fragment() {
                     setUserInfo(it)
                 } ?: {
                     showSnackBar(
-                        context!!,
+                        requireActivity(),
                         getString(R.string.fragment_authorization_error),
                         getString(R.string.ok_string)
                     )
                 }()
             }
             is ErrorViewState -> {
-                showSnackBar(
-                    context!!,
-                    getString(R.string.fragment_authorization_error_server),
-                    getString(R.string.ok_string)
-                )
+                viewState.th.message?.let {
+                    showSnackBar(
+                            requireActivity(),
+                            it,
+                            getString(R.string.ok_string)
+                    )
+                }
+
                 viewState.user?.userInfo?.let {
                     setUserInfo(it)
                 }

@@ -18,6 +18,8 @@ object ShowMainScreenFragment : SupportAppScreen() {
     override fun getFragment() = MainScreenFragment.getInstance()
 }
 
-class ShowProjectsFragment(val date: String) : SupportAppScreen() {
-    override fun getFragment() = ProjectsFragment.getInstance(date)
+class ShowProjectsFragment(val bundle: String) : SupportAppScreen() {
+    override fun getFragment(): ProjectsFragment {
+        return ProjectsFragment.getInstance(bundle)
+    }
 }

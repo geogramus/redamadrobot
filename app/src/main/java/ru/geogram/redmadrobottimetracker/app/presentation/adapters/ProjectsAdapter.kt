@@ -1,14 +1,11 @@
 package ru.geogram.redmadrobottimetracker.app.presentation.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.geogram.domain.model.days.ProjectInfoForDays
 import ru.geogram.redmadrobottimetracker.app.R
 import ru.geogram.redmadrobottimetracker.app.presentation.holders.WeekTasksViewHolder
-import ru.geogram.redmadrobottimetracker.app.utils.Utils
 
 class ProjectsAdapter(val projectsInfoForDays: ArrayList<ProjectInfoForDays>) :
     RecyclerView.Adapter<WeekTasksViewHolder>() {

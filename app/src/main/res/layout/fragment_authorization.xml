@@ -144,7 +144,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="@string/fragment_authorization_email_for_outstaffer"
-        android:textColor="@color/red_redmarobot_color"
+        android:textColor="@color/red_redmad_robot_color"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/fragment_authorization_email_edit_text"
         app:layout_constraintStart_toStartOf="parent"
@@ -158,7 +158,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="-8dp"
         android:text="@string/fragment_authorization_incorrect_login_tv"
-        android:textColor="@color/red_redmarobot_color"
+        android:textColor="@color/red_redmad_robot_color"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_authorization_email_edit_text" />
