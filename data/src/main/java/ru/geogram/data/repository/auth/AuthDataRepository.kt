@@ -11,13 +11,11 @@ import ru.geogram.domain.exceptions.network.CreditinalException
 import ru.geogram.domain.model.auth.AuthInfo
 import ru.geogram.domain.model.auth.LoginPassword
 import ru.geogram.domain.providers.resources.ResourceManagerProvider
-import ru.geogram.domain.providers.rx.SchedulersProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.domain.repositories.AuthRepository
 import javax.inject.Inject
 
 class AuthDataRepository @Inject constructor(
-        private val schedulers: SchedulersProvider,
         private val systemInfoProvider: SystemInfoProvider,
         private val authApi: AuthApi,
         private val boxStore: UserDatabaseInterface,
@@ -29,23 +27,18 @@ class AuthDataRepository @Inject constructor(
 
     override fun getProfile(): Single<AuthInfo> {
         val cookie = resourceManager.getToken()
-        val diskObservable = loadFromDb().subscribeOn(schedulers.computation())
+        val diskObservable = loadFromDb()
         val networkObservable =
                 getProfileInfo(cookie)
-                        .subscribeOn(schedulers.io())
-                        .observeOn(schedulers.computation())
                         .map(this::processResponse)
 
         val observable = if (systemInfoProvider.hasNetwork()) networkObservable else diskObservable
         return observable.map<AuthInfo> { it }
-                .observeOn(schedulers.mainThread())
     }
 
     override fun authCheck(): Single<AuthInfo> {
         val cookie = resourceManager.getToken()
         return authCheckCall(cookie)
-                .subscribeOn(schedulers.io())
-                .observeOn(schedulers.computation())
                 .map(this::processResponse)
                 .onErrorResumeNext(::convertException)
     }
@@ -59,19 +52,14 @@ class AuthDataRepository @Inject constructor(
     }
 
     override fun auth(loginModel: LoginPassword): Single<AuthInfo> {
-        val diskObservable =
-                loadFromDb()
-                        .subscribeOn(schedulers.io())
+        val diskObservable = loadFromDb()
         val networkObservable =
                 createCall(AuthConverter.convertToLoginModel(loginModel))
-                        .subscribeOn(schedulers.io())
-                        .observeOn(schedulers.computation())
                         .map(this::processResponse)
                         .map(this::saveCallResult)
                         .flatMap { loadFromDb() }
         val observable = if (systemInfoProvider.hasNetwork()) networkObservable else diskObservable
         return observable.map<AuthInfo> { it }
-                .observeOn(schedulers.mainThread())
     }
 
     private fun authCheckCall(cookie: String) = authApi.authCheck(cookie)

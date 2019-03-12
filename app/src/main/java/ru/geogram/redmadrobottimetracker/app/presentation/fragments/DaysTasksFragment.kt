@@ -23,7 +23,6 @@ class DaysTasksFragment : BaseFragment() {
     companion object {
         fun getInstance(): DaysTasksFragment = DaysTasksFragment()
         const val DAY_TASKS = "day_position"
-        const val NEW_DAY_DATE = "new_day_date"
     }
 
     private lateinit var projectsAdapters: ProjectsAdapter
@@ -57,9 +56,7 @@ class DaysTasksFragment : BaseFragment() {
         }
         fragment_day_of_week_new_task_btn.clicks().subscribe{
             dayInfo?.date?.let {
-                val bundle = Bundle()
-                bundle.putString(NEW_DAY_DATE, it)
-                router.provideRouter().navigateTo(ShowProjectsFragment(bundle))
+                router.provideRouter().navigateTo(ShowProjectsFragment(it))
             }
         }.disposeOnDetach()
     }

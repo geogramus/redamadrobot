@@ -6,7 +6,6 @@ import ru.geogram.data.network.api.DaysApi
 import ru.geogram.data.network.factory.AppApiFactory
 import ru.geogram.data.repository.days.DaysDataRepository
 import ru.geogram.domain.providers.resources.ResourceManagerProvider
-import ru.geogram.domain.providers.rx.SchedulersProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.domain.repositories.DaysRepository
 import ru.geogram.redmadrobottimetracker.app.di.scope.DaysScope
@@ -31,13 +30,11 @@ abstract class DaysModule {
         @Provides
         @DaysScope
         internal fun provideDaysRepository(
-            schedulers: SchedulersProvider,
             systemInfoProvider: SystemInfoProvider,
             userApi: DaysApi,
-//            dataBase: UserDatabaseInterface,
             resourceManager: ResourceManagerProvider
         ): DaysRepository{
-            return DaysDataRepository(schedulers, systemInfoProvider, userApi, resourceManager)
+            return DaysDataRepository(systemInfoProvider, userApi, resourceManager)
         }
     }
 }

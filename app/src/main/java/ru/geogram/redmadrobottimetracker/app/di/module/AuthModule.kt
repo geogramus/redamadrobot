@@ -7,7 +7,6 @@ import ru.geogram.data.network.factory.AppApiFactory
 import ru.geogram.data.repository.auth.AuthDataRepository
 import ru.geogram.data.storage.db.UserDatabaseInterface
 import ru.geogram.domain.providers.resources.ResourceManagerProvider
-import ru.geogram.domain.providers.rx.SchedulersProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.domain.repositories.AuthRepository
 import ru.geogram.redmadrobottimetracker.app.di.scope.AuthScope
@@ -33,13 +32,12 @@ abstract class AuthModule {
         @Provides
         @AuthScope
         internal fun provideUserRepository(
-            schedulers: SchedulersProvider,
             systemInfoProvider: SystemInfoProvider,
             userApi: AuthApi,
             dataBase: UserDatabaseInterface,
             resourceManager: ResourceManagerProvider
         ): AuthRepository{
-            return AuthDataRepository(schedulers, systemInfoProvider, userApi, dataBase, resourceManager)
+            return AuthDataRepository(systemInfoProvider, userApi, dataBase, resourceManager)
         }
     }
 }
