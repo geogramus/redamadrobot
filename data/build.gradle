@@ -50,7 +50,9 @@ dependencies {
             deps.rx.java,
             deps.rx.android,
 
-            deps.dagger.runtime
+            deps.dagger.runtime,
+
+            deps.gson.parsing
     )
 
     api(

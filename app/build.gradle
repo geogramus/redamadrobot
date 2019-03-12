@@ -50,15 +50,14 @@ dependencies {
 
             deps.lottie.anim,
 
-            deps.dagger.runtime
+            deps.dagger.runtime,
+            deps.gson.parsing
     )
-    implementation 'com.google.code.gson:gson:2.8.5'//знаю что так неправильно но через dep.gradle file
-    // не получается подключить
+
     testImplementation(
             deps.test.junit,
             deps.test.roboelectric
     )
-
     kapt(
             deps.arch.compiler,
             deps.dagger.compiler

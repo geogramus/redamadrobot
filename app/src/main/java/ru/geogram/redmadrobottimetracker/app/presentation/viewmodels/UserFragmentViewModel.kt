@@ -20,21 +20,20 @@ class UserFragmentViewModel @Inject constructor(private val authService: AuthRep
     fun userInfo() {
         safeSubscribe {
             authService
-                    .getProfile()
-                    .schedulersToMain()
-                    .subscribe(
-                            {
-                                check.postValue(Data(it))
-                            },
-                            {
-                                check.postValue(
-                                        ErrorViewState(
-                                                it,
-                                                authService.getProfileFromDatabase()
-                                        )
-                                )
-                                it.printStackTrace()
-                            })
+                .getProfile()
+                .schedulersToMain()
+                .subscribe(
+                    {
+                        check.postValue(Data(it))
+                    },
+                    {
+                        check.postValue(
+                            ErrorViewState(
+                                it
+                            )
+                        )
+                        it.printStackTrace()
+                    })
         }
     }
 }

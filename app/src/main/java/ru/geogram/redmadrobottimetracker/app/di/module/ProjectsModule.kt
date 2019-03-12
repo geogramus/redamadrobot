@@ -7,6 +7,7 @@ import ru.geogram.data.delegate.provideDataAppDatabase
 import ru.geogram.data.network.api.ProjectsApi
 import ru.geogram.data.network.factory.AppApiFactory
 import ru.geogram.data.repository.projects.ProjectsDataRepository
+import ru.geogram.data.storage.db.AppDatabase
 import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.domain.repositories.ProjectsRepository
@@ -33,15 +34,18 @@ abstract class ProjectsModule {
         @DaysScope
         internal fun provideAppDatabase(context: Context) = provideDataAppDatabase(context)
 
+
+
         @JvmStatic
         @Provides
         @DaysScope
         internal fun provideProjectsRepository(
             systemInfoProvider: SystemInfoProvider,
             projectsApi: ProjectsApi,
-            resourceManager: ResourceManagerProvider
+            resourceManager: ResourceManagerProvider,
+            appDatabase: AppDatabase
         ): ProjectsRepository {
-            return ProjectsDataRepository(systemInfoProvider, projectsApi, resourceManager)
+            return ProjectsDataRepository(systemInfoProvider, projectsApi, resourceManager, appDatabase.projectsEntityDao())
         }
     }
 }

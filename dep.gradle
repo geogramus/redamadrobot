@@ -127,8 +127,8 @@ deps.test = test
 
 def gson = [:]
 versions.gson = "2.8.5"
-gson.runtime = "com.google.code.gson:gson:$versions.gson"
-deps.gson = deps
+gson.parsing = "com.google.code.gson:gson:$versions.gson"
+deps.gson = gson
 
 
 ext.deps = deps
