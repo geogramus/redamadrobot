@@ -19,7 +19,7 @@ import ru.geogram.redmadrobottimetracker.app.R
 import ru.geogram.redmadrobottimetracker.app.di.DI
 import ru.geogram.redmadrobottimetracker.app.presentation.adapters.ProjectsListAdapter
 import ru.geogram.redmadrobottimetracker.app.presentation.calbacks.ProjectListCalback
-import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.ProjectsFragmentViewModel
+import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.ProjectsViewModel
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.*
 import ru.geogram.redmadrobottimetracker.app.utils.*
 import java.util.concurrent.TimeUnit
@@ -27,18 +27,21 @@ import java.util.concurrent.TimeUnit
 class ProjectsFragment : BaseFragment(), ProjectListCalback {
 
     companion object {
-        fun getInstance(bundle: Bundle): ProjectsFragment {
+        fun getInstance(date: String): ProjectsFragment {
             val projectsFragment = ProjectsFragment()
+            val bundle = Bundle()
+            bundle.putString(NEW_DAY_DATE, date)
             projectsFragment.arguments = bundle
             return projectsFragment
         }
 
+        private const val NEW_DAY_DATE = "new_day_date"
         private const val DEBOUNCE_TIME = 300L
         private const val MIN_SEARCH_LETTERS_COUNT = 2
     }
 
     private val MINUTES_HOUR = 60
-    private lateinit var viewModel: ProjectsFragmentViewModel
+    private lateinit var viewModel: ProjectsViewModel
     private lateinit var screenState: LoadingStateDelegate
     private lateinit var projectsAdapter: ProjectsListAdapter
     private var timeIsSet = false
@@ -61,7 +64,7 @@ class ProjectsFragment : BaseFragment(), ProjectListCalback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.getString(DaysTasksFragment.NEW_DAY_DATE)?.let {
+        arguments?.getString(NEW_DAY_DATE)?.let {
             date = it
         }
         projectsAdapter = ProjectsListAdapter(this)

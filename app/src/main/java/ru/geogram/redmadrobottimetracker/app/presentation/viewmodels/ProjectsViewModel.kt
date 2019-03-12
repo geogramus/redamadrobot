@@ -10,7 +10,7 @@ import ru.geogram.redmadrobottimetracker.app.providers.navigation.RouterProvider
 import ru.geogram.redmadrobottimetracker.app.utils.schedulersToMain
 import javax.inject.Inject
 
-class ProjectsFragmentViewModel @Inject constructor(
+class ProjectsViewModel @Inject constructor(
         private val projectsService: ProjectsRepository,
         private val provider: RouterProvider
 ) : BaseViewModel() {

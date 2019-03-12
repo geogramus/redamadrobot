@@ -10,12 +10,10 @@ import ru.geogram.domain.model.projects.PayloadInfo
 import ru.geogram.domain.model.projects.PayloadSucces
 import ru.geogram.domain.model.projects.ProjectInf
 import ru.geogram.domain.providers.resources.ResourceManagerProvider
-import ru.geogram.domain.providers.rx.SchedulersProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.domain.repositories.ProjectsRepository
 
 class ProjectsDataRepository(
-        val schedulers: SchedulersProvider,
         private val systemInfoProvider: SystemInfoProvider,
         private val projectsApi: ProjectsApi,
         private val resourceManager: ResourceManagerProvider
@@ -24,22 +22,19 @@ class ProjectsDataRepository(
     override fun getProjects(recent: Boolean): Single<ArrayList<ProjectInf>> {
         val cookie = resourceManager.getToken()
         val networkObservable =
-                getProjectsInfo(cookie, recent)
-                        .subscribeOn(schedulers.io())
-                        .observeOn(schedulers.computation())
-                        .map(this::processResponse)
+            getProjectsInfo(cookie, recent)
+                .map(this::processResponse)
 
         return networkObservable
     }
 
     override fun payload(payloadInfo: PayloadInfo): Single<PayloadSucces> {
         val cookie = resourceManager.getToken()
-        val payLoad = PayLoad(payloadInfo.project_id, payloadInfo.minutes_spent, payloadInfo.date, payloadInfo.description)
+        val payLoad =
+            PayLoad(payloadInfo.project_id, payloadInfo.minutes_spent, payloadInfo.date, payloadInfo.description)
         val networkObservable =
-                payLoadTime(cookie, payLoad)
-                        .subscribeOn(schedulers.io())
-                        .observeOn(schedulers.computation())
-                        .map(this::payLoadResponse)
+            payLoadTime(cookie, payLoad)
+                .map(this::payLoadResponse)
 
         return networkObservable
     }

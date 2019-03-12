@@ -10,13 +10,11 @@ import ru.geogram.domain.exceptions.network.CreditinalException
 import ru.geogram.domain.model.auth.AuthInfo
 import ru.geogram.domain.model.auth.LoginPassword
 import ru.geogram.domain.providers.resources.ResourceManagerProvider
-import ru.geogram.domain.providers.rx.SchedulersProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.domain.repositories.AuthRepository
 import javax.inject.Inject
 
 class AuthDataRepository @Inject constructor(
-    private val schedulers: SchedulersProvider,
     private val systemInfoProvider: SystemInfoProvider,
     private val authApi: AuthApi,
     private val resourceManager: ResourceManagerProvider
@@ -25,18 +23,13 @@ class AuthDataRepository @Inject constructor(
     override fun getProfile(): Single<AuthInfo> {
         val cookie = resourceManager.getToken()
         return getProfileInfo(cookie)
-            .subscribeOn(schedulers.io())
-            .observeOn(schedulers.computation())
             .map(this::processResponse)
-            .observeOn(schedulers.mainThread())
 
     }
 
     override fun authCheck(): Single<AuthInfo> {
         val cookie = resourceManager.getToken()
         return authCheckCall(cookie)
-            .subscribeOn(schedulers.io())
-            .observeOn(schedulers.computation())
             .map(this::processResponse)
             .onErrorResumeNext(::convertException)
     }
@@ -52,10 +45,7 @@ class AuthDataRepository @Inject constructor(
     override fun auth(loginModel: LoginPassword): Single<AuthInfo> {
 
         return createCall(AuthConverter.convertToLoginModel(loginModel))
-            .subscribeOn(schedulers.io())
-            .observeOn(schedulers.computation())
             .map(this::processResponse)
-            .observeOn(schedulers.mainThread())
 
 
     }
