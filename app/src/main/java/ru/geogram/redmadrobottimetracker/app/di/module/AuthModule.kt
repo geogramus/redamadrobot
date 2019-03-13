@@ -2,10 +2,12 @@ package ru.geogram.redmadrobottimetracker.app.di.module
 
 import dagger.Module
 import dagger.Provides
+import ru.geogram.data.dataProvidersImpl.LoginPasswordProviderImpl
 import ru.geogram.data.network.api.AuthApi
 import ru.geogram.data.network.factory.AppApiFactory
 import ru.geogram.data.repository.auth.AuthDataRepository
-import ru.geogram.domain.providers.resources.ResourceManagerProvider
+import ru.geogram.domain.providers.dataProviders.LoginPasswordProvider
+import ru.geogram.domain.providers.dataProviders.TokenProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.domain.repositories.AuthRepository
 import ru.geogram.redmadrobottimetracker.app.di.scope.AuthScope
@@ -19,13 +21,13 @@ abstract class AuthModule {
         @JvmStatic
         @Provides
         @AuthScope
-        internal fun provideAppApi(resourceManager: ResourceManagerProvider) = AppApiFactory(resourceManager)
+        internal fun provideAuthApi(appApiFactory: AppApiFactory) = appApiFactory.create(AuthApi::class.java)
+
 
         @JvmStatic
         @Provides
         @AuthScope
-        internal fun provideAuthApi(appApiFactory: AppApiFactory) = appApiFactory.create(AuthApi::class.java)
-
+        internal fun provideLoginPasswordData():LoginPasswordProvider = LoginPasswordProviderImpl()
 
         @JvmStatic
         @Provides
@@ -33,9 +35,10 @@ abstract class AuthModule {
         internal fun provideUserRepository(
             systemInfoProvider: SystemInfoProvider,
             userApi: AuthApi,
-            resourceManager: ResourceManagerProvider
+            tokenProvider: TokenProvider,
+            loginPasswordProvider: LoginPasswordProvider
         ): AuthRepository{
-            return AuthDataRepository(systemInfoProvider, userApi, resourceManager)
+            return AuthDataRepository(systemInfoProvider, userApi, tokenProvider, loginPasswordProvider)
         }
     }
 }

@@ -6,13 +6,13 @@ import ru.geogram.data.network.ServerUrls
 import ru.geogram.domain.exceptions.network.CreditinalException
 import ru.geogram.domain.exceptions.network.NetworkException
 import ru.geogram.domain.exceptions.network.ServerException
-import ru.geogram.domain.providers.resources.ResourceManagerProvider
+import ru.geogram.domain.providers.dataProviders.TokenProvider
 import java.io.IOException
 import javax.inject.Inject
 
 private const val SET_COOKIE = "set-cookie"
 
-class AppApiFactory @Inject constructor(private val resourceManager: ResourceManagerProvider) : ApiFactory(
+class AppApiFactory @Inject constructor(private val tokenProvider: TokenProvider) : ApiFactory(
         ServerUrls.RedMadRobot(),
         HttpClientFactory.okHttpClient {
 
@@ -44,14 +44,14 @@ class AppApiFactory @Inject constructor(private val resourceManager: ResourceMan
             }
             addInterceptor { chain ->
                 val response = chain.proceed(chain.request())
-                if (resourceManager.getToken().isEmpty()) {
+                if (tokenProvider.getToken().isEmpty()) {
                     if (!response.headers(SET_COOKIE).isEmpty()) {
                         var cookies = ""
                         for (header in response.headers(SET_COOKIE)) {
                             cookies = header
                         }
                         // Save the cookies (I saved in SharedPrefrence), you save whereever you want to save
-                        resourceManager.setToken(cookies)
+                        tokenProvider.setToken(cookies)
                     }
                 }
                 response

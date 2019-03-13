@@ -6,6 +6,6 @@ import ru.geogram.domain.model.projects.PayloadSucces
 import ru.geogram.domain.model.projects.ProjectInf
 
 interface ProjectsRepository {
-    fun getProjects(recent: Boolean): Single<ArrayList<ProjectInf>>
+    fun getProjects(recent: Boolean): Single<List<ProjectInf>>
     fun payload(payloadInfo: PayloadInfo): Single<PayloadSucces>
 }

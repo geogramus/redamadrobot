@@ -15,6 +15,6 @@ data class ProjectsEntity constructor(
 
     @ColumnInfo(name = "projects")
     @TypeConverters(ProjectsListConverter::class)
-    val projects: ArrayList<Project>
+    val projects: List<Project>
 
 )

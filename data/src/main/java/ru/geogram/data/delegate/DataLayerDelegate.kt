@@ -6,5 +6,8 @@ import ru.geogram.data.storage.db.AppDatabase
 import ru.geogram.data.storage.db.AppDatabaseImpl
 
 fun provideDataAppDatabase(context: Context): AppDatabase {
-    return Room.databaseBuilder(context, AppDatabaseImpl::class.java, AppDatabaseImpl.DATABASE_NAME).build()
+    return Room.databaseBuilder(
+        context, AppDatabaseImpl::class.java,
+        AppDatabaseImpl.DATABASE_NAME
+    ).build()
 }

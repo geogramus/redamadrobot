@@ -131,8 +131,8 @@ class ProjectsFragment : BaseFragment(), ProjectListCalback {
         when (viewState) {
             is DataProjects -> {
                 screenState.showContent()
-                viewState.projects?.let {
-                    projectsAdapter.addItems(it)
+                viewState.projects.let {
+                    projectsAdapter.addItems(ArrayList(it))
                 }
             }
             is LoadingProjects -> {

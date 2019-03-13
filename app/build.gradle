@@ -54,10 +54,6 @@ dependencies {
             deps.gson.parsing
     )
 
-    api(
-            deps.utils.hawk
-    )
-
     testImplementation(
             deps.test.junit,
             deps.test.roboelectric

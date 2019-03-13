@@ -11,11 +11,11 @@ import ru.geogram.domain.model.projects.ProjectsInfo
 
 object ProjectsConverter {
     fun fromNetwork(projects: Projects): ProjectsInfo {
-        val projectsList = ArrayList<ProjectInf>()
+        var projectsList = listOf<ProjectInf>()
         projects.data?.let {
-            it.projects.forEach {
-                projectsList.add(ProjectInf(it.id, it.name))
-            }
+            projectsList = it.projects.map {
+                ProjectInf(it.id, it.name)
+            }.toList()
         }
         return ProjectsInfo(projectsList)
     }
@@ -30,21 +30,17 @@ object ProjectsConverter {
         return PayloadSucces(id, projectName)
     }
 
-    fun fromDatabase(projects: ArrayList<Project>?): ArrayList<ProjectInf> {
-        val projectsList = ArrayList<ProjectInf>()
-        projects?.let {
-            it.forEach {
-                projectsList.add(ProjectInf(it.id, it.name))
+    fun fromDatabase(projects: List<Project>?): List<ProjectInf> {
+        return projects?.let {
+            it.map {
+                ProjectInf(it.id, it.name)
             }
-        }
-        return projectsList
+        } ?: listOf<ProjectInf>()
     }
 
-    fun toDatabase(list: ArrayList<ProjectInf>):ProjectsEntity{
-        val projectsList = ArrayList<Project>()
-        list.forEach {
-            projectsList.add(Project(it.id, it.name))
-        }
-        return ProjectsEntity(Utils.getCurrentDate(), projectsList)
+    fun toDatabase(list: List<ProjectInf>): ProjectsEntity {
+        return ProjectsEntity(
+            Utils.getCurrentDate(),
+            list.map { Project(it.id, it.name) })
     }
 }

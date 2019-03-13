@@ -57,7 +57,8 @@ dependencies {
 
     api(
             deps.room.runtime,
-            deps.room.rxjava2
+            deps.room.rxjava2,
+            deps.utils.hawk
     )
 
     testImplementation(

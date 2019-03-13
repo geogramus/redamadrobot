@@ -12,8 +12,8 @@ object AuthConverter {
 
     fun convertToLoginModel(source: LoginPassword): LoginModel {
         return LoginModel(
-                source.login,
-                source.password
+            source.login,
+            source.password
         )
     }
 
@@ -21,25 +21,20 @@ object AuthConverter {
     fun fromNetwork(loginResponse: LoginResponseModel): AuthInfo {
         val user = loginResponse.data?.user
         val error = loginResponse.error
-        return AuthInfo(
-            user?.let {
-                UserInfo(
-                    id = it.id,
-                    first_name = it.first_name,
-                    last_name = it.last_name,
-                    role = it.role,
-                    email = it.email,
-                    is_staff = it.is_staff
-                )
-            } ?: {
-                null
-            }(),
-            error?.let {
-                ErrorInfo(it.code, error.description)
-            } ?: {
-                null
-            }()
-        )
+        val authInfo = user?.let {
+            UserInfo(
+                id = it.id,
+                first_name = it.first_name,
+                last_name = it.last_name,
+                role = it.role,
+                email = it.email,
+                is_staff = it.is_staff
+            )
+        }
+        val errorInfo = error?.let {
+            ErrorInfo(it.code, error.description)
+        }
+        return AuthInfo(authInfo, errorInfo)
     }
 
 }

@@ -10,14 +10,14 @@ class ProjectsListConverter {
 
         @JvmStatic
         @TypeConverter
-        fun toProjects(list: ArrayList<Project>?): String? {
+        fun toProjects(list: List<Project>?): String? {
             return Gson().toJson(list)
         }
 
         @JvmStatic
         @TypeConverter
-        fun fromProjects(verifyOptions: String?): ArrayList<Project>? {
-            return Gson().fromJson<ArrayList<Project>>(verifyOptions, object : TypeToken<ArrayList<Project>>() {}.type)
+        fun fromProjects(verifyOptions: String?): List<Project>? {
+            return Gson().fromJson<List<Project>>(verifyOptions, object : TypeToken<List<Project>>() {}.type)
         }
     }
 }

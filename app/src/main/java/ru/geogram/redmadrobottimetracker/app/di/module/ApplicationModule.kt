@@ -3,6 +3,9 @@ package ru.geogram.redmadrobottimetracker.app.di.module
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import ru.geogram.data.dataProvidersImpl.TokenProviderImpl
+import ru.geogram.data.network.factory.AppApiFactory
+import ru.geogram.domain.providers.dataProviders.TokenProvider
 import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.redmadrobottimetracker.app.di.scope.ApplicationScope
@@ -43,6 +46,16 @@ internal abstract class ApplicationModule {
         @Provides
         @ApplicationScope
         internal fun provideRouterProvider(): RouterProvider = navigator
+
+        @JvmStatic
+        @Provides
+        @ApplicationScope
+        internal fun provideToken(): TokenProvider = TokenProviderImpl()
+
+        @JvmStatic
+        @Provides
+        @ApplicationScope
+        internal fun provideAppApi(tokenProvider: TokenProvider) = AppApiFactory(tokenProvider)
 
     }
 }
