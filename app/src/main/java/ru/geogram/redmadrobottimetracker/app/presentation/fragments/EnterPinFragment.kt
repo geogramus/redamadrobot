@@ -32,19 +32,22 @@ class EnterPinFragment : BaseKeyboardFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setNumbersListeners()
         fragment_enter_pin_et.textChanges()
-            .subscribe {
-                viewModel.isPinValid(it.toString())
-            }.disposeOnDetach()
+                .subscribe {
+                    viewModel.isPinValid(it.toString())
+                }.disposeOnDetach()
         fragment_enter_pin_remove_btn.clicks()
-            .subscribe {
-                removeLastSimbol()
-            }.disposeOnDetach()
+                .subscribe {
+                    removeLastSimbol()
+                }.disposeOnDetach()
         observe(viewModel.isValidPin, this::onPinChanged)
     }
 
     override fun pinStringChanged(pin: String) = fragment_enter_pin_et.setText(pin, TextView.BufferType.EDITABLE)
 
 
-    private fun onPinChanged(pinIsCorrect: Boolean) = viewModel.showMainScreen()
+    private fun onPinChanged(pinIsCorrect: Boolean) {
+        if (pinIsCorrect) viewModel.showMainScreen()
+    }
 }
