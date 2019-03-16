@@ -3,7 +3,7 @@ package ru.geogram.redmadrobottimetracker.app.presentation.viewmodels
 import androidx.lifecycle.MutableLiveData
 import ru.geogram.domain.repositories.AuthRepository
 import ru.geogram.redmadrobottimetracker.app.presentation.ShowAuthFragment
-import ru.geogram.redmadrobottimetracker.app.presentation.ShowMainScreenFragment
+import ru.geogram.redmadrobottimetracker.app.presentation.ShowEnterPinFragment
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
 import ru.geogram.redmadrobottimetracker.app.providers.navigation.RouterProvider
@@ -32,7 +32,7 @@ class MainActivityViewModel @Inject constructor(
                 .schedulersToMain()
                 .subscribe(
                         {
-                            router.newRootScreen(ShowMainScreenFragment)
+                            router.newRootScreen(ShowEnterPinFragment)
                         },
                         {
                             router.newRootScreen(ShowAuthFragment)

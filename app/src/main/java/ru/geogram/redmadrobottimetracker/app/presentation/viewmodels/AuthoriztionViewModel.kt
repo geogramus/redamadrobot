@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import ru.geogram.domain.model.auth.LoginPassword
 import ru.geogram.domain.providers.dataProviders.LoginPasswordProvider
 import ru.geogram.domain.repositories.AuthRepository
-import ru.geogram.redmadrobottimetracker.app.presentation.ShowMainScreenFragment
+import ru.geogram.redmadrobottimetracker.app.presentation.ShowCreatePinFragment
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
@@ -31,7 +31,7 @@ class AuthoriztionViewModel @Inject constructor(
                 .schedulersToMain()
                 .subscribe(
                         {
-                            router.newRootScreen(ShowMainScreenFragment)
+                            router.newRootScreen(ShowCreatePinFragment)
                             loginPasswordProvider.setLoginPassword(model)
                         },
                         {

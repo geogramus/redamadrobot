@@ -48,4 +48,17 @@
     <string name="ok_string">ок</string>
     <string name="time_hours_mins">%1$dч. %2$dмин.</string>
     <string name="fragment_projects_list_search">Введите название проекта</string>
+    <string name="enter_pin_layout_seven">7</string>
+    <string name="enter_pin_layout_eight">8</string>
+    <string name="enter_pin_layout_nine">9</string>
+    <string name="enter_pin_layout_zero">0</string>
+    <string name="enter_pin_layout_four">4</string>
+    <string name="enter_pin_layout_five">5</string>
+    <string name="enter_pin_layout_six">6</string>
+    <string name="enter_pin_layout_one">1</string>
+    <string name="enter_pin_layout_two">2</string>
+    <string name="enter_pin_layout_three">3</string>
+    <string name="enter_pin_layout_enter_pin_or_finger">Введите пароль или сканируйте\nотпечаток пальца</string>
+    <string name="create_pin_layout_use_finger_swotch_text">Использовать отпечаток\nпальца при входе</string>
+    <string name="fragment_create_pin_save">Сохранить</string>
 </resources>

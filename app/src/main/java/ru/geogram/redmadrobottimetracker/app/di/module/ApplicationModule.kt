@@ -5,10 +5,12 @@ import dagger.Module
 import dagger.Provides
 import ru.geogram.data.dataProvidersImpl.TokenProviderImpl
 import ru.geogram.data.network.factory.AppApiFactory
+import ru.geogram.domain.providers.crypto.TinkProvider
 import ru.geogram.domain.providers.dataProviders.TokenProvider
 import ru.geogram.domain.providers.resources.ResourceManagerProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.redmadrobottimetracker.app.di.scope.ApplicationScope
+import ru.geogram.redmadrobottimetracker.app.providers.crypto.TinkProviderImpl
 import ru.geogram.redmadrobottimetracker.app.providers.navigation.NavigationProviderImpl
 import ru.geogram.redmadrobottimetracker.app.providers.navigation.RouterProvider
 import ru.geogram.redmadrobottimetracker.app.providers.resources.ResourceManagerProviderImpl
@@ -57,5 +59,9 @@ internal abstract class ApplicationModule {
         @ApplicationScope
         internal fun provideAppApi(tokenProvider: TokenProvider) = AppApiFactory(tokenProvider)
 
+        @JvmStatic
+        @Provides
+        @ApplicationScope
+        internal fun provideTink(context: Context): TinkProvider = TinkProviderImpl(context)
     }
 }

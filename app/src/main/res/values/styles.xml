@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
+
+    <style name="PinButtonsStyle" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/grey</item>
+    </style>
 </resources>

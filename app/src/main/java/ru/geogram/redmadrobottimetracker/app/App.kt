@@ -4,6 +4,7 @@ import android.app.Application
 import com.orhanobut.hawk.Hawk
 import ru.geogram.redmadrobottimetracker.app.di.DI
 
+
 class App : Application() {
 
     override fun onCreate() {
@@ -15,4 +16,5 @@ class App : Application() {
     private fun initDI() {
         DI.init(this)
     }
+
 }

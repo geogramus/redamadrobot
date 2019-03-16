@@ -1,9 +1,6 @@
 package ru.geogram.redmadrobottimetracker.app.presentation
 
-import ru.geogram.redmadrobottimetracker.app.presentation.fragments.AuthorizationFragment
-import ru.geogram.redmadrobottimetracker.app.presentation.fragments.MainScreenFragment
-import ru.geogram.redmadrobottimetracker.app.presentation.fragments.ProjectsFragment
-import ru.geogram.redmadrobottimetracker.app.presentation.fragments.UserFragment
+import ru.geogram.redmadrobottimetracker.app.presentation.fragments.*
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 object ShowUserFragment : SupportAppScreen() {
@@ -22,4 +19,12 @@ class ShowProjectsFragment(val bundle: String) : SupportAppScreen() {
     override fun getFragment(): ProjectsFragment {
         return ProjectsFragment.getInstance(bundle)
     }
+}
+
+object ShowCreatePinFragment : SupportAppScreen() {
+    override fun getFragment() = CreatePinFragment.getInstance()
+}
+
+object ShowEnterPinFragment : SupportAppScreen() {
+    override fun getFragment() = EnterPinFragment.getInstance()
 }

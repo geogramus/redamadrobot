@@ -54,7 +54,7 @@ dependencies {
 
             deps.gson.parsing
     )
-
+    api 'com.google.crypto.tink:tink-android:1.2.2'
     api(
             deps.room.runtime,
             deps.room.rxjava2,

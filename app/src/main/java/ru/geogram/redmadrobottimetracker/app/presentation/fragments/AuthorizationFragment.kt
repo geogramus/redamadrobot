@@ -89,7 +89,7 @@ class AuthorizationFragment : BaseFragment() {
                     )
                 }.disposeOnDetach()
 
-        fragment_authorization_auth_btn.clicks()
+        fragment_create_pin_save_btn.clicks()
                 .subscribe {
                     viewModel.auth(
                             LoginPassword(

@@ -55,7 +55,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/fragment_authorization_auth_btn"
+        android:id="@+id/fragment_create_pin_save_btn"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
         android:inputType="textPassword"
         android:textColor="@android:color/black"
         android:textColorHint="@color/auth_et_text_color"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_authorization_auth_btn"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_create_pin_save_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

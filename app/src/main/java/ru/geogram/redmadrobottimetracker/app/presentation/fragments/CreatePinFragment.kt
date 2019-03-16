@@ -16,10 +16,10 @@ import ru.geogram.redmadrobottimetracker.app.utils.isEnable
 import ru.geogram.redmadrobottimetracker.app.utils.observe
 import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
 
-class FragmentCreatePin : BaseKeyboardFragment() {
+class CreatePinFragment : BaseKeyboardFragment() {
 
     companion object {
-        fun getInstance(): FragmentCreatePin = FragmentCreatePin()
+        fun getInstance(): CreatePinFragment = CreatePinFragment()
     }
 
     private lateinit var viewModel: CreatePinViewModel

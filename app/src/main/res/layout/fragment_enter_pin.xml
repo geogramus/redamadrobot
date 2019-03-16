@@ -9,144 +9,22 @@
     tools:ignore="MissingConstraints">
 
 
-    <Button
-        android:id="@+id/seven_number_btn"
-        style="@style/PinButtonsStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/enter_pin_layout_seven"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/zero_number_btn"
-        app:layout_constraintEnd_toStartOf="@+id/eight_number_btn"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/eight_number_btn"
-        style="@style/PinButtonsStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/enter_pin_layout_eight"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="@+id/seven_number_btn"
-        app:layout_constraintEnd_toStartOf="@+id/nine_number_btn"
-        app:layout_constraintStart_toEndOf="@+id/seven_number_btn" />
-
-    <Button
-        android:id="@+id/nine_number_btn"
-        style="@style/PinButtonsStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/enter_pin_layout_nine"
-        app:layout_constraintBottom_toBottomOf="@+id/eight_number_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/eight_number_btn" />
-
-    <Button
-        android:id="@+id/zero_number_btn"
-        style="@style/PinButtonsStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="96dp"
-        android:minWidth="100dp"
-        android:text="@string/enter_pin_layout_zero"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/four_number_btn"
-        style="@style/PinButtonsStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/enter_pin_layout_four"
-        app:layout_constraintBottom_toTopOf="@+id/seven_number_btn"
-        app:layout_constraintEnd_toStartOf="@+id/five_number_btn"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/five_number_btn"
-        style="@style/PinButtonsStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/enter_pin_layout_five"
-        app:layout_constraintBottom_toBottomOf="@+id/four_number_btn"
-        app:layout_constraintEnd_toStartOf="@+id/six_number_btn"
-        app:layout_constraintStart_toEndOf="@+id/four_number_btn" />
-
-    <Button
-        android:id="@+id/six_number_btn"
-        style="@style/PinButtonsStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/enter_pin_layout_six"
-        app:layout_constraintBottom_toBottomOf="@+id/five_number_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/five_number_btn" />
-
-    <Button
-        android:id="@+id/one_number_btn"
-        style="@style/PinButtonsStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/enter_pin_layout_one"
-        app:layout_constraintBottom_toTopOf="@+id/four_number_btn"
-        app:layout_constraintEnd_toStartOf="@+id/two_number_btn"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/two_number_btn"
-        style="@style/PinButtonsStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/enter_pin_layout_two"
-        app:layout_constraintBottom_toBottomOf="@+id/one_number_btn"
-        app:layout_constraintEnd_toStartOf="@+id/three_number_btn"
-        app:layout_constraintStart_toEndOf="@+id/one_number_btn" />
-
-    <Button
-        android:id="@+id/three_number_btn"
-        style="@style/PinButtonsStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/enter_pin_layout_three"
-        app:layout_constraintBottom_toBottomOf="@+id/two_number_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/two_number_btn" />
-
     <EditText
-        android:id="@+id/textView"
+        android:id="@+id/fragment_enter_pin_et"
         style="@style/PinButtonsStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
         android:clickable="false"
         android:enabled="false"
         android:focusable="false"
         android:inputType="numberPassword"
         android:maxLength="4"
         android:textSize="48sp"
-        app:layout_constraintBottom_toTopOf="@+id/two_number_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
         tools:text="5757" />
 
     <ImageView
@@ -176,4 +54,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
+    <include
+        layout="@layout/keyboard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="96dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <ImageView
+            android:id="@+id/fragment_enter_pin_remove_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="30dp"
+            android:minHeight="30dp"
+            android:padding="16dp"
+            app:srcCompat="@drawable/backspace_button"
+            app:layout_constraintTop_toTopOf="@+id/fragment_enter_pin_et" app:layout_constraintStart_toEndOf="@+id/fragment_enter_pin_et"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_enter_pin_et"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
