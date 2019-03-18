@@ -18,17 +18,18 @@ class TinkProviderImpl @Inject constructor(private val context: Context) : TinkP
     private val PREF_FILE_NAME = "red_mad_watcher_pref"
     private val TINK_KEYSET_NAME = "red_mad_watcher__keyset"
     private val MASTER_KEY_URI = "android-keystore://red_mad_watcher_key"
-    var aead: Aead? = null
 
-    override fun provideTink() {
+    override fun provideTink(): Aead {
+        val aead: Aead
         try {
             Config.register(TinkConfig.LATEST)
-//            aead = getOrGenerateNewKeysetHandle(context).getPrimitive(Aead::class.java)
+            aead = getOrGenerateNewKeysetHandle(context).getPrimitive(Aead::class.java)
         } catch (e: GeneralSecurityException) {
             throw RuntimeException(e)
         } catch (e: IOException) {
             throw RuntimeException(e)
         }
+        return aead
     }
 
     @Throws(IOException::class, GeneralSecurityException::class)

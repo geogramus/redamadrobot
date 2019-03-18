@@ -61,4 +61,5 @@
     <string name="enter_pin_layout_enter_pin_or_finger">Введите пароль или сканируйте\nотпечаток пальца</string>
     <string name="create_pin_layout_use_finger_swotch_text">Использовать отпечаток\nпальца при входе</string>
     <string name="fragment_create_pin_save">Сохранить</string>
+    <string name="fragment_enter_pin_incorrect_password">Неверный пароль</string>
 </resources>

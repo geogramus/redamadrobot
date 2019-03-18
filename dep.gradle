@@ -3,6 +3,7 @@ static def addRepos(RepositoryHandler handler) {
     handler.jcenter()
     handler.maven { url 'https://jitpack.io' }
     handler.maven { url 'https://maven.fabric.io/public' }
+    handler.maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
 ext.addRepos = this.&addRepos
@@ -71,7 +72,7 @@ deps.customtabs = customtabs
 
 def lottie = [:]
 versions.lottie = "3.0.0-beta2"
-lottie.anim =  "com.airbnb.android:lottie:$versions.lottie"
+lottie.anim = "com.airbnb.android:lottie:$versions.lottie"
 deps.lottie = lottie
 
 def rx = [:]
@@ -132,6 +133,10 @@ versions.gson = "2.8.5"
 gson.parsing = "com.google.code.gson:gson:$versions.gson"
 deps.gson = gson
 
+def crypto = [:]
+versions.crypto = "HEAD-SNAPSHOT"
+crypto.tink = "com.google.crypto.tink:tink-android:$versions.crypto"
+deps.crypto = crypto
 
 ext.deps = deps
 

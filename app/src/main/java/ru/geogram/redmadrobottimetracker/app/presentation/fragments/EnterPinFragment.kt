@@ -11,9 +11,7 @@ import kotlinx.android.synthetic.main.fragment_enter_pin.*
 import ru.geogram.redmadrobottimetracker.app.R
 import ru.geogram.redmadrobottimetracker.app.di.DI
 import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.EnterPinViewModel
-import ru.geogram.redmadrobottimetracker.app.utils.getViewModel
-import ru.geogram.redmadrobottimetracker.app.utils.observe
-import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
+import ru.geogram.redmadrobottimetracker.app.utils.*
 
 class EnterPinFragment : BaseKeyboardFragment() {
 
@@ -23,7 +21,8 @@ class EnterPinFragment : BaseKeyboardFragment() {
 
     private lateinit var viewModel: EnterPinViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val viewModelFactory = viewModelFactory { DI.AUTH.get().createEnterPinViewModel() }
         viewModel = getViewModel(viewModelFactory)
@@ -39,15 +38,18 @@ class EnterPinFragment : BaseKeyboardFragment() {
                 }.disposeOnDetach()
         fragment_enter_pin_remove_btn.clicks()
                 .subscribe {
+                    fragment_enter_pin_incorrect_pin_tv.Gone()
                     removeLastSimbol()
                 }.disposeOnDetach()
         observe(viewModel.isValidPin, this::onPinChanged)
     }
 
-    override fun pinStringChanged(pin: String) = fragment_enter_pin_et.setText(pin, TextView.BufferType.EDITABLE)
+    override fun pinStringChanged(pin: String) = fragment_enter_pin_et
+            .setText(pin, TextView.BufferType.EDITABLE)
 
 
     private fun onPinChanged(pinIsCorrect: Boolean) {
-        if (pinIsCorrect) viewModel.showMainScreen()
+        if (pinIsCorrect) viewModel.showMainScreen() else
+            fragment_enter_pin_incorrect_pin_tv.Visible()
     }
 }

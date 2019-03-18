@@ -76,4 +76,17 @@
         app:layout_constraintStart_toEndOf="@+id/fragment_enter_pin_et"
         app:layout_constraintTop_toTopOf="@+id/fragment_enter_pin_et"
         app:srcCompat="@drawable/backspace_button" />
+
+    <TextView
+        android:id="@+id/fragment_enter_pin_incorrect_pin_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/fragment_enter_pin_incorrect_password"
+        android:textColor="@color/red_redmad_robot_color"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_enter_pin_et" />
 </androidx.constraintlayout.widget.ConstraintLayout>

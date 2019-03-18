@@ -31,11 +31,13 @@ class CreatePinFragment : BaseKeyboardFragment() {
         return inflater.inflate(R.layout.fragment_create_pin, container, false)
     }
 
+    private var pin = ""
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setNumbersListeners()
         create_pin_layout_et_pin.textChanges()
                 .subscribe {
+                    pin= it.toString()
                     viewModel.isPinValid(it.toString())
                 }.disposeOnDetach()
         fragment_create_pin_remove_btn.clicks()
@@ -44,6 +46,7 @@ class CreatePinFragment : BaseKeyboardFragment() {
                 }.disposeOnDetach()
         fragment_create_pin_save_btn.clicks()
                 .subscribe {
+                    viewModel.savePin(pin)
                     viewModel.showMainScreen()
                 }.disposeOnDetach()
         observe(viewModel.isValidPin, this::onPinChanged)
