@@ -52,7 +52,9 @@ dependencies {
 
             deps.dagger.runtime,
 
-            deps.gson.parsing
+            deps.gson.parsing,
+
+            deps.utils.root_beer
     )
 
     api(

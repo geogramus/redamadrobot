@@ -113,12 +113,14 @@ versions.multidex = "2.0.0"
 versions.joda = "2.10"
 versions.androidKtx = "1.0.0-rc02"
 versions.hawk = "2.0.1"
+versions.root_beer = "0.0.7"
 utils.pretty_logger = "com.orhanobut:logger:$versions.pretty_logger"
 utils.joda = "joda-time:joda-time:$versions.joda"
 utils.okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:${versions.okhttp_logging_interceptor}"
 utils.multidex = "androidx.multidex:multidex:$versions.multidex"
 utils.androidKtx = "androidx.core:core-ktx:$versions.androidKtx"
 utils.hawk = "com.orhanobut:hawk:$versions.hawk"
+utils.root_beer = "com.scottyab:rootbeer-lib:$versions.root_beer"
 deps.utils = utils
 
 def test = [:]

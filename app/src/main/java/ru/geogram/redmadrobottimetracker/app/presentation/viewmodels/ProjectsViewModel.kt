@@ -47,9 +47,7 @@ class ProjectsViewModel @Inject constructor(
                                 projects.postValue(DataProjects(it))
                             },
                             {
-                                projects.postValue(
-                                        ErrorViewStateProjects(it)
-                                )
+                                projects.postValue(ErrorViewStateProjects(it))
                                 it.printStackTrace()
                             })
         }

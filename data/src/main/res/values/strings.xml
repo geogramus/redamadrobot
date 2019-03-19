@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">data</string>
+    <string name="root_threat">На телефоне обнаружен root</string>
+    <string name="public_wifi_threat">Вы используете публичную сеть</string>
 </resources>

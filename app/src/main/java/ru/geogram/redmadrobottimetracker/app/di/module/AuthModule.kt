@@ -48,10 +48,10 @@ abstract class AuthModule {
         @Provides
         @AuthScope
         internal fun provideUserRepository(
-            systemInfoProvider: SystemInfoProvider,
-            userApi: AuthApi,
-            tokenProvider: TokenProvider,
-            loginPasswordProvider: LoginPasswordProvider
+                systemInfoProvider: SystemInfoProvider,
+                userApi: AuthApi,
+                tokenProvider: TokenProvider,
+                loginPasswordProvider: LoginPasswordProvider
         ): AuthRepository {
             return AuthDataRepository(systemInfoProvider, userApi, tokenProvider, loginPasswordProvider)
         }

@@ -19,10 +19,7 @@ import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Data
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
-import ru.geogram.redmadrobottimetracker.app.utils.getViewModel
-import ru.geogram.redmadrobottimetracker.app.utils.observe
-import ru.geogram.redmadrobottimetracker.app.utils.showSnackBar
-import ru.geogram.redmadrobottimetracker.app.utils.viewModelFactory
+import ru.geogram.redmadrobottimetracker.app.utils.*
 
 
 class MainScreenFragment : BaseFragment() {
@@ -60,6 +57,7 @@ class MainScreenFragment : BaseFragment() {
         viewModel = getViewModel(viewModelFactory)
 
         observe(viewModel.days, this::onUserChanged)
+        observe(viewModel.threats, this::onThreatsDetected)
         return fragmentView
     }
 
@@ -116,6 +114,14 @@ class MainScreenFragment : BaseFragment() {
                             getString(R.string.ok_string)
                     )
                 }
+            }
+        }
+    }
+
+    private fun onThreatsDetected(threats: List<String>) {
+        if (threats.isNotEmpty()) {
+            context?.let {
+                showThreatAlertDialog(it, messages = threats)
             }
         }
     }

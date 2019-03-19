@@ -62,4 +62,6 @@
     <string name="create_pin_layout_use_finger_swotch_text">Использовать отпечаток\nпальца при входе</string>
     <string name="fragment_create_pin_save">Сохранить</string>
     <string name="fragment_enter_pin_incorrect_password">Неверный пароль</string>
+    <string name="threats_founded">Найдены угрозы</string>
+    <string name="problems_warning">Данные проблемы подвергают опасности ваши личные данные</string>
 </resources>
