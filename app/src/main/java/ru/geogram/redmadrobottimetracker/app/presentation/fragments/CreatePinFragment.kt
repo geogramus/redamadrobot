@@ -46,6 +46,7 @@ class CreatePinFragment : BaseKeyboardFragment() {
                 }.disposeOnDetach()
         fragment_create_pin_save_btn.clicks()
                 .subscribe {
+                    viewModel.saveUseFingerSetting(create_pin_layout_finger_switch.isChecked)
                     viewModel.savePin(pin)
                     viewModel.showMainScreen()
                 }.disposeOnDetach()

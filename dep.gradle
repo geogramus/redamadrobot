@@ -50,10 +50,12 @@ versions.constraint_layout = "1.1.3"
 versions.state_delegator = "1.5"
 versions.material_design = "1.5@aar"
 versions.rx_bindings = "3.0.0-alpha2"
+versions.fingerprint_auth = "1.0.1"
 ui.constraint_layout = "androidx.constraintlayout:constraintlayout:$versions.constraint_layout"
 ui.stateDelegator = "com.redmadrobot:state-delegator:$versions.state_delegator"
 ui.material_design = "com.github.navasmdc:MaterialDesign:$versions.material_design"
 ui.rx_bindings = "com.jakewharton.rxbinding3:rxbinding:$versions.rx_bindings"
+ui.fingerprint_auth = "com.multidots:fingerprint-auth:$versions.fingerprint_auth"
 deps.ui = ui
 
 def support = [:]

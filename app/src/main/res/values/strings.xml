@@ -64,4 +64,5 @@
     <string name="fragment_enter_pin_incorrect_password">Неверный пароль</string>
     <string name="threats_founded">Найдены угрозы</string>
     <string name="problems_warning">Данные проблемы подвергают опасности ваши личные данные</string>
+    <string name="enter_pin_fragment_enter_password">Введите пароль</string>
 </resources>

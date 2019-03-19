@@ -3,12 +3,14 @@ package ru.geogram.redmadrobottimetracker.app.di.module
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import ru.geogram.data.dataProvidersImpl.FingerProviderImpl
 import ru.geogram.data.dataProvidersImpl.LoginPasswordProviderImpl
 import ru.geogram.data.dataProvidersImpl.PinProviderImpl
 import ru.geogram.data.network.api.AuthApi
 import ru.geogram.data.network.factory.AppApiFactory
 import ru.geogram.data.repository.auth.AuthDataRepository
 import ru.geogram.domain.providers.crypto.TinkProvider
+import ru.geogram.domain.providers.dataProviders.FingerProvider
 import ru.geogram.domain.providers.dataProviders.LoginPasswordProvider
 import ru.geogram.domain.providers.dataProviders.PinProvider
 import ru.geogram.domain.providers.dataProviders.TokenProvider
@@ -47,11 +49,16 @@ abstract class AuthModule {
         @JvmStatic
         @Provides
         @AuthScope
+        internal fun provideFingerUsing(): FingerProvider = FingerProviderImpl()
+
+        @JvmStatic
+        @Provides
+        @AuthScope
         internal fun provideUserRepository(
-                systemInfoProvider: SystemInfoProvider,
-                userApi: AuthApi,
-                tokenProvider: TokenProvider,
-                loginPasswordProvider: LoginPasswordProvider
+            systemInfoProvider: SystemInfoProvider,
+            userApi: AuthApi,
+            tokenProvider: TokenProvider,
+            loginPasswordProvider: LoginPasswordProvider
         ): AuthRepository {
             return AuthDataRepository(systemInfoProvider, userApi, tokenProvider, loginPasswordProvider)
         }
