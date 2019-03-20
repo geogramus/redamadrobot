@@ -2,7 +2,7 @@ package ru.geogram.redmadrobottimetracker.app.presentation.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import ru.geogram.domain.model.auth.LoginPassword
-import ru.geogram.domain.providers.dataProviders.LoginPasswordProvider
+import ru.geogram.domain.providers.dataProviders.UserCredentialsProvider
 import ru.geogram.domain.repositories.AuthRepository
 import ru.geogram.redmadrobottimetracker.app.presentation.ShowCreatePinFragment
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class AuthoriztionViewModel @Inject constructor(
         private val authService: AuthRepository,
         private val provider: RouterProvider,
-        private val loginPasswordProvider: LoginPasswordProvider
+        private val userCredentialsProvider: UserCredentialsProvider
 ) : BaseViewModel() {
     val router by lazy {
         provider.provideRouter()
@@ -32,7 +32,7 @@ class AuthoriztionViewModel @Inject constructor(
                 .subscribe(
                         {
                             router.newRootScreen(ShowCreatePinFragment)
-                            loginPasswordProvider.setLoginPassword(model)
+                            userCredentialsProvider.setLoginPassword(model)
                         },
                         {
                             auth.postValue(

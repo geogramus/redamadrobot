@@ -16,10 +16,7 @@ class DaysDataRepository(
     override fun getDays(from: String, to: String): Single<DaysInfo> {
         val cookie = tokenProvider.getToken()
         val networkObservable = daysApi.getDays(cookie, from, to)
-            .map {
-                DaysConverter.fromNetwork(it)
-            }
-
+            .map {DaysConverter.fromNetwork(it)}
         return networkObservable
     }
 

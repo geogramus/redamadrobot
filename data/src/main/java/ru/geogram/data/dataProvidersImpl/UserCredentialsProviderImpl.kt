@@ -3,9 +3,9 @@ package ru.geogram.data.dataProvidersImpl
 import com.google.gson.Gson
 import com.orhanobut.hawk.Hawk
 import ru.geogram.domain.model.auth.LoginPassword
-import ru.geogram.domain.providers.dataProviders.LoginPasswordProvider
+import ru.geogram.domain.providers.dataProviders.UserCredentialsProvider
 
-class LoginPasswordProviderImpl : LoginPasswordProvider {
+class UserCredentialsProviderImpl : UserCredentialsProvider {
 
     companion object {
         private const val LOGIN = "login"

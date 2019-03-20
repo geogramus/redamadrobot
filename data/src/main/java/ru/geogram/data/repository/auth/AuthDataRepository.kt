@@ -8,7 +8,7 @@ import ru.geogram.data.network.api.AuthApi
 import ru.geogram.domain.exceptions.network.CreditinalException
 import ru.geogram.domain.model.auth.AuthInfo
 import ru.geogram.domain.model.auth.LoginPassword
-import ru.geogram.domain.providers.dataProviders.LoginPasswordProvider
+import ru.geogram.domain.providers.dataProviders.UserCredentialsProvider
 import ru.geogram.domain.providers.dataProviders.TokenProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.domain.repositories.AuthRepository
@@ -18,7 +18,7 @@ class AuthDataRepository @Inject constructor(
     private val systemInfoProvider: SystemInfoProvider,
     private val authApi: AuthApi,
     private val tokenProvider: TokenProvider,
-    private val loginPasswordProvider: LoginPasswordProvider
+    private val userCredentialsProvider: UserCredentialsProvider
 ) : AuthRepository {
 
     override fun getProfile(): Single<AuthInfo> {
@@ -37,7 +37,7 @@ class AuthDataRepository @Inject constructor(
 
     private fun convertException(error: Throwable): Single<AuthInfo> {
         if (error is CreditinalException) {
-            return auth(loginPasswordProvider.getLoginPassword())
+            return auth(userCredentialsProvider.getLoginPassword())
         } else {
             throw error
         }

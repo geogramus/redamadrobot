@@ -4,14 +4,14 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import ru.geogram.data.dataProvidersImpl.FingerProviderImpl
-import ru.geogram.data.dataProvidersImpl.LoginPasswordProviderImpl
+import ru.geogram.data.dataProvidersImpl.UserCredentialsProviderImpl
 import ru.geogram.data.dataProvidersImpl.PinProviderImpl
 import ru.geogram.data.network.api.AuthApi
 import ru.geogram.data.network.factory.AppApiFactory
 import ru.geogram.data.repository.auth.AuthDataRepository
 import ru.geogram.domain.providers.crypto.TinkProvider
 import ru.geogram.domain.providers.dataProviders.FingerProvider
-import ru.geogram.domain.providers.dataProviders.LoginPasswordProvider
+import ru.geogram.domain.providers.dataProviders.UserCredentialsProvider
 import ru.geogram.domain.providers.dataProviders.PinProvider
 import ru.geogram.domain.providers.dataProviders.TokenProvider
 import ru.geogram.domain.providers.system.SystemInfoProvider
@@ -34,7 +34,7 @@ abstract class AuthModule {
         @JvmStatic
         @Provides
         @AuthScope
-        internal fun provideLoginPasswordData(): LoginPasswordProvider = LoginPasswordProviderImpl()
+        internal fun provideLoginPasswordData(): UserCredentialsProvider = UserCredentialsProviderImpl()
 
         @JvmStatic
         @Provides
@@ -58,9 +58,9 @@ abstract class AuthModule {
             systemInfoProvider: SystemInfoProvider,
             userApi: AuthApi,
             tokenProvider: TokenProvider,
-            loginPasswordProvider: LoginPasswordProvider
+            userCredentialsProvider: UserCredentialsProvider
         ): AuthRepository {
-            return AuthDataRepository(systemInfoProvider, userApi, tokenProvider, loginPasswordProvider)
+            return AuthDataRepository(systemInfoProvider, userApi, tokenProvider, userCredentialsProvider)
         }
     }
 }
