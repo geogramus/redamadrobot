@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="fragment_authorization_registration_tv,
             fragment_authorization_password_question,
-            fragment_authorization_auth_btn,
             fragment_authorization_password_edit_text,
             fragment_authorization_email_edit_text,
             fragment_authorization_enter_for_robots,
