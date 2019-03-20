@@ -14,18 +14,12 @@ import ru.geogram.redmadrobottimetracker.app.presentation.viewmodels.EnterPinVie
 import ru.geogram.redmadrobottimetracker.app.utils.*
 
 class EnterPinFragment : BaseKeyboardFragment(){
-//    , FingerPrintAuthCallback {
 
     companion object {
         fun getInstance(): EnterPinFragment = EnterPinFragment()
     }
 
     private lateinit var viewModel: EnterPinViewModel
-//    private val finger by lazy {
-//        context?.let {
-//            FingerPrintAuthHelper.getHelper(it, this);
-//        }
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,39 +55,14 @@ class EnterPinFragment : BaseKeyboardFragment(){
     override fun pinStringChanged(pin: String) = fragment_enter_pin_et
         .setText(pin, TextView.BufferType.EDITABLE)
 
-//    override fun onNoFingerPrintHardwareFound() {
-//        fragment_enter_pin_help_tv.text = getString(R.string.enter_pin_fragment_enter_password)
-//    }
-//
-//    override fun onAuthFailed(errorCode: Int, errorMessage: String?) {
-//        fragment_enter_pin_help_tv.text = getString(R.string.enter_pin_fragment_enter_password)
-//    }
-//
-//    override fun onNoFingerPrintRegistered() {
-//        fragment_enter_pin_help_tv.text = getString(R.string.enter_pin_fragment_enter_password)
-//    }
-//
-//    override fun onBelowMarshmallow() {
-//        fragment_enter_pin_help_tv.text = getString(R.string.enter_pin_fragment_enter_password)
-//    }
-//
-//    override fun onAuthSuccess(cryptoObject: FingerprintManager.CryptoObject?) {
-//        viewModel.showMainScreen()
-//    }
-
     private fun onPinChanged(pinIsCorrect: Boolean) {
         if (pinIsCorrect) viewModel.showMainScreen() else
             fragment_enter_pin_incorrect_pin_tv.Visible()
     }
 
     private fun onUseFingerChanged(useFinger: Boolean) {
-//        if (useFinger) finger?.startAuth()
     }
 
-    override fun onPause() {
-        super.onPause()
-//        finger?.stopAuth()
-    }
 }
 
 
