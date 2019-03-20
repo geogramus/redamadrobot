@@ -33,7 +33,6 @@ class MainActivity: AppCompatActivity() {
         setContentView(R.layout.activity_main)
         DI.app.inject(this)
         val viewModelFactory = viewModelFactory { DI.AUTH.get().mainViewModel() }
-
         viewModel = getViewModel(viewModelFactory)
     }
 

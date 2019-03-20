@@ -37,6 +37,7 @@ dependencies {
             deps.arch.lifecycle,
 
             deps.support.design,
+            deps.support.biometric,
 
             deps.navigation.cicerone,
 

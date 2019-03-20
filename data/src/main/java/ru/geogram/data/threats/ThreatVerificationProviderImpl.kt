@@ -11,13 +11,6 @@ class ThreatVerificationProviderImpl @Inject constructor(
     context: Context
 ) : ThreatVerificationProvider {
 
-    companion object {
-        private const val PUBLIC = "public"
-        private const val FREE = "free"
-        private const val OPEN = "open"
-        private const val AIRPORT = "airport"
-        private const val GUEST = "GUEST"
-    }
 
     private val ROOT_THREAT by lazy {
         context.getString(R.string.root_threat)
@@ -29,10 +22,6 @@ class ThreatVerificationProviderImpl @Inject constructor(
 
     private val wifiManager by lazy {
         context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-    }
-
-    private val wifiTypeList by lazy {
-        listOf(PUBLIC, FREE, OPEN, AIRPORT, GUEST)
     }
 
     private val rootBeer by lazy {
@@ -60,10 +49,6 @@ class ThreatVerificationProviderImpl @Inject constructor(
     private fun detectPublicWifi() {
         wifiManager.connectionInfo?.let { info ->
             val ssid = info.ssid
-            if (wifiTypeList.any { ssid.toLowerCase().contains(it) }) {
-                threatsList.add(PUBLIC_WIFI_THREAT)
-                return
-            }
             if (wifiManager.configuredNetworks
                     .find { it.SSID == ssid }
                     ?.allowedKeyManagement

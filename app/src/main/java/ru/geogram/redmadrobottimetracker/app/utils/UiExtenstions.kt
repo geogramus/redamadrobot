@@ -35,6 +35,10 @@ fun Fragment.showThreatAlertDialog(context: Context, message: String? = null,
     builder.show()
 }
 
+fun View.isVisible(isVisible:Boolean){
+    visibility = if(isVisible) View.VISIBLE else View.INVISIBLE
+}
+
 fun View.Visible() {
     visibility = View.VISIBLE
 }

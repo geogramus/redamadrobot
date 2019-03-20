@@ -60,11 +60,13 @@ deps.ui = ui
 
 def support = [:]
 versions.androidx = "1.0.0"
+versions.biometver = "1.0.0-alpha03"
 support.app_compat = "androidx.appcompat:appcompat:$versions.androidx"
 support.recyclerview = "androidx.recyclerview:recyclerview:$versions.androidx"
 support.cardview = "androidx.cardview:cardview:$versions.androidx"
 support.design = "com.google.android.material:material:$versions.androidx"
 support.anotations = "androidx.annotation:annotation:$versions.androidx"
+support.biometric = "androidx.biometric:biometric:1.0.0-alpha03"
 deps.support = support
 
 def customtabs = [:]

@@ -65,4 +65,8 @@
     <string name="threats_founded">Найдены угрозы</string>
     <string name="problems_warning">Данные проблемы подвергают опасности ваши личные данные</string>
     <string name="enter_pin_fragment_enter_password">Введите пароль</string>
+    <string name="finger_not_supported">Отпечаток пальца не поддерживается данным устройством</string>
+    <string name="nter_pin_fragment_cancel">Отмена</string>
+    <string name="finger_authorization">Авторизация по отпечатку пальца</string>
+    <string name="enter_pin_fragment_use_fingerprint_for_auth">Используйте отпечаток пальца для авторизации</string>
 </resources>
