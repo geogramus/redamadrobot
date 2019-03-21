@@ -24,5 +24,5 @@
 -dontnote okhttp3.internal.platform.**
 -dontnote com.google.gson.internal.UnsafeAllocator
 -dontwarn retrofit2.Platform$Java8
--keep class ru.geogram.data.db.projects.** { *; }
--keep class ru.geogram.data.network.** { *; }
+-keep class ru.geogram.data.model.db.projects.** { *; }
+-keep class ru.geogram.data.model.network.** { *; }

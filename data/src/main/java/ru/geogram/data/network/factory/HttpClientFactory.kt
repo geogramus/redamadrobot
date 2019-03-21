@@ -13,7 +13,6 @@ object HttpClientFactory {
     private const val CONNECT_TIMEOUT_MILLIS = 12000L
     private const val READ_TIMEOUT_MILLIS = 12000L
     private const val CERT_1 = "sha256/919aHK1wjFAZCpJlrIO39suaQnftqM4Mpc24VzVnPE8="
-    private const val CERT_2 = "sha256/YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg="
     private const val URL_PATTERN = "watcher.intern.redmadrobot.com"
 
     fun okHttpClient(builder: OkHttpClient.Builder.() -> Unit): OkHttpClient {
@@ -31,7 +30,7 @@ object HttpClientFactory {
             readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
             certificatePinner(
                 CertificatePinner.Builder()
-                    .add(URL_PATTERN, CERT_1, CERT_2)
+                    .add(URL_PATTERN, CERT_1)
                     .build()
             )
         }

@@ -7,10 +7,14 @@ import ru.geogram.data.R
 import ru.geogram.domain.providers.threats.ThreatVerificationProvider
 import javax.inject.Inject
 
+
 class ThreatVerificationProviderImpl @Inject constructor(
     context: Context
 ) : ThreatVerificationProvider {
 
+    private val WPA2_PSK by lazy {
+        4
+    }
 
     private val ROOT_THREAT by lazy {
         context.getString(R.string.root_threat)
@@ -49,13 +53,15 @@ class ThreatVerificationProviderImpl @Inject constructor(
     private fun detectPublicWifi() {
         wifiManager.connectionInfo?.let { info ->
             val ssid = info.ssid
-            if (wifiManager.configuredNetworks
-                    .find { it.SSID == ssid }
-                    ?.allowedKeyManagement
-                    ?.isEmpty == true
-            ) {
-                threatsList.add(PUBLIC_WIFI_THREAT)
-            }
+            wifiManager.configuredNetworks
+                .find { it.SSID == ssid }
+                ?.allowedKeyManagement?.get(WPA2_PSK)
+                ?.let {
+                    if (!it) {
+                        threatsList.add(PUBLIC_WIFI_THREAT)
+                    }
+                }
+
         }
     }
 }
