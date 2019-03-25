@@ -69,4 +69,7 @@
     <string name="nter_pin_fragment_cancel">Отмена</string>
     <string name="finger_authorization">Авторизация по отпечатку пальца</string>
     <string name="enter_pin_fragment_use_fingerprint_for_auth">Используйте отпечаток пальца для авторизации</string>
+    <string name="fragment_registration_name">Имя</string>
+    <string name="fragment_registration_last_name">Фамилия</string>
+    <string name="fragment_registration_reg_btn">Зарегестрироваться</string>
 </resources>

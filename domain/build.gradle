@@ -43,10 +43,6 @@ dependencies {
             deps.dagger.runtime
     )
 
-    api (
-            deps.crypto.tink
-    )
-
     testImplementation(
             deps.test.junit,
             deps.test.roboelectric

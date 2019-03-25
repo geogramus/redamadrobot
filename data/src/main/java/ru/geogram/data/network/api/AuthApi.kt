@@ -7,6 +7,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import ru.geogram.data.model.network.user.LoginModel
 import ru.geogram.data.model.network.user.LoginResponseModel
+import ru.geogram.data.model.network.user.RegistrationModel
 
 
 interface AuthApi {
@@ -19,4 +20,7 @@ interface AuthApi {
 
     @GET("/auth/profile/")
     fun getProfile(@Header("Cookie") cookie: String): Single<LoginResponseModel>
+
+    @POST("auth/sign-up/")
+    fun singUp(@Body registrationModel: RegistrationModel): Single<LoginResponseModel>
 }

@@ -30,7 +30,7 @@ class EnterPinFragment : BaseKeyboardFragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val viewModelFactory = viewModelFactory { DI.AUTH.get().createEnterPinViewModel() }
+        val viewModelFactory = viewModelFactory { DI.AUTH.get().enterPinViewModel() }
         viewModel = getViewModel(viewModelFactory)
         return inflater.inflate(R.layout.fragment_enter_pin, container, false)
     }

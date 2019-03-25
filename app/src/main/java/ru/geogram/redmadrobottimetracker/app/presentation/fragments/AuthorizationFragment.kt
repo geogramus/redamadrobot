@@ -98,6 +98,11 @@ class AuthorizationFragment : BaseFragment() {
                             )
                     )
                 }.disposeOnDetach()
+
+        fragment_authorization_registration_tv.clicks()
+                .subscribe {
+                    viewModel.showRegistrationFragment()
+                }.disposeOnDetach()
     }
 
     private fun onUserChanged(viewState: ViewState) {

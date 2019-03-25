@@ -19,7 +19,7 @@ class TinkProviderImpl @Inject constructor(private val context: Context) : TinkP
     private val TINK_KEYSET_NAME = "red_mad_watcher__keyset"
     private val MASTER_KEY_URI = "android-keystore://red_mad_watcher_key"
 
-    override fun provideTink(): Aead {
+    private fun provideTink(): Aead {
         val aead: Aead
         try {
             Config.register(TinkConfig.LATEST)
@@ -40,5 +40,13 @@ class TinkProviderImpl @Inject constructor(private val context: Context) : TinkP
             .withMasterKeyUri(MASTER_KEY_URI)
             .build()
             .getKeysetHandle()
+    }
+
+    override fun encrypt(pin: ByteArray): ByteArray {
+        return provideTink().encrypt(pin, byteArrayOf())
+    }
+
+    override fun decrypt(pin: ByteArray): ByteArray {
+        return provideTink().decrypt(pin, byteArrayOf())
     }
 }

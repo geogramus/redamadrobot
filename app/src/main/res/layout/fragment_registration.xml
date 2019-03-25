@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/fragment_registration_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="fragment_registration_name,
+            fragment_registration_last_name,
+            fragment_registration_email,
+            fragment_registration_password,
+            fragment_registration_registration_button" />
+
+    <ImageView
+        android:id="@+id/fragment_registration_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_registration_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_img_rmr_logo" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/fragment_registration_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/bg_edittext"
+        android:ems="10"
+        android:hint="@string/fragment_registration_name"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/auth_et_text_color"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_registration_last_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/fragment_registration_last_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_edittext"
+        android:ems="10"
+        android:hint="@string/fragment_registration_last_name"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/auth_et_text_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/fragment_registration_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_edittext"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/auth_et_text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_registration_last_name" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/fragment_registration_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_edittext"
+        android:ems="10"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/auth_et_text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_registration_email" />
+
+    <ImageView
+        android:id="@+id/fragment_registration_back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_icn_arrow_back" />
+
+    <Button
+        android:id="@+id/fragment_registration_registration_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/buttong_bg_red_rounded_disabled"
+        android:clickable="false"
+        android:enabled="false"
+        android:text="@string/fragment_registration_reg_btn"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_registration_password" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/fragment_registration_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_registration_logo"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="circle_progress_bar.json"
+        app:lottie_loop="true" />
+</androidx.constraintlayout.widget.ConstraintLayout>

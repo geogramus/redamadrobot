@@ -60,7 +60,8 @@ dependencies {
     api(
             deps.room.runtime,
             deps.room.rxjava2,
-            deps.utils.hawk
+            deps.utils.hawk,
+            deps.crypto.tink
     )
 
     testImplementation(

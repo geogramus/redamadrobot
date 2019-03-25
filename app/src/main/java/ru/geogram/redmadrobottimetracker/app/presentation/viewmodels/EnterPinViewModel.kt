@@ -21,7 +21,7 @@ class EnterPinViewModel @Inject constructor(
 
     fun isPinValid(pin: String) {
         if (pin.length == rightPinLength) {
-            val decryptPin = tink.provideTink().decrypt(pinProvider.getPin(), byteArrayOf())
+            val decryptPin = tink.decrypt(pinProvider.getPin())
             isValidPin.value = decryptPin.contentEquals(pin.toByteArray())
         }
     }

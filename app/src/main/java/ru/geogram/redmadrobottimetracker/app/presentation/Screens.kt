@@ -28,3 +28,8 @@ object ShowCreatePinFragment : SupportAppScreen() {
 object ShowEnterPinFragment : SupportAppScreen() {
     override fun getFragment() = EnterPinFragment.getInstance()
 }
+
+
+object ShowRegistrationFragment : SupportAppScreen() {
+    override fun getFragment() = RegistrationFragment.getInstance()
+}

@@ -5,10 +5,12 @@ import ru.geogram.domain.model.auth.LoginPassword
 import ru.geogram.domain.providers.dataProviders.UserCredentialsProvider
 import ru.geogram.domain.repositories.AuthRepository
 import ru.geogram.redmadrobottimetracker.app.presentation.ShowCreatePinFragment
+import ru.geogram.redmadrobottimetracker.app.presentation.ShowRegistrationFragment
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ErrorViewState
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.Loading
 import ru.geogram.redmadrobottimetracker.app.presentation.viewstates.ViewState
 import ru.geogram.redmadrobottimetracker.app.providers.navigation.RouterProvider
+import ru.geogram.redmadrobottimetracker.app.utils.Utils
 import ru.geogram.redmadrobottimetracker.app.utils.schedulersToMain
 import javax.inject.Inject
 
@@ -48,7 +50,11 @@ class AuthoriztionViewModel @Inject constructor(
         if (target.isEmpty()) {
             correctEmail.postValue(false)
         } else {
-            correctEmail.postValue(android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches())
+            correctEmail.postValue(Utils.isValidEmail(target))
         }
+    }
+
+    fun showRegistrationFragment() {
+        provider.provideRouter().navigateTo(ShowRegistrationFragment)
     }
 }

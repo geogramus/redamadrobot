@@ -161,4 +161,8 @@ object Utils {
             }
         }
     }
+
+    fun isValidEmail(target: String): Boolean = android.util.Patterns.EMAIL_ADDRESS
+            .matcher(target).matches()
+
 }

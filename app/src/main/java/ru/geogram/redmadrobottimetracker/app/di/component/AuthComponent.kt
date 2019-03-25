@@ -18,5 +18,6 @@ interface AuthComponent {
     fun mainViewModel(): MainActivityViewModel
     fun userFragmentViewModel(): UserFragmentViewModel
     fun createPinViewModel(): CreatePinViewModel
-    fun createEnterPinViewModel(): EnterPinViewModel
+    fun enterPinViewModel(): EnterPinViewModel
+    fun registrationViewModel(): RegistrationViewModel
 }
