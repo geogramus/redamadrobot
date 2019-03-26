@@ -1,6 +1,6 @@
 package ru.geogram.domain.providers.dataProviders
 
 interface PinProvider {
-    fun setPin(pin: ByteArray)
-    fun getPin(): ByteArray
+    fun setPin(pin: String)
+    fun getPin(): String
 }

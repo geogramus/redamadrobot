@@ -43,8 +43,6 @@ dependencies {
 
             deps.kotlin.stdlib,
 
-//            deps.gson.runtime,
-
             deps.utils.okhttp_logging_interceptor,
 
             deps.rx.java,
@@ -54,7 +52,9 @@ dependencies {
 
             deps.gson.parsing,
 
-            deps.utils.root_beer
+            deps.utils.root_beer,
+
+            deps.crypto.binarypref
     )
 
     api(

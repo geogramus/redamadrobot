@@ -141,7 +141,9 @@ deps.gson = gson
 
 def crypto = [:]
 versions.crypto = "HEAD-SNAPSHOT"
+versions.binarypref = "1.0.1"
 crypto.tink = "com.google.crypto.tink:tink-android:$versions.crypto"
+crypto.binarypref = "com.github.yandextaxitech:binaryprefs:$versions.binarypref"
 deps.crypto = crypto
 
 ext.deps = deps

@@ -1,5 +1,8 @@
 package ru.geogram.data
 
+import android.content.Context
+import com.ironz.binaryprefs.BinaryPreferencesBuilder
+import com.ironz.binaryprefs.PreferencesEditor
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,5 +22,7 @@ object Utils {
 
 
     fun getCurrentDate(): String = SimpleDateFormat(DATE_FORMAT_PATTERN).format(Date())
+
+    fun getBinaryEditor(context: Context): PreferencesEditor = BinaryPreferencesBuilder(context).build().edit()
 
 }

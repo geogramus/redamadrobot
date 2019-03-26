@@ -22,7 +22,7 @@ class CreatePinViewModel @Inject constructor(
 
     fun saveUseFingerSetting(useFinger:Boolean) = fingerProvider.setFingerUsing(useFinger)
 
-    fun savePin(pin: String) = pinProvider.setPin(tink.encrypt(pin.toByteArray()))
+    fun savePin(pin: String) = pinProvider.setPin(pin)
 
     fun showMainScreen() = provider.provideRouter().newRootScreen(ShowMainScreenFragment)
 }
