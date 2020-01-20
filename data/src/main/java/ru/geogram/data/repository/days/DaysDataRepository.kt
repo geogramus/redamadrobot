@@ -5,11 +5,9 @@ import ru.geogram.data.model.converter.DaysConverter
 import ru.geogram.data.network.api.DaysApi
 import ru.geogram.domain.model.days.DaysInfo
 import ru.geogram.domain.providers.dataProviders.TokenProvider
-import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.domain.repositories.DaysRepository
 
 class DaysDataRepository(
-    private val systemInfoProvider: SystemInfoProvider,
     private val daysApi: DaysApi,
     private val tokenProvider: TokenProvider
 ) : DaysRepository {

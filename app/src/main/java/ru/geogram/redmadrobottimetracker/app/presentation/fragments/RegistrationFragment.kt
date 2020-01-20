@@ -72,6 +72,7 @@ class RegistrationFragment : BaseFragment() {
                     viewModel.exit()
                 }.disposeOnDetach()
         observe(viewModel.allFieldsCorrect, ::allFieldsValidCheck)
+        observe(viewModel.registrate, ::onUserChanged)
     }
 
     private fun allFieldsValidCheck(valid: Boolean) {

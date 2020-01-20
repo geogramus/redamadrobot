@@ -14,7 +14,6 @@ import ru.geogram.domain.providers.dataProviders.FingerProvider
 import ru.geogram.domain.providers.dataProviders.PinProvider
 import ru.geogram.domain.providers.dataProviders.TokenProvider
 import ru.geogram.domain.providers.dataProviders.UserCredentialsProvider
-import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.domain.repositories.AuthRepository
 import ru.geogram.redmadrobottimetracker.app.di.scope.AuthScope
 import ru.geogram.redmadrobottimetracker.app.providers.crypto.TinkProviderImpl
@@ -56,12 +55,11 @@ abstract class AuthModule {
         @Provides
         @AuthScope
         internal fun provideUserRepository(
-            systemInfoProvider: SystemInfoProvider,
             userApi: AuthApi,
             tokenProvider: TokenProvider,
             userCredentialsProvider: UserCredentialsProvider
         ): AuthRepository {
-            return AuthDataRepository(systemInfoProvider, userApi, tokenProvider, userCredentialsProvider)
+            return AuthDataRepository(userApi, tokenProvider, userCredentialsProvider)
         }
     }
 }

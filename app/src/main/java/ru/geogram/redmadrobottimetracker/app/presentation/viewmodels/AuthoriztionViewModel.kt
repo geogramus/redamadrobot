@@ -20,7 +20,7 @@ class AuthoriztionViewModel @Inject constructor(
         private val provider: RouterProvider,
         private val userCredentialsProvider: UserCredentialsProvider
 ) : BaseViewModel() {
-    val router by lazy {
+    private val router by lazy {
         provider.provideRouter()
     }
     val auth: MutableLiveData<ViewState> = MutableLiveData()

@@ -14,8 +14,6 @@ import javax.inject.Inject
 class AppApiFactory @Inject constructor(private val tokenProvider: TokenProvider) : ApiFactory(
     ServerUrls.RedMadRobot(),
     HttpClientFactory.okHttpClient {
-
-        // Error interceptor
         addInterceptor { chain ->
             val response = try {
                 chain.proceed(chain.request())
@@ -26,19 +24,11 @@ class AppApiFactory @Inject constructor(private val tokenProvider: TokenProvider
                 }
             }
             when (response.code()) {
-                401 -> {
-                    throw CreditinalException()
-                }
-                in 400..501 -> {
-                    throw ServerException(response.code(), getErrorMessage(response.body()))
-                }
-                else -> {
-
-                }
+                401 -> throw CreditinalException()
+                in 400..501 -> throw ServerException(response.code(),
+                    getErrorMessage(response.body()))
             }
-            if (!response.isSuccessful) {
-                throw ServerException(response.code())
-            }
+            if (!response.isSuccessful) throw ServerException(response.code())
             response
         }
         addInterceptor { chain ->
@@ -49,7 +39,6 @@ class AppApiFactory @Inject constructor(private val tokenProvider: TokenProvider
                     for (header in response.headers(SET_COOKIE)) {
                         cookies = header
                     }
-                    // Save the cookies (I saved in SharedPrefrence), you save whereever you want to save
                     tokenProvider.setToken(cookies)
                 }
             }

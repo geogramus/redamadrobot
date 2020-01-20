@@ -11,12 +11,10 @@ import ru.geogram.domain.model.auth.LoginPassword
 import ru.geogram.domain.model.auth.RegistraionInfo
 import ru.geogram.domain.providers.dataProviders.TokenProvider
 import ru.geogram.domain.providers.dataProviders.UserCredentialsProvider
-import ru.geogram.domain.providers.system.SystemInfoProvider
 import ru.geogram.domain.repositories.AuthRepository
 import javax.inject.Inject
 
 class AuthDataRepository @Inject constructor(
-    private val systemInfoProvider: SystemInfoProvider,
     private val authApi: AuthApi,
     private val tokenProvider: TokenProvider,
     private val userCredentialsProvider: UserCredentialsProvider
@@ -52,7 +50,7 @@ class AuthDataRepository @Inject constructor(
 
     override fun registrate(registrationInfo: RegistraionInfo): Single<AuthInfo> {
         return authApi.singUp(AuthConverter.convertToRegistrationModel(registrationInfo))
-                .map(this::processResponse)
+            .map(this::processResponse)
     }
 
     private fun processResponse(response: LoginResponseModel) = AuthConverter.fromNetwork(response)
